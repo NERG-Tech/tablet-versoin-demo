@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react-native",
@@ -12,10 +13,7 @@
     "skipLibCheck": true,
     "noImplicitAny": false,
     "target": "esnext",
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["src/*"]
-    }
+    "baseUrl": "."
   },
   "exclude": ["node_modules", "babel.config.js", "metro.config.js"]
 }
