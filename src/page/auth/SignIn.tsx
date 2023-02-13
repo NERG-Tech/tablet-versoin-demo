@@ -4,7 +4,7 @@ import {useAuth} from '../../contexts/AuthProvider';
 import Loading from '../../common/components/Loading';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../common/constants/StyleConstants';
 import Input from '../../common/components/Input';
-import RoundedGradientButton from '../..//common/components/buttons/RoundedGradientButton';
+import RoundedGradientButton from '../../common/components/buttons/RoundedGradientButton';
 
 const WatchesImage = require('../../assets/watches.png');
 const LogoImage = require('../../assets/logo/logo.png');
@@ -110,6 +110,7 @@ const SignInScreen = () => {
           placeholder="E-mail"
           textStyle={styles.input}
           inputStyle={styles.emailWrapper}
+          keyboardType="email-address"
           onChangeText={(text: string) => {
             setEmail(text);
           }}
