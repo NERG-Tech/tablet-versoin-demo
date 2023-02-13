@@ -74,7 +74,6 @@ const MainLayout = (props: TProps) => {
   const currentRoute = navigationRef.current?.getCurrentRoute();
   const currentNav = currentRoute?.name || NavigationConstants.DASHBOARD;
   console.log('route: ', currentNav);
-  console.log('props: ', props);
 
   return (
     <View style={styles.container}>

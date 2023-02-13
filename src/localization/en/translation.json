@@ -1,0 +1,228 @@
+{
+  "general": {
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
+  "app": {
+    "dashboard": "Dashboard",
+    "gmMode": "GM Mode",
+    "coachMode": "Coach Mode",
+    "addPlayer": "Add Player",
+    "invite": "Invite",
+    "editProfile": "Edit Profile",
+    "privacyPolicy": "Privacy Policy",
+    "settings": "Settings",
+    "signIn": "Log In",
+    "signOut": "Sign Out"
+  },
+  "profile": {
+    "uploadPhoto": "Upload Photo",
+    "connectDevice": "Connect Device",
+    "teamConnect": "Team Connect",
+    "addFile": "Add File",
+    "createSave": "Create/Save",
+    "name": "Name",
+    "age": "Age",
+    "position": "Position",
+    "college": "College",
+    "gamesWon": "Games Won",
+    "gamesStarted": "Games Started",
+    "targetRound": "Target Round",
+    "height": "Height",
+    "weight": "Weight",
+    "positions": {
+      "QB": "Quarterback (QB)",
+      "OL": "Offensive Linemen (OL)",
+      "RB": "Running Back (RB)",
+      "FB": "Fullback (FB)",
+      "TE": "Tight End (TE)",
+      "WR": "Wide Receiver (WR)",
+      "DL": "Defensive Linemen (DL)",
+      "LB": "Linebacker (LB)",
+      "CB": "Cornerback (CB)",
+      "KR": "Kick Returner (KR)",
+      "PR": "Punt Returner (PR)",
+      "LS": "Long Snapper (LS)",
+      "S": "Safety (S)",
+      "K": "Kicker (K)",
+      "P": "Punter (P)"
+    }
+  },
+  "dashboard": {
+    "caption": "Draft Board",
+    "teamNeeds": "Team Needs",
+    "offense": "Offense",
+    "defense": "Defense",
+    "specialTimes": "Special Times",
+    "filters": {
+      "caption": "Filters",
+      "position": "Position",
+      "priority": "Priority",
+      "draftMatch": "Draft Match",
+      "capHit": "Cap Hit",
+      "teamPipeline": "Team Pipeline",
+      "freeAgents": "Free Agents",
+      "nergScore": "NERG Score",
+      "round": "Round"
+    }
+  },
+  "gmMode": {
+    "caption": "GM Mode",
+    "pse": "Pre-season expectation",
+    "rsr": "Regular season results",
+    "psr": "Post season results",
+    "pc": "Players Contracts",
+    "ph": "Players Health",
+    "sc": "Salary Cap",
+    "tfa": "Team Free Agents",
+    "lfa": "League Free Agents",
+    "npl": "NERG Pipe Line"
+  },
+  "coachMode": {
+    "caption": "Coach Mode",
+    "offense": "Offense",
+    "defense": "Defense",
+    "specialTimes": "Special Times",
+    "seq": "Scheme: Essential Quality",
+    "sep": "Scheme: Essential Position",
+    "srp": "Scheme: Related Position",
+    "position": "Position",
+    "status": "Status",
+    "enter": "Enter",
+    "positionData": "Position Data",
+    "ob": "OB",
+    "backs": "Backs",
+    "oLine": "O-Line",
+    "tightEnd": "Tight End",
+    "receivers": "Recievers"
+  },
+  "personalInfo": {
+    "proData": {
+      "caption": "Pro Data",
+      "weeklyResult": {
+        "caption": "Weekly results",
+        "hl": "Hydration Levels",
+        "ha": "Health Activity",
+        "br": "Body Rejuvenation",
+        "st": "Sedentary Time",
+        "publish": "Publish"
+      },
+      "options": {
+        "ht": "Hydration Target",
+        "ha": "Health Activity",
+        "rt": "Rejuvenating Time",
+        "mf": "Mental Fatigue",
+        "gc": "Gut Comfort",
+        "mt": "Muscle Tension"
+      },
+      "playerHealth": {
+        "caption": "Player Health",
+        "bg": "Blood Glucose",
+        "bp": "Blood Pressure",
+        "hrv": "HRV",
+        "bo": "Blood Oxygen",
+        "sleep": "Sleep"
+      }
+    },
+    "nutrients": {
+      "caption": "Nutrients",
+      "awt": "Average Water Temperature",
+      "ctcd": "Calories To Consume Daily",
+      "ht": "Hydration Target",
+      "preA": "Pre Activity",
+      "postA": "Post Activty",
+      "dt": "Daily Target",
+      "ng": "Nutrient Gaps",
+      "macro": "Daily Target",
+      "vitamins": "Vitamins",
+      "minerals": "Minerals",
+      "water": "Minerals",
+      "carbohydrates": "Carbohydrates",
+      "dri": "Dietary Reference Intake (DRI)"
+    },
+    "exercise": {
+      "caption": "Exercise",
+      "ctbd": "Calories To Burn Daily",
+      "st": "Steps Taken",
+      "aza": "Activity Zone Analysis",
+      "ha": "Healthy Activty",
+      "pa": "Performance Activtiy",
+      "recovery": "Recovery",
+      "weightLoss": "Weight Loss",
+      "maximum": "Maximum",
+      "rr": "Respiratory rate",
+      "abt": "Average Body Temp",
+      "ahr": "Active Heart Rate",
+      "hr": "Heart Rate Reserve",
+      "hrr": "Heart Rate Recovery",
+      "il": "Intensity Level"
+    },
+    "rest": {
+      "caption": "Rest",
+      "rt": "Rest Time",
+      "qs": "Quality Sleep",
+      "sa": "Sleep Analysis",
+      "bedTime": "Bedtime",
+      "wakeup": "Wake up",
+      "remSleep": "REM Sleep",
+      "deepSleep": "Deep Sleep",
+      "lightSleep": "Light Sleep",
+      "vm": "Vo2 MAx",
+      "br": "Base RMR",
+      "bo": "Blood oxygen",
+      "bg": "Blood Glucose",
+      "rhr": "Resting Heart Rate",
+      "bee": "Basal Energy expenditure"
+    },
+    "genetics": {
+      "caption": "Genetics",
+      "bmi": {
+        "caption": "BMI",
+        "age": "Age",
+        "weight": "Weight",
+        "height": "Height",
+        "apm": "Add Player Measurements"
+      },
+      "gah": {
+        "caption": "Genetics and health",
+        "ethnicity": "Ethnicity",
+        "complextion": "Complextion",
+        "bloodType": "Blood Type",
+        "apec": "Add Pre-Existing Conditions",
+        "adm": "Add Food Allergies / Diet Restrictions / Medications",
+        "afmh": "Add Family Medical History"
+      },
+      "abw": "Adjusted Body Weight",
+      "lbm": "Lean Body Mass",
+      "wthr": "Waist To Hip ratio",
+      "bww": "Body Water Weight",
+      "bv": "Blood Volume",
+      "policy": "HIPPA Policy",
+      "mesurement": {
+        "caption": "Key Measurements",
+        "link": "Detailed View",
+        "nc": "Neck Circumference",
+        "hs": "Hand Size",
+        "gc": "Glute Circumference",
+        "ws": "Wing Span",
+        "hc": "Hips Circumference",
+        "wc": "Waist Circumference"
+      },
+      "clutchModal": {
+        "caption": "About Clutch Potential",
+        "content": "Clutch Gen gives you deeper insight into how a player respond to pressure situations at the cellular level. The NERG algorithm takes many factors into account to see if this player has the physiological makeup to surpass the physical, mental, and emotional hurdles that it takes to play the game at a high level for a long time."
+      },
+      "bloodModal": {
+        "caption": "About Blood Volume",
+        "content": "With more blood volume, you have a higher VO2 for the same level of effort. Essentially, you have more aerobic power. Aside from more aerobic power, there are other benefits that come from greater blood volume. It helps reduce lactate accumulation because the extra oxygen leads to less anaerobic respiration."
+      },
+      "waterModal": {
+        "caption": "About Body Water Weight",
+        "content": "Alterations in total body water can affect some aspects of force generation. According to research examining differences between euhydrated and dehydrated conditions, there is a direct connection between body water deficits (2.9% of body mass) and an athlete’s ability to generate upper and lower body anaerobic power."
+      }
+    }
+  }
+}

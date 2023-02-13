@@ -4,6 +4,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import type {StackNavigationProp} from '@react-navigation/stack';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 import DashboardScreen from '../page/Dashboard';
+import GMModeScreen from '../page/GMMode';
+import CoachModeScreen from '../page/CoachMode';
 
 export type AppStackParamList = {
   [NavigationConstants.DASHBOARD]: undefined;
@@ -37,12 +39,12 @@ export const AppStack = () => {
       />
       <Screen
         name={NavigationConstants.GM_MODE}
-        component={DashboardScreen}
+        component={GMModeScreen}
         options={{headerShown: false}}
       />
       <Screen
         name={NavigationConstants.COACH_MODE}
-        component={DashboardScreen}
+        component={CoachModeScreen}
         options={{headerShown: false}}
       />
       <Screen
