@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {useAuth} from '../../contexts/AuthProvider';
 import Loading from '../../common/components/Loading';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../common/constants/StyleConstants';
 import Input from '../../common/components/Input';
+import {Button} from '../../common/components/buttons';
 import RoundedGradientButton from '../../common/components/buttons/RoundedGradientButton';
 
 const WatchesImage = require('../../assets/watches.png');
@@ -88,7 +90,7 @@ const SignInScreen = () => {
   const [loading, isLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const {t} = useTranslation();
   const auth = useAuth();
 
   const signIn = async () => {
@@ -126,12 +128,14 @@ const SignInScreen = () => {
           }}
         />
         <View style={styles.buttonGroupWrapper}>
-          <Text style={styles.forgotText}>Forgot password</Text>
+          <Button>
+            <Text style={styles.forgotText}>{t('app.forgotPassword')}</Text>
+          </Button>
           <RoundedGradientButton
             onPress={() => signIn()}
             customStyle={styles.sigInButton}
             textStyle={styles.signInText}
-            label="Log In"
+            label={t('app.signIn')}
           />
         </View>
       </View>

@@ -4,7 +4,9 @@
     "yes": "Yes",
     "no": "No",
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "email": "E-mail",
+    "password": "Password"
   },
   "app": {
     "dashboard": "Dashboard",
@@ -16,7 +18,9 @@
     "privacyPolicy": "Privacy Policy",
     "settings": "Settings",
     "signIn": "Log In",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "register":"Sign Up",
+    "forgotPassword": "Forgot password"
   },
   "profile": {
     "uploadPhoto": "Upload Photo",
