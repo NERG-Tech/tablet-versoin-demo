@@ -28,7 +28,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     'no-empty-function': 'off',
-    'no-console': ['error', {allow: ['warn']}],
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'prettier/prettier': 'error',

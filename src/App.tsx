@@ -2,6 +2,8 @@ import 'react-native-gesture-handler';
 import React, {memo, ReactNode} from 'react';
 import {StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
+import {persistStore} from 'redux-persist';
+import {PersistGate} from 'redux-persist/integration/react';
 import {store} from './redux/store';
 import {useSelector} from './redux/store';
 import {themeTypeSelector} from './modules/app/selectors';
@@ -10,6 +12,8 @@ import {ThemeProvider} from 'styled-components';
 import {Themes} from './common/theme';
 import {AuthProvider} from './contexts/AuthProvider';
 import {AppNavigator} from './navigation/AppNavigator';
+
+const persistor = persistStore(store);
 
 const AppThemeProvider = ({children}: {children: ReactNode | ReactNode[]}) => {
   const userSelectedThemeType = useSelector(themeTypeSelector);
@@ -30,9 +34,11 @@ const AppComponent = (): JSX.Element => {
   return (
     <AuthProvider>
       <Provider store={store}>
-        <AppThemeProvider>
-          <AppNavigator />
-        </AppThemeProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <AppThemeProvider>
+            <AppNavigator />
+          </AppThemeProvider>
+        </PersistGate>
       </Provider>
     </AuthProvider>
   );

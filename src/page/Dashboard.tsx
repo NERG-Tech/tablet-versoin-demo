@@ -1,13 +1,7 @@
 import React from 'react';
-import {Button, Text, View, StyleSheet} from 'react-native';
-
+import {Button} from 'react-native';
 import {useAuth} from '../contexts/AuthProvider';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+import MainLayout from '../layouts/MainLayout';
 
 const DashboardScreen = () => {
   const auth = useAuth();
@@ -16,10 +10,9 @@ const DashboardScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Dashboard SCREEN</Text>
+    <MainLayout>
       <Button title="Sign Out" onPress={signOut} />
-    </View>
+    </MainLayout>
   );
 };
 
