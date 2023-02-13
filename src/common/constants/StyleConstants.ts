@@ -42,7 +42,7 @@ export const FONT_SIZE = {
   XXS: 10,
   XS: 12,
   MS: 14,
-  MD: 17,
+  MD: 16,
   L: 20,
   XL: 22,
   XXL: 24,
