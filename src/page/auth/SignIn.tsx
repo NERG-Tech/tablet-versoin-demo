@@ -5,7 +5,7 @@ import Loading from '../../common/components/Loading';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../common/constants/StyleConstants';
 import Input from '../../common/components/Input';
 import RoundedGradientButton from '../..//common/components/buttons/RoundedGradientButton';
-/* eslint-disable @typescript-eslint/no-var-requires */
+
 const WatchesImage = require('../../assets/watches.png');
 const LogoImage = require('../../assets/logo/logo.png');
 
