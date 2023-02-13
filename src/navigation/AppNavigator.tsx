@@ -2,8 +2,12 @@ import React from 'react';
 import {NavigationContainer, createNavigationContainerRef} from '@react-navigation/native';
 import {useAuth} from '../contexts/AuthProvider';
 import Loading from '../common/components/Loading';
-import {AuthStack} from './AuthStack';
-import {AppStack} from './AppStack';
+import {AuthStack, AuthStackRoutes, AuthNavigations} from './AuthStack';
+import {AppStack, AppStackRoutes, AppNavigations} from './AppStack';
+
+export type Navigations = AuthNavigations & AppNavigations;
+
+export type Routes = AuthStackRoutes & AppStackRoutes;
 
 export const navigationRef = createNavigationContainerRef();
 

@@ -4,14 +4,14 @@ import {Text, View, StyleSheet} from 'react-native';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
 import {Button, RoundedButton} from '../common/components/buttons';
 import {navigationRef} from '../navigation/AppNavigator';
-import * as Navigations from '../common/constants/NavigationConstants';
+import * as NavigationConstants from '../common/constants/NavigationConstants';
 
 const LogoImg = require('../assets/logo/logo_white.png');
 
 const navigations = {
-  [Navigations.DASHBOARD]: 'Dashboard',
-  [Navigations.GM_MODE]: 'GM Mode',
-  [Navigations.COACH_MODE]: 'Coach Mode',
+  [NavigationConstants.DASHBOARD]: 'Dashboard',
+  [NavigationConstants.GM_MODE]: 'GM Mode',
+  [NavigationConstants.COACH_MODE]: 'Coach Mode',
 };
 
 const styles = StyleSheet.create({
@@ -72,8 +72,9 @@ type TProps = {
 
 const MainLayout = (props: TProps) => {
   const currentRoute = navigationRef.current?.getCurrentRoute();
-  const currentNav = currentRoute?.name || Navigations.DASHBOARD;
+  const currentNav = currentRoute?.name || NavigationConstants.DASHBOARD;
   console.log('route: ', currentNav);
+  console.log('props: ', props);
 
   return (
     <View style={styles.container}>
