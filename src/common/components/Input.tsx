@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     height: 90,
     paddingVertical: 20,
     paddingHorizontal: 28,
-    backgroundColor: COLORS.INPUT_BACKGROUND,
+    backgroundColor: COLORS.BACKGROUND_INPUT,
     borderColor: COLORS.BORDER,
     borderWidth: 1,
     borderRadius: 24,
@@ -62,10 +62,10 @@ const Input = (props: TProps) => {
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor || COLORS.GREY_TEXT}
+        placeholderTextColor={placeholderTextColor || COLORS.TEXT_GREY}
         autoCorrect={false}
         autoFocus={autoFocus}
-        selectionColor={selectionColor || COLORS.GREY_TEXT}
+        selectionColor={selectionColor || COLORS.TEXT_GREY}
         style={StyleSheet.flatten([styles.input, textStyle])}
         value={value}
         onChangeText={props.onChangeText}
