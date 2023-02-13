@@ -3,8 +3,12 @@ import {Text, View} from 'react-native';
 
 const GMModeScreen = () => {
   return (
-    <View>
-      <Text>GM Mode</Text>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+      }}>
+      <Text style={{textAlign: 'center'}}>GM Mode</Text>
     </View>
   );
 };

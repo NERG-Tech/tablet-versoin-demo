@@ -126,8 +126,6 @@ const MainLayout = (props: TProps) => {
     auth.signOut();
   };
 
-  console.log('currentNav: ', props.currentNav);
-
   return (
     <View style={styles.container}>
       <View style={styles.leftSideBarWrapper}>
@@ -158,29 +156,17 @@ const MainLayout = (props: TProps) => {
       <View style={styles.rightWrapper}>
         <View style={styles.headerWrapper}>
           <View style={styles.navWrapper}>
-            {Object.keys(navigations).map((nav: string, i: number) => {
-              if (props.currentNav === nav) {
-                return (
-                  <Button
-                    key={i}
-                    customStyle={styles.navButton}
-                    onPress={() => props.onChangeNav(nav)}>
-                    <Text style={StyleSheet.flatten([styles.navText, styles.navActiveText])}>
-                      {navigations[nav]}
-                    </Text>
-                  </Button>
-                );
-              } else {
-                return (
-                  <Button
-                    key={i}
-                    customStyle={styles.navButton}
-                    onPress={() => props.onChangeNav(nav)}>
-                    <Text style={styles.navText}>{navigations[nav]}</Text>
-                  </Button>
-                );
-              }
-            })}
+            {Object.keys(navigations).map((nav: string, i: number) => (
+              <Button key={i} customStyle={styles.navButton} onPress={() => props.onChangeNav(nav)}>
+                {props.currentNav === nav ? (
+                  <Text style={StyleSheet.flatten([styles.navText, styles.navActiveText])}>
+                    {navigations[nav]}
+                  </Text>
+                ) : (
+                  <Text style={styles.navText}>{navigations[nav]}</Text>
+                )}
+              </Button>
+            ))}
           </View>
           <RoundedButton onPress={() => console.log('Add Player')} label="Add Player" />
           <Button customStyle={styles.invite} onPress={() => console.log('Invite')}>
