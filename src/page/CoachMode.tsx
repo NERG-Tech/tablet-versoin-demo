@@ -1,12 +1,11 @@
 import React from 'react';
-import {Text} from 'react-native';
-import MainLayout from '../layouts/MainLayout';
+import {Text, View} from 'react-native';
 
 const CoachModeScreen = () => {
   return (
-    <MainLayout>
+    <View>
       <Text>Coach Mode</Text>
-    </MainLayout>
+    </View>
   );
 };
 

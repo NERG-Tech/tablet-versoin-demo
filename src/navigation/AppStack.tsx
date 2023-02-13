@@ -3,14 +3,10 @@ import {RouteProp} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import type {StackNavigationProp} from '@react-navigation/stack';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
-import DashboardScreen from '../page/Dashboard';
-import GMModeScreen from '../page/GMMode';
-import CoachModeScreen from '../page/CoachMode';
+import HomeScreen from '../page/Home';
 
 export type AppStackParamList = {
-  [NavigationConstants.DASHBOARD]: undefined;
-  [NavigationConstants.GM_MODE]: undefined;
-  [NavigationConstants.COACH_MODE]: undefined;
+  [NavigationConstants.HOME]: undefined;
   [NavigationConstants.PERSONAL_INFO]: {userId: string};
 };
 
@@ -31,25 +27,15 @@ const {Screen, Navigator} = createStackNavigator<AppStackParamList>();
 
 export const AppStack = () => {
   return (
-    <Navigator initialRouteName={NavigationConstants.DASHBOARD}>
+    <Navigator initialRouteName={NavigationConstants.HOME}>
       <Screen
-        name={NavigationConstants.DASHBOARD}
-        component={DashboardScreen}
-        options={{headerShown: false}}
-      />
-      <Screen
-        name={NavigationConstants.GM_MODE}
-        component={GMModeScreen}
-        options={{headerShown: false}}
-      />
-      <Screen
-        name={NavigationConstants.COACH_MODE}
-        component={CoachModeScreen}
+        name={NavigationConstants.HOME}
+        component={HomeScreen}
         options={{headerShown: false}}
       />
       <Screen
         name={NavigationConstants.PERSONAL_INFO}
-        component={DashboardScreen}
+        component={HomeScreen}
         options={{headerShown: false}}
       />
     </Navigator>

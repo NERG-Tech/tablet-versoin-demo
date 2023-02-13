@@ -19,7 +19,7 @@
     "settings": "Settings",
     "signIn": "Log In",
     "signOut": "Sign Out",
-    "register":"Sign Up",
+    "register": "Sign Up",
     "forgotPassword": "Forgot password"
   },
   "profile": {
@@ -116,19 +116,22 @@
       },
       "options": {
         "ht": "Hydration Target",
+        "pn": "Proper Nutrition",
         "ha": "Health Activity",
         "rt": "Rejuvenating Time",
         "mf": "Mental Fatigue",
         "gc": "Gut Comfort",
-        "mt": "Muscle Tension"
+        "mt": "Muscle Tension",
+        "jnp": "Joint/neck Pain"
       },
       "playerHealth": {
         "caption": "Player Health",
         "bg": "Blood Glucose",
         "bp": "Blood Pressure",
+        "ecg": "ECG",
         "hrv": "HRV",
         "bo": "Blood Oxygen",
-        "sleep": "Sleep"
+        "stress": "Stress"
       }
     },
     "nutrients": {
