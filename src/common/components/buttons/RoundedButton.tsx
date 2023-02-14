@@ -2,40 +2,37 @@ import React from 'react';
 import {Text, StyleSheet, ViewStyle, TextStyle, GestureResponderEvent} from 'react-native';
 import {Button} from './Button';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../constants/StyleConstants';
-import LinearGradient from 'react-native-linear-gradient';
 
 const styles = StyleSheet.create({
   text: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.XXL,
+    fontSize: FONT_SIZE.MD,
     color: COLORS.WHITE,
   },
-  gradientButton: {
+  button: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    width: 180,
+    height: 60,
+    backgroundColor: COLORS.BLUE,
+    borderRadius: 24,
   },
 });
 
 type TProps = {
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
-  customStyle: ViewStyle;
+  customStyle?: ViewStyle;
   textStyle?: TextStyle;
   label: string;
 };
 
-const RoundedGradientButton = (props: TProps) => {
+export const RoundedButton = (props: TProps) => {
   return (
-    <Button onPress={props.onPress}>
-      <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
-        colors={[COLORS.BLUE_LIGHT, COLORS.BLACK]}
-        style={StyleSheet.flatten([styles.gradientButton, props.customStyle])}>
-        <Text style={StyleSheet.flatten([styles.text, props.textStyle])}>{props.label}</Text>
-      </LinearGradient>
+    <Button
+      customStyle={StyleSheet.flatten([styles.button, props.customStyle])}
+      onPress={props.onPress}>
+      <Text style={StyleSheet.flatten([styles.text, props.textStyle])}>{props.label}</Text>
     </Button>
   );
 };
-
-export default RoundedGradientButton;

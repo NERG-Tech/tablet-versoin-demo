@@ -1,31 +1,51 @@
 import React, {useEffect, useRef} from 'react';
-import {View, TextInput, KeyboardTypeOptions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {COLORS} from '../constants/StyleConstants';
+import {
+  View,
+  Text,
+  TextInput,
+  KeyboardTypeOptions,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../constants/StyleConstants';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 10,
+    borderRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY,
   },
   input: {
     flex: 1,
-    width: '100%',
-    height: 90,
-    paddingVertical: 20,
-    paddingHorizontal: 28,
-    backgroundColor: COLORS.BACKGROUND_INPUT,
-    borderColor: COLORS.BORDER,
-    borderWidth: 1,
-    borderRadius: 24,
+    marginHorizontal: 10,
+    fontWeight: FONT_WEIGHT.SEMI_BOLD,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.WHITE,
+    textAlign: 'center',
+    backgroundColor: COLORS.TRANSPARENT,
+  },
+  label: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.XS,
+    color: COLORS.TEXT_GREY_LIGHTER,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRightWidth: 2,
+    borderRightColor: COLORS.DIVIDER_LIGHT,
   },
 });
 
 type TProps = {
   value: string;
-  onChangeText: (text: string) => void;
+  label: string;
+  onChangeText?: (text: string) => void;
   placeholder?: string;
   placeholderTextColor?: string;
   secureTextEntry?: boolean;
+  readOnly?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
   autoFocus?: boolean;
   selectionColor?: string;
@@ -33,13 +53,15 @@ type TProps = {
   inputStyle?: ViewStyle;
 };
 
-const Input = (props: TProps) => {
+export const AttributeInput = (props: TProps) => {
   const inputRef = useRef<TextInput | null>(null);
   const {
     value,
+    label,
     placeholder,
     placeholderTextColor,
     secureTextEntry,
+    readOnly,
     keyboardType,
     autoFocus,
     selectionColor,
@@ -57,10 +79,12 @@ const Input = (props: TProps) => {
 
   return (
     <View style={StyleSheet.flatten([styles.container, inputStyle])}>
+      <Text style={styles.label}>{label}</Text>
       <TextInput
         ref={inputRef}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
+        editable={!readOnly}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor || COLORS.TEXT_GREY}
         autoCorrect={false}
@@ -73,5 +97,3 @@ const Input = (props: TProps) => {
     </View>
   );
 };
-
-export default Input;

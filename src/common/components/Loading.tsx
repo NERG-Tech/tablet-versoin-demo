@@ -2,7 +2,7 @@ import React from 'react';
 import {View, ActivityIndicator} from 'react-native';
 import {COLORS} from '../constants/StyleConstants';
 
-const Loading = ({size = 'large'}: {size?: number | 'small' | 'large' | undefined}) => {
+export const Loading = ({size = 'large'}: {size?: number | 'small' | 'large' | undefined}) => {
   return (
     <View
       style={{
@@ -13,5 +13,3 @@ const Loading = ({size = 'large'}: {size?: number | 'small' | 'large' | undefine
     </View>
   );
 };
-
-export default Loading;
