@@ -26,15 +26,15 @@ type TProps = {
 
 const RoundedGradientButton = (props: TProps) => {
   return (
-    <LinearGradient
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}
-      colors={[COLORS.BLUE_LIGHT, COLORS.BLACK]}
-      style={StyleSheet.flatten([styles.gradientButton, props.customStyle])}>
-      <Button onPress={props.onPress}>
+    <Button onPress={props.onPress}>
+      <LinearGradient
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        colors={[COLORS.BLUE_LIGHT, COLORS.BLACK]}
+        style={StyleSheet.flatten([styles.gradientButton, props.customStyle])}>
         <Text style={StyleSheet.flatten([styles.text, props.textStyle])}>{props.label}</Text>
-      </Button>
-    </LinearGradient>
+      </LinearGradient>
+    </Button>
   );
 };
 
