@@ -4,7 +4,7 @@ import {Text, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
-import {Input, AttributeInput, Button, RoundedButton} from '../common/components';
+import {Input, AttributeInput, Button, RoundedButton, CheckListItem} from '../common/components';
 import {useAuth} from '../contexts/AuthProvider';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 
@@ -21,6 +21,24 @@ const navigations = {
   [NavigationConstants.DASHBOARD]: 'Dashboard',
   [NavigationConstants.GM_MODE]: 'GM Mode',
   [NavigationConstants.COACH_MODE]: 'Coach Mode',
+};
+
+const positions = {
+  QB: 'Quarterback (QB)',
+  OL: 'Offensive Linemen (OL)',
+  RB: 'Running Back (RB)',
+  FB: 'Fullback (FB)',
+  TE: 'Tight End (TE)',
+  WR: 'Wide Receiver (WR)',
+  DL: 'Defensive Linemen (DL)',
+  LB: 'Linebacker (LB)',
+  CB: 'Cornerback (CB)',
+  KR: 'Kick Returner (KR)',
+  PR: 'Punt Returner (PR)',
+  LS: 'Long Snapper (LS)',
+  S: 'Safety (S)',
+  K: 'Kicker (K)',
+  P: 'Punter (P)',
 };
 
 const styles = StyleSheet.create({
@@ -311,6 +329,71 @@ const addPlayerModalStyles = StyleSheet.create({
   },
 });
 
+const positinModalStyles = StyleSheet.create({
+  modal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  container: {
+    width: 850,
+    height: 480,
+    borderRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY_LIGHT,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY,
+  },
+  headerText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.XXL,
+    color: COLORS.WHITE,
+  },
+  modalBody: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 50,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+  },
+  colWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  lastWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  buttonsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: 10,
+  },
+  confirmBtn: {
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.GREEN,
+  },
+  cancelBtn: {
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.RED,
+  },
+  buttonText: {
+    fontWeight: FONT_WEIGHT.MIDDLE,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.WHITE,
+  },
+});
+
 type TProps = {
   children: React.ReactNode;
   currentNav: string;
@@ -318,13 +401,46 @@ type TProps = {
 };
 
 const MainLayout = (props: TProps) => {
+  const initState = {
+    search: '',
+    name: '',
+    age: '',
+    position: '',
+    college: '',
+    gamesStarted: '',
+    gamesWon: '',
+    targetRound: '',
+    height: '',
+    weight: '',
+  };
+
   const [isConfirmVisible, setConfrimVisible] = useState(false);
   const [isPlayerVisible, setPlayerVisible] = useState(false);
-  const [search, setSearch] = useState('');
+  const [isPositionVisible, setPositionVisible] = useState(false);
+  const [state, setState] = useState(initState);
   const {t} = useTranslation();
   const auth = useAuth();
   const signOut = () => {
     setConfrimVisible(true);
+  };
+
+  const onChangeField = (field: string, value: string | boolean) => {
+    setState({...state, [field]: value});
+  };
+
+  const onAddPlayerModalClose = (confirm: boolean) => {
+    if (!confirm) {
+      setState(initState);
+    }
+    setTimeout(() => setPlayerVisible(false), 150);
+  };
+
+  const onPositionModalClose = (confirm: boolean) => {
+    if (!confirm) {
+      onChangeField('position', '');
+    }
+    setTimeout(() => setPositionVisible(false), 150);
+    setTimeout(() => setPlayerVisible(true), 600);
   };
 
   const confirmModal = isConfirmVisible => (
@@ -361,28 +477,22 @@ const MainLayout = (props: TProps) => {
     </Modal>
   );
 
-  const onAddPlayerModalClose = () => {
-    setPlayerVisible(false);
-    setSearch('');
-  };
-
   const addPlayerModal = isPlayerVisible => (
     <Modal
       isVisible={isPlayerVisible}
       style={addPlayerModalStyles.modal}
       animationIn={'fadeIn'}
-      animationOut={'fadeOut'}
-      onBackdropPress={() => onAddPlayerModalClose()}>
+      animationOut={'fadeOut'}>
       <View style={addPlayerModalStyles.container}>
         <View style={addPlayerModalStyles.modalHeader}>
           <Input
-            value={search}
+            value={state.search}
             placeholder="Search"
             icon={<Image style={addPlayerModalStyles.serachImg} source={SearchImg} />}
             placeholderTextColor={COLORS.TEXT_GREY_LIGHT}
             textStyle={addPlayerModalStyles.serachText}
             inputStyle={addPlayerModalStyles.searchWrapper}
-            onChangeText={(text: string) => setSearch(text)}
+            onChangeText={(text: string) => onChangeField('search', text)}
           />
           <View style={addPlayerModalStyles.headerGroupWrapper}>
             <Button customStyle={addPlayerModalStyles.headerItemWrapper}>
@@ -407,55 +517,67 @@ const MainLayout = (props: TProps) => {
             </View>
             <AttributeInput
               label={t('profile.age')}
-              value="34"
-              onChangeText={(text: string) => console.log('age: ', text)}
+              value={state.age}
+              placeholder="34"
+              onChangeText={(text: string) => onChangeField('age', text)}
             />
           </View>
           <View style={addPlayerModalStyles.colWrapper}>
             <AttributeInput
               label={t('profile.name')}
-              value="Tom Brady"
-              onChangeText={(text: string) => console.log('name: ', text)}
+              value={state.name}
+              placeholder="Tom Brady"
+              onChangeText={(text: string) => onChangeField('name', text)}
             />
             <AttributeInput
               label={t('profile.college')}
-              value="Michigan"
-              onChangeText={(text: string) => console.log('college: ', text)}
+              value={state.college}
+              placeholder="Michigan"
+              onChangeText={(text: string) => onChangeField('college', text)}
             />
             <AttributeInput
               label={t('profile.gamesWon')}
-              value="20/44"
-              onChangeText={(text: string) => console.log('gamesWon: ', text)}
+              value={state.gamesWon}
+              placeholder="20/44"
+              onChangeText={(text: string) => onChangeField('gamesWon', text)}
             />
             <AttributeInput
               label={t('profile.height')}
-              value="5’5”"
-              onChangeText={(text: string) => console.log('height: ', text)}
+              value={state.height}
+              placeholder="5’5”"
+              onChangeText={(text: string) => onChangeField('height', text)}
             />
           </View>
           <View style={addPlayerModalStyles.colWrapper}>
-            <Button onPress={() => console.log('position select')}>
+            <Button
+              onPress={() => {
+                setPlayerVisible(false);
+                setTimeout(() => setPositionVisible(true), 450);
+              }}>
               <AttributeInput
                 label={t('profile.position')}
+                value={state.position}
+                placeholder="QB"
                 readOnly={true}
-                value="QB"
-                onChangeText={(text: string) => console.log('position: ', text)}
               />
             </Button>
             <AttributeInput
               label={t('profile.gamesStarted')}
-              value="30/44"
-              onChangeText={(text: string) => console.log('gamesStarted: ', text)}
+              value={state.gamesStarted}
+              placeholder="30/44"
+              onChangeText={(text: string) => onChangeField('gamesStarted', text)}
             />
             <AttributeInput
               label={t('profile.targetRound')}
-              value="3rd"
-              onChangeText={(text: string) => console.log('targetRound: ', text)}
+              value={state.targetRound}
+              placeholder="3rd"
+              onChangeText={(text: string) => onChangeField('targetRound', text)}
             />
             <AttributeInput
               label={t('profile.weight')}
-              value="145 LBS"
-              onChangeText={(text: string) => console.log('weight: ', text)}
+              value={state.weight}
+              placeholder="145 LBS"
+              onChangeText={(text: string) => onChangeField('weight', text)}
             />
           </View>
         </View>
@@ -465,12 +587,79 @@ const MainLayout = (props: TProps) => {
             <Image style={addPlayerModalStyles.bluetoothImg} source={BluetoothImg} />
           </Button>
           <View style={addPlayerModalStyles.buttonGroupWrapper}>
-            <Button customStyle={addPlayerModalStyles.cancelBtn}>
+            <Button
+              customStyle={addPlayerModalStyles.cancelBtn}
+              onPress={() => onAddPlayerModalClose(false)}>
               <Text style={addPlayerModalStyles.buttonText}>{t('general.cancel')}</Text>
             </Button>
-            <Button customStyle={addPlayerModalStyles.confirmBtn}>
+            <Button
+              customStyle={addPlayerModalStyles.confirmBtn}
+              onPress={() => onAddPlayerModalClose(true)}>
               <Text style={addPlayerModalStyles.buttonText}>{t('profile.createSave')}</Text>
             </Button>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const positionModal = isPositionVisible => (
+    <Modal
+      isVisible={isPositionVisible}
+      style={positinModalStyles.modal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}>
+      <View style={positinModalStyles.container}>
+        <View style={positinModalStyles.modalHeader}>
+          <Text style={positinModalStyles.headerText}>{t('profile.positions.caption')}</Text>
+        </View>
+        <View style={positinModalStyles.modalBody}>
+          <View style={positinModalStyles.colWrapper}>
+            {['QB', 'OL', 'RB', 'FB', 'TE', 'WR'].map((key: string, i: number) => (
+              <CheckListItem
+                key={i}
+                label={key}
+                options={positions}
+                status={state.position === key}
+                setStatus={(status: string | boolean) => onChangeField('position', status)}
+              />
+            ))}
+          </View>
+          <View style={positinModalStyles.colWrapper}>
+            {['DL', 'LB', 'CB', 'S', 'K', 'P'].map((key: string, i: number) => (
+              <CheckListItem
+                key={i}
+                label={key}
+                options={positions}
+                status={state.position === key}
+                setStatus={(status: string | boolean) => onChangeField('position', status)}
+              />
+            ))}
+          </View>
+          <View style={positinModalStyles.lastWrapper}>
+            <View style={positinModalStyles.colWrapper}>
+              {['KR', 'PR', 'LS'].map((key: string, i: number) => (
+                <CheckListItem
+                  key={i}
+                  label={key}
+                  options={positions}
+                  status={state.position === key}
+                  setStatus={(status: string | boolean) => onChangeField('position', status)}
+                />
+              ))}
+            </View>
+            <View style={positinModalStyles.buttonsWrapper}>
+              <Button
+                customStyle={positinModalStyles.cancelBtn}
+                onPress={() => onPositionModalClose(false)}>
+                <Text style={positinModalStyles.buttonText}>{t('general.cancel')}</Text>
+              </Button>
+              <Button
+                customStyle={positinModalStyles.confirmBtn}
+                onPress={() => onPositionModalClose(true)}>
+                <Text style={positinModalStyles.buttonText}>{t('general.confirm')}</Text>
+              </Button>
+            </View>
           </View>
         </View>
       </View>
@@ -529,6 +718,7 @@ const MainLayout = (props: TProps) => {
       <View style={styles.modalsWrapper}>
         {confirmModal(isConfirmVisible)}
         {addPlayerModal(isPlayerVisible)}
+        {positionModal(isPositionVisible)}
       </View>
     </View>
   );

@@ -39,6 +39,7 @@
     "height": "Height",
     "weight": "Weight",
     "positions": {
+      "caption": "Secelt Position",
       "QB": "Quarterback (QB)",
       "OL": "Offensive Linemen (OL)",
       "RB": "Running Back (RB)",
@@ -105,8 +106,8 @@
     "receivers": "Recievers"
   },
   "personalInfo": {
-    "proData": {
-      "caption": "Pro Data",
+    "snapshot": {
+      "caption": "Snapshot",
       "weeklyResult": {
         "caption": "Weekly results",
         "hl": "Hydration Levels",

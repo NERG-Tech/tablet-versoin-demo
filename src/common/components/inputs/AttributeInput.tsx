@@ -1,43 +1,67 @@
 import React, {useEffect, useRef} from 'react';
-import {View, TextInput, KeyboardTypeOptions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {COLORS} from '../constants/StyleConstants';
+import {
+  View,
+  Text,
+  TextInput,
+  KeyboardTypeOptions,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../constants/StyleConstants';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: COLORS.BORDER,
-    backgroundColor: COLORS.BACKGROUND_INPUT,
+    paddingVertical: 10,
+    borderRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY,
   },
   input: {
-    width: '100%',
+    flex: 1,
+    marginHorizontal: 10,
+    fontWeight: FONT_WEIGHT.SEMI_BOLD,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.WHITE,
+    textAlign: 'center',
     backgroundColor: COLORS.TRANSPARENT,
+  },
+  label: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.XS,
+    color: COLORS.TEXT_GREY_LIGHTER,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRightWidth: 2,
+    borderRightColor: COLORS.DIVIDER_LIGHT,
   },
 });
 
 type TProps = {
   value: string;
-  onChangeText: (text: string) => void;
+  label: string;
+  onChangeText?: (text: string) => void;
   placeholder?: string;
   placeholderTextColor?: string;
   secureTextEntry?: boolean;
+  readOnly?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
   autoFocus?: boolean;
   selectionColor?: string;
   textStyle?: TextStyle;
   inputStyle?: ViewStyle;
-  icon?: React.ReactNode;
 };
 
-export const Input = (props: TProps) => {
+export const AttributeInput = (props: TProps) => {
   const inputRef = useRef<TextInput | null>(null);
   const {
     value,
-    icon,
+    label,
     placeholder,
     placeholderTextColor,
     secureTextEntry,
+    readOnly,
     keyboardType,
     autoFocus,
     selectionColor,
@@ -55,11 +79,12 @@ export const Input = (props: TProps) => {
 
   return (
     <View style={StyleSheet.flatten([styles.container, inputStyle])}>
-      {!!icon && icon}
+      <Text style={styles.label}>{label}</Text>
       <TextInput
         ref={inputRef}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
+        editable={!readOnly}
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor || COLORS.TEXT_GREY}
         autoCorrect={false}

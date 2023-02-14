@@ -18,6 +18,7 @@ export const COLORS = {
   TEXT_DARK: '#000110',
   DIVIDER: '#2C2C2E',
   DIVIDER_LIGHT: '#3A3A3C',
+  UNDERLINE: '#888888',
   TRANSPARENT: 'transparent',
   WHITE: '#FFF',
   WHITE_ALPHA: 'rgba(0, 0, 0, 0.05)',
