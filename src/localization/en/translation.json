@@ -6,7 +6,8 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "email": "E-mail",
-    "password": "Password"
+    "password": "Password",
+    "search": "Search"
   },
   "app": {
     "dashboard": "Dashboard",
@@ -27,7 +28,7 @@
     "connectDevice": "Connect Device",
     "teamConnect": "Team Connect",
     "addFile": "Add File",
-    "createSave": "Create/Save",
+    "createSave": "Create / Save",
     "name": "Name",
     "age": "Age",
     "position": "Position",

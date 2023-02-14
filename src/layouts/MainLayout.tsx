@@ -4,15 +4,18 @@ import {Text, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
-import {Button, RoundedButton} from '../common/components/buttons';
-import Input from '../common/components/Input';
+import {Input, AttributeInput, Button, RoundedButton} from '../common/components';
 import {useAuth} from '../contexts/AuthProvider';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 
-const LogoImg = require('../assets/logo/logo_white.png');
-const NFLImg = require('../assets/logo/NFL/NFL.png');
-const ArrowRight = require('../assets/hoc/arrowRight.png');
-const SearchImg = require('../assets/hoc/search.png');
+const LogoImg = require('../assets/img/logo/logo_white.png');
+const NFLImg = require('../assets/img/logo/NFL/NFL.png');
+const ArrowRight = require('../assets/img/hoc/arrowRight.png');
+const SearchImg = require('../assets/img/hoc/search.png');
+const TeamImg = require('../assets/img/team.png');
+const AddFileImg = require('../assets/img/addFile.png');
+const AvatarImg = require('../assets/img/jack.png');
+const BluetoothImg = require('../assets/img/bluetooth.png');
 
 const navigations = {
   [NavigationConstants.DASHBOARD]: 'Dashboard',
@@ -169,7 +172,7 @@ const addPlayerModalStyles = StyleSheet.create({
   },
   container: {
     width: 830,
-    height: 670,
+    height: 700,
     borderRadius: 25,
     backgroundColor: COLORS.WHITE,
   },
@@ -202,8 +205,109 @@ const addPlayerModalStyles = StyleSheet.create({
   serachImg: {
     width: 16,
     height: 16,
-    resizeMode: 'cover',
     marginLeft: 18,
+    resizeMode: 'contain',
+  },
+  headerGroupWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 90,
+  },
+  headerItemWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  headerItemText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.L,
+    color: COLORS.WHITE,
+  },
+  headerItemImg: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
+  },
+  modalBody: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 28,
+    padding: 60,
+    paddingTop: 40,
+  },
+  colWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    gap: 35,
+  },
+  avatarWrapper: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 15,
+  },
+  avatar: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    borderWidth: 6,
+    borderColor: COLORS.BORDER_GREY,
+  },
+  uploadBtn: {
+    width: 185,
+    height: 40,
+    borderRadius: 24,
+  },
+  modalFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 60,
+    paddingBottom: 40,
+  },
+  bluetoothBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 36,
+    backgroundColor: COLORS.BACKGROUND,
+    borderWidth: 1,
+    borderRadius: 24,
+    borderColor: COLORS.BORDER_ALPHA,
+  },
+  bluetoothText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.MS,
+    color: COLORS.BLACK_MIDDLE,
+  },
+  bluetoothImg: {
+    width: 32,
+    height: 32,
+    marginLeft: 20,
+    resizeMode: 'contain',
+  },
+  buttonGroupWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+  },
+  confirmBtn: {
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.GREEN,
+  },
+  cancelBtn: {
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.RED,
+  },
+  buttonText: {
+    fontWeight: FONT_WEIGHT.MIDDLE,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.WHITE,
   },
 });
 
@@ -280,6 +384,94 @@ const MainLayout = (props: TProps) => {
             inputStyle={addPlayerModalStyles.searchWrapper}
             onChangeText={(text: string) => setSearch(text)}
           />
+          <View style={addPlayerModalStyles.headerGroupWrapper}>
+            <Button customStyle={addPlayerModalStyles.headerItemWrapper}>
+              <Text style={addPlayerModalStyles.headerItemText}>{t('profile.teamConnect')}</Text>
+              <Image style={addPlayerModalStyles.headerItemImg} source={TeamImg} />
+            </Button>
+            <Button customStyle={addPlayerModalStyles.headerItemWrapper}>
+              <Text style={addPlayerModalStyles.headerItemText}>{t('profile.addFile')}</Text>
+              <Image style={addPlayerModalStyles.headerItemImg} source={AddFileImg} />
+            </Button>
+          </View>
+        </View>
+        <View style={addPlayerModalStyles.modalBody}>
+          <View style={addPlayerModalStyles.colWrapper}>
+            <View style={addPlayerModalStyles.avatarWrapper}>
+              <Image style={addPlayerModalStyles.avatar} source={AvatarImg} />
+              <RoundedButton
+                label={t('profile.uploadPhoto')}
+                customStyle={addPlayerModalStyles.uploadBtn}
+                onPress={() => console.log('Uplaod Photo')}
+              />
+            </View>
+            <AttributeInput
+              label={t('profile.age')}
+              value="34"
+              onChangeText={(text: string) => console.log('age: ', text)}
+            />
+          </View>
+          <View style={addPlayerModalStyles.colWrapper}>
+            <AttributeInput
+              label={t('profile.name')}
+              value="Tom Brady"
+              onChangeText={(text: string) => console.log('name: ', text)}
+            />
+            <AttributeInput
+              label={t('profile.college')}
+              value="Michigan"
+              onChangeText={(text: string) => console.log('college: ', text)}
+            />
+            <AttributeInput
+              label={t('profile.gamesWon')}
+              value="20/44"
+              onChangeText={(text: string) => console.log('gamesWon: ', text)}
+            />
+            <AttributeInput
+              label={t('profile.height')}
+              value="5’5”"
+              onChangeText={(text: string) => console.log('height: ', text)}
+            />
+          </View>
+          <View style={addPlayerModalStyles.colWrapper}>
+            <Button onPress={() => console.log('position select')}>
+              <AttributeInput
+                label={t('profile.position')}
+                readOnly={true}
+                value="QB"
+                onChangeText={(text: string) => console.log('position: ', text)}
+              />
+            </Button>
+            <AttributeInput
+              label={t('profile.gamesStarted')}
+              value="30/44"
+              onChangeText={(text: string) => console.log('gamesStarted: ', text)}
+            />
+            <AttributeInput
+              label={t('profile.targetRound')}
+              value="3rd"
+              onChangeText={(text: string) => console.log('targetRound: ', text)}
+            />
+            <AttributeInput
+              label={t('profile.weight')}
+              value="145 LBS"
+              onChangeText={(text: string) => console.log('weight: ', text)}
+            />
+          </View>
+        </View>
+        <View style={addPlayerModalStyles.modalFooter}>
+          <Button customStyle={addPlayerModalStyles.bluetoothBtn}>
+            <Text style={addPlayerModalStyles.bluetoothText}>{t('profile.connectDevice')}</Text>
+            <Image style={addPlayerModalStyles.bluetoothImg} source={BluetoothImg} />
+          </Button>
+          <View style={addPlayerModalStyles.buttonGroupWrapper}>
+            <Button customStyle={addPlayerModalStyles.cancelBtn}>
+              <Text style={addPlayerModalStyles.buttonText}>{t('general.cancel')}</Text>
+            </Button>
+            <Button customStyle={addPlayerModalStyles.confirmBtn}>
+              <Text style={addPlayerModalStyles.buttonText}>{t('profile.createSave')}</Text>
+            </Button>
+          </View>
         </View>
       </View>
     </Modal>

@@ -2,14 +2,12 @@ import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from '../../contexts/AuthProvider';
-import Loading from '../../common/components/Loading';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../common/constants/StyleConstants';
-import Input from '../../common/components/Input';
-import {Button} from '../../common/components/buttons';
+import {Loading, Input, Button} from '../../common/components';
 import RoundedGradientButton from '../../common/components/buttons/RoundedGradientButton';
 
-const WatchesImage = require('../../assets/watches.png');
-const LogoImage = require('../../assets/logo/logo.png');
+const WatchesImage = require('../../assets/img/watches.png');
+const LogoImage = require('../../assets/img/logo/logo.png');
 
 const styles = StyleSheet.create({
   container: {
