@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image} from 'react-native';
 import {Text, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
 import {Button, RoundedButton} from '../common/components/buttons';
+import Input from '../common/components/Input';
 import {useAuth} from '../contexts/AuthProvider';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 
 const LogoImg = require('../assets/logo/logo_white.png');
 const NFLImg = require('../assets/logo/NFL/NFL.png');
 const ArrowRight = require('../assets/hoc/arrowRight.png');
+const SearchImg = require('../assets/hoc/search.png');
 
 const navigations = {
   [NavigationConstants.DASHBOARD]: 'Dashboard',
@@ -111,20 +114,176 @@ const styles = StyleSheet.create({
   invite: {
     flex: 1,
   },
+  modalsWrapper: {
+    position: 'relative',
+  },
+});
+
+const confirmModalStyles = StyleSheet.create({
+  modal: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  container: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: 480,
+    height: 210,
+    borderRadius: 24,
+    backgroundColor: COLORS.WHITE,
+  },
+  modalTitle: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.XXL,
+    color: COLORS.TEXT_DARK,
+    marginTop: 40,
+  },
+  modalButtonsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+    gap: 30,
+  },
+  modalButton: {
+    width: 165,
+    height: 70,
+    borderRadius: 50,
+  },
+  confirm: {
+    backgroundColor: COLORS.GREEN,
+  },
+  cancel: {
+    backgroundColor: COLORS.RED,
+  },
+  modalButtonText: {
+    fontWeight: FONT_WEIGHT.MIDDLE,
+    fontSize: FONT_SIZE.XXL,
+    color: COLORS.WHITE,
+  },
+});
+
+const addPlayerModalStyles = StyleSheet.create({
+  modal: {
+    flexDirection: 'row',
+  },
+  container: {
+    width: 830,
+    height: 670,
+    borderRadius: 25,
+    backgroundColor: COLORS.WHITE,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingLeft: 35,
+    paddingRight: 55,
+    paddingVertical: 25,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    backgroundColor: COLORS.BLACK_MIDDLE,
+  },
+  searchWrapper: {
+    flexDirection: 'row',
+    borderRadius: 8,
+    borderColor: COLORS.BORDER_LIGHT,
+    backgroundColor: COLORS.BACKGROUND_INPUT_LIGHT,
+  },
+  serachText: {
+    fontSize: FONT_SIZE.MS,
+    fontWeight: FONT_WEIGHT.LIGHT,
+    color: COLORS.BLACK_LIGHT,
+    width: 160,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+  },
+  serachImg: {
+    width: 16,
+    height: 16,
+    resizeMode: 'cover',
+    marginLeft: 18,
+  },
 });
 
 type TProps = {
-  children: any;
+  children: React.ReactNode;
   currentNav: string;
   onChangeNav: (nav: string) => void;
 };
 
 const MainLayout = (props: TProps) => {
+  const [isConfirmVisible, setConfrimVisible] = useState(false);
+  const [isPlayerVisible, setPlayerVisible] = useState(false);
+  const [search, setSearch] = useState('');
   const {t} = useTranslation();
   const auth = useAuth();
   const signOut = () => {
-    auth.signOut();
+    setConfrimVisible(true);
   };
+
+  const confirmModal = isConfirmVisible => (
+    <Modal
+      isVisible={isConfirmVisible}
+      style={confirmModalStyles.modal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
+      onBackdropPress={() => setConfrimVisible(false)}>
+      <View style={confirmModalStyles.container}>
+        <Text style={confirmModalStyles.modalTitle}>{t('general.confirm')}</Text>
+        <View style={confirmModalStyles.modalButtonsWrapper}>
+          <Button
+            customStyle={StyleSheet.flatten([
+              confirmModalStyles.modalButton,
+              confirmModalStyles.cancel,
+            ])}
+            onPress={() => setConfrimVisible(false)}>
+            <Text style={confirmModalStyles.modalButtonText}>{t('general.no')}</Text>
+          </Button>
+          <Button
+            customStyle={StyleSheet.flatten([
+              confirmModalStyles.modalButton,
+              confirmModalStyles.confirm,
+            ])}
+            onPress={() => {
+              auth.signOut();
+              setTimeout(() => setConfrimVisible(false), 300);
+            }}>
+            <Text style={confirmModalStyles.modalButtonText}>{t('general.yes')}</Text>
+          </Button>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const onAddPlayerModalClose = () => {
+    setPlayerVisible(false);
+    setSearch('');
+  };
+
+  const addPlayerModal = isPlayerVisible => (
+    <Modal
+      isVisible={isPlayerVisible}
+      style={addPlayerModalStyles.modal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
+      onBackdropPress={() => onAddPlayerModalClose()}>
+      <View style={addPlayerModalStyles.container}>
+        <View style={addPlayerModalStyles.modalHeader}>
+          <Input
+            value={search}
+            placeholder="Search"
+            icon={<Image style={addPlayerModalStyles.serachImg} source={SearchImg} />}
+            placeholderTextColor={COLORS.TEXT_GREY_LIGHT}
+            textStyle={addPlayerModalStyles.serachText}
+            inputStyle={addPlayerModalStyles.searchWrapper}
+            onChangeText={(text: string) => setSearch(text)}
+          />
+        </View>
+      </View>
+    </Modal>
+  );
 
   return (
     <View style={styles.container}>
@@ -168,12 +327,16 @@ const MainLayout = (props: TProps) => {
               </Button>
             ))}
           </View>
-          <RoundedButton onPress={() => console.log('Add Player')} label="Add Player" />
+          <RoundedButton onPress={() => setPlayerVisible(true)} label="Add Player" />
           <Button customStyle={styles.invite} onPress={() => console.log('Invite')}>
             <Text style={styles.navText}>Invite</Text>
           </Button>
         </View>
         {props.children}
+      </View>
+      <View style={styles.modalsWrapper}>
+        {confirmModal(isConfirmVisible)}
+        {addPlayerModal(isPlayerVisible)}
       </View>
     </View>
   );

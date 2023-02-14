@@ -6,17 +6,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: COLORS.BORDER,
+    backgroundColor: COLORS.BACKGROUND_INPUT,
   },
   input: {
-    flex: 1,
     width: '100%',
-    height: 90,
-    paddingVertical: 20,
-    paddingHorizontal: 28,
-    backgroundColor: COLORS.BACKGROUND_INPUT,
-    borderColor: COLORS.BORDER,
-    borderWidth: 1,
-    borderRadius: 24,
+    backgroundColor: COLORS.TRANSPARENT,
   },
 });
 
@@ -31,12 +27,14 @@ type TProps = {
   selectionColor?: string;
   textStyle?: TextStyle;
   inputStyle?: ViewStyle;
+  icon?: React.ReactNode;
 };
 
 const Input = (props: TProps) => {
   const inputRef = useRef<TextInput | null>(null);
   const {
     value,
+    icon,
     placeholder,
     placeholderTextColor,
     secureTextEntry,
@@ -57,6 +55,7 @@ const Input = (props: TProps) => {
 
   return (
     <View style={StyleSheet.flatten([styles.container, inputStyle])}>
+      {!!icon && icon}
       <TextInput
         ref={inputRef}
         keyboardType={keyboardType}

@@ -40,14 +40,18 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.L,
     fontWeight: FONT_WEIGHT.LIGHT,
     color: COLORS.BLACK_LIGHT,
+    paddingVertical: 20,
+    paddingHorizontal: 28,
   },
   emailWrapper: {
-    marginTop: 100,
+    height: 90,
     borderRadius: 24,
+    marginTop: 100,
   },
   passwordWrapper: {
-    marginTop: 45,
+    height: 90,
     borderRadius: 24,
+    marginTop: 45,
   },
   buttonGroupWrapper: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState} from 'react';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 import MainLayout from '../layouts/MainLayout';
 import DashboardScreen from './Dashboard';
@@ -8,7 +8,7 @@ import CoachModeScreen from './CoachMode';
 const HomeScreen = () => {
   const [nav, setNav] = useState(NavigationConstants.DASHBOARD);
 
-  const ScreenView = useMemo(() => {
+  const ScreenView = nav => {
     if (nav === NavigationConstants.DASHBOARD) {
       return <DashboardScreen />;
     } else if (nav === NavigationConstants.GM_MODE) {
@@ -16,11 +16,11 @@ const HomeScreen = () => {
     } else if (nav === NavigationConstants.COACH_MODE) {
       return <CoachModeScreen />;
     }
-  }, [nav]);
+  };
 
   return (
     <MainLayout currentNav={nav} onChangeNav={setNav}>
-      {ScreenView}
+      {ScreenView(nav)}
     </MainLayout>
   );
 };

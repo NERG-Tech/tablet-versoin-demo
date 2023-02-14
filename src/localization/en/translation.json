@@ -1,10 +1,10 @@
 {
   "general": {
-    "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
     "ok": "OK",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "email": "E-mail",
     "password": "Password"
   },
