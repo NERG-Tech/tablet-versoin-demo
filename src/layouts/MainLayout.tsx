@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 20,
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderBottomColor: COLORS.DIVIDER,
   },
   optionText: {
