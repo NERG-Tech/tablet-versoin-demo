@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import type {StackNavigationProp} from '@react-navigation/stack';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 import HomeScreen from '../page/Home';
+import PlayerScreen from '../page/Player';
 
 export type AppStackParamList = {
   [NavigationConstants.HOME]: undefined;
@@ -35,7 +36,7 @@ export const AppStack = () => {
       />
       <Screen
         name={NavigationConstants.PERSONAL_INFO}
-        component={HomeScreen}
+        component={PlayerScreen}
         options={{headerShown: false}}
       />
     </Navigator>
