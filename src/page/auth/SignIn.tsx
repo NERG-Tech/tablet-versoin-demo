@@ -93,7 +93,7 @@ const SignInScreen = () => {
 
   const signIn = async () => {
     isLoading(true);
-    await auth.signIn();
+    await auth.signIn(email, password);
   };
 
   if (loading) {

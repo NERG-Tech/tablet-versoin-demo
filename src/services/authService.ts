@@ -1,20 +1,32 @@
+import {signInWithEmailAndPassword, auth} from '../firebase/firebase';
 export type AuthDataI = {
   token: string;
   email: string;
   name: string;
 };
+export type UserCredential = {user: object; operationType: string};
 
 const signIn = (email: string, password: string): Promise<AuthDataI> => {
   // this is a mock of an API call, in a real app
   // will be need connect with some real API,
   // send email and password, and if credential is corret
   // the API will resolve with some token and another datas as the below
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then((result: UserCredential) => {
+      // console.log(result);
+      return result.user;
+    })
+    .catch(err => {
+      // console.log(err);
+      return {error: err};
+    });
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({
         token: JWTTokenMock,
         email: email,
-        name: 'William Lei',
+        name: 'Max One User',
       });
     }, 1000);
   });
