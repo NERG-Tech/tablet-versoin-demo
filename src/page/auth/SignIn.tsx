@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import {useToast} from 'react-native-toast-notifications';
 import {useAuth} from '../../contexts/AuthProvider';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../common/constants/StyleConstants';
 import {Loading, Input, Button} from '../../common/components';
@@ -89,15 +90,31 @@ const styles = StyleSheet.create({
 });
 
 const SignInScreen = () => {
-  const [loading, isLoading] = useState(false);
+  const toast = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {t} = useTranslation();
-  const auth = useAuth();
+  const {loading, setLoading, signIn, errors} = useAuth();
 
-  const signIn = async () => {
-    isLoading(true);
-    await auth.signIn(email, password);
+  const toastNotification = err => {
+    if (err && err.length) {
+      toast.show(err, {
+        type: 'danger',
+        placement: 'top',
+        duration: 3000,
+        animationType: 'slide-in',
+        style: {
+          flexDirection: 'row',
+          alignItems: 'center',
+        },
+      });
+    }
+  };
+
+  const handleSignIn = async () => {
+    setLoading(true);
+    await signIn(email, password);
+    toastNotification(errors);
   };
 
   if (loading) {
@@ -134,7 +151,7 @@ const SignInScreen = () => {
             <Text style={styles.forgotText}>{t('app.forgotPassword')}</Text>
           </Button>
           <RoundedGradientButton
-            onPress={() => signIn()}
+            onPress={() => handleSignIn()}
             customStyle={styles.sigInButton}
             textStyle={styles.signInText}
             label={t('app.signIn')}

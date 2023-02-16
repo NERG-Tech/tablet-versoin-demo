@@ -12,6 +12,7 @@ import {ThemeProvider} from 'styled-components';
 import {Themes} from './common/theme';
 import {AuthProvider} from './contexts/AuthProvider';
 import {AppNavigator} from './navigation/AppNavigator';
+import {ToastProvider} from 'react-native-toast-notifications';
 
 const persistor = persistStore(store);
 
@@ -36,7 +37,9 @@ const AppComponent = (): JSX.Element => {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <AppThemeProvider>
-            <AppNavigator />
+            <ToastProvider textStyle={{fontSize: 16}}>
+              <AppNavigator />
+            </ToastProvider>
           </AppThemeProvider>
         </PersistGate>
       </Provider>
