@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 15,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: COLORS.UNDERLINE,
   },
   text: {
@@ -30,18 +30,18 @@ const styles = StyleSheet.create({
 
 type TProps = {
   label: string;
-  options?: object;
+  options: object;
   status: boolean;
-  setStatus: (status: string | boolean) => void;
+  setStatus: (status: string) => void;
 };
 
 export const CheckListItem = (props: TProps) => {
   const {label, options, status} = props;
 
   return (
-    <Button onPress={options ? () => props.setStatus(label) : () => props.setStatus(!status)}>
+    <Button onPress={() => props.setStatus(label)}>
       <View style={styles.container}>
-        <Text style={styles.text}>{options ? options[label] : label}</Text>
+        <Text style={styles.text}>{options[label]}</Text>
         {status ? (
           <Image style={styles.checkItem} source={CheckActiveImg} />
         ) : (

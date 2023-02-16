@@ -5,6 +5,7 @@
     "ok": "OK",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "save": "Save",
     "email": "E-mail",
     "password": "Password",
     "search": "Search"
@@ -32,12 +33,10 @@
     "name": "Name",
     "age": "Age",
     "position": "Position",
-    "college": "College",
-    "gamesWon": "Games Won",
-    "gamesStarted": "Games Started",
-    "targetRound": "Target Round",
     "height": "Height",
     "weight": "Weight",
+    "gender": "Gender",
+    "sport": "Sport",
     "positions": {
       "caption": "Secelt Position",
       "QB": "Quarterback (QB)",
@@ -55,6 +54,27 @@
       "S": "Safety (S)",
       "K": "Kicker (K)",
       "P": "Punter (P)"
+    },
+    "menSports": {
+      "caption": "Select Men’s Sport",
+      "football": "Football",
+      "basketball": "Basketball",
+      "baseball": "Baseball",
+      "crossCountry": "Cross Country"
+    },
+    "womenSports": {
+      "caption": "Select Women’s Sport",
+      "basketball": "Basketball",
+      "trackFiled": "Track / Field",
+      "softball": "Softball",
+      "crossCountry": "Cross Country",
+      "tennis": "Tennis",
+      "volleyball": "Volleyball"
+    },
+    "genders": {
+      "caption": "Select Gender",
+      "male": "Male",
+      "female": "Female"
     }
   },
   "dashboard": {
