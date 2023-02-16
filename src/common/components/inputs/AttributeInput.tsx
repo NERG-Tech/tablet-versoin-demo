@@ -12,6 +12,7 @@ import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../constants/StyleConstants';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.XS,
     color: COLORS.TEXT_GREY_LIGHTER,
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     borderRightWidth: 2,
     borderRightColor: COLORS.DIVIDER_LIGHT,
   },
