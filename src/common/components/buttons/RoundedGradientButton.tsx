@@ -24,7 +24,7 @@ type TProps = {
   label: string;
 };
 
-const RoundedGradientButton = (props: TProps) => {
+export const RoundedGradientButton = (props: TProps) => {
   return (
     <Button onPress={props.onPress}>
       <LinearGradient
@@ -37,5 +37,3 @@ const RoundedGradientButton = (props: TProps) => {
     </Button>
   );
 };
-
-export default RoundedGradientButton;

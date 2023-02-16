@@ -51,6 +51,8 @@ const AuthProvider = ({children}: {children: any}) => {
       // In a real App this data will be provided by the user from some InputText components.
       const _authData = await authService.signIn(email, password);
 
+      // clear Error msg
+      setErrors('');
       // Set the data in the context, so the App can be notified
       // and send the user to the AuthStack
       setAuthData(_authData);
@@ -59,10 +61,10 @@ const AuthProvider = ({children}: {children: any}) => {
       // to be recovered in the next user session.
       AsyncStorage.setItem('@AuthData', JSON.stringify(_authData));
     } catch (error) {
+      setErrors('User not found..');
       console.log('log in err: ', error);
     } finally {
       // loading finished
-      setErrors('User not found..');
       setLoading(false);
     }
   };

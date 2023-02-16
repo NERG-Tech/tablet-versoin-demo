@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {useToast} from 'react-native-toast-notifications';
 import {useAuth} from '../../contexts/AuthProvider';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../common/constants/StyleConstants';
-import {Loading, Input, Button} from '../../common/components';
-import RoundedGradientButton from '../../common/components/buttons/RoundedGradientButton';
+import {Loading, Input, Button, RoundedGradientButton} from '../../common/components';
 
 const WatchesImage = require('../../assets/img/watches.png');
 const LogoImage = require('../../assets/img/logo/logo.png');
@@ -94,11 +93,11 @@ const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {t} = useTranslation();
-  const {loading, setLoading, signIn, errors} = useAuth();
+  const {errors, loading, setLoading, signIn} = useAuth();
 
-  const toastNotification = err => {
-    if (err && err.length) {
-      toast.show(err, {
+  const toastNotification = useCallback(() => {
+    if (errors?.length) {
+      toast.show('User not found..', {
         type: 'danger',
         placement: 'top',
         duration: 3000,
@@ -109,12 +108,15 @@ const SignInScreen = () => {
         },
       });
     }
-  };
+  }, [errors]);
+
+  useEffect(() => {
+    toastNotification();
+  }, [errors]);
 
   const handleSignIn = async () => {
     setLoading(true);
     await signIn(email, password);
-    toastNotification(errors);
   };
 
   if (loading) {
