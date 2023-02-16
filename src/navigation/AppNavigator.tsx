@@ -14,12 +14,15 @@ export const navigationRef = createNavigationContainerRef();
 export const AppNavigator = () => {
   const {authData, loading} = useAuth();
 
+  const isLogin = authData?.token.length;
+
   if (loading) {
     return <Loading />;
   }
+
   return (
     <NavigationContainer ref={navigationRef}>
-      {authData ? <AppStack /> : <AuthStack />}
+      {isLogin ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

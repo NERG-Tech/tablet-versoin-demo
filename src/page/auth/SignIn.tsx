@@ -89,15 +89,14 @@ const styles = StyleSheet.create({
 });
 
 const SignInScreen = () => {
-  const [loading, isLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {t} = useTranslation();
-  const auth = useAuth();
+  const {loading, setLoading, signIn} = useAuth();
 
-  const signIn = async () => {
-    isLoading(true);
-    await auth.signIn(email, password);
+  const handleSignIn = async () => {
+    setLoading(true);
+    await signIn(email, password);
   };
 
   if (loading) {
@@ -134,7 +133,7 @@ const SignInScreen = () => {
             <Text style={styles.forgotText}>{t('app.forgotPassword')}</Text>
           </Button>
           <RoundedGradientButton
-            onPress={() => signIn()}
+            onPress={() => handleSignIn()}
             customStyle={styles.sigInButton}
             textStyle={styles.signInText}
             label={t('app.signIn')}
