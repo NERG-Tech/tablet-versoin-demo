@@ -4,7 +4,14 @@ import {Text, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
-import {Input, AttributeInput, Button, RoundedButton, CheckListItem} from '../common/components';
+import {
+  Input,
+  AttributeInput,
+  Button,
+  RoundedButton,
+  CheckListItem,
+  CircularProgressBar,
+} from '../common/components';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 
 const LogoImg = require('../assets/img/logo/logo_white.png');
@@ -88,8 +95,8 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   avatarLogo: {
-    width: 225,
-    height: 225,
+    width: 210,
+    height: 210,
     borderRadius: 999,
     resizeMode: 'contain',
   },
@@ -943,7 +950,13 @@ const PlayerLayout = (props: TProps) => {
           <Image style={styles.logo} source={LogoImg} />
         </View>
         <View style={styles.avatarWrapper}>
-          <Image style={styles.avatarLogo} source={AvatarImg} />
+          <CircularProgressBar
+            progress={75}
+            diameter={220}
+            startColor={COLORS.GRADIENT_SKY}
+            endColor={COLORS.GRADIENT_BLUE}>
+            <Image style={styles.avatarLogo} source={AvatarImg} />
+          </CircularProgressBar>
         </View>
         <View style={styles.optionsWrapper}>
           <Button customStyle={styles.optionWrapper} onPress={() => console.log('Edit Profile')}>
