@@ -7,7 +7,7 @@ import HomeScreen from '../page/Home';
 import PlayerScreen from '../page/Player';
 
 export type AppStackParamList = {
-  [NavigationConstants.HOME]: undefined;
+  [NavigationConstants.HOME]: {activeNav: string};
   [NavigationConstants.PERSONAL_INFO]: {userId: string};
 };
 
@@ -28,16 +28,18 @@ const {Screen, Navigator} = createStackNavigator<AppStackParamList>();
 
 export const AppStack = () => {
   return (
-    <Navigator initialRouteName={NavigationConstants.HOME}>
+    <Navigator initialRouteName={NavigationConstants.PERSONAL_INFO}>
       <Screen
         name={NavigationConstants.HOME}
         component={HomeScreen}
         options={{headerShown: false}}
+        initialParams={{activeNav: NavigationConstants.DASHBOARD}}
       />
       <Screen
         name={NavigationConstants.PERSONAL_INFO}
         component={PlayerScreen}
         options={{headerShown: false}}
+        initialParams={{userId: ''}}
       />
     </Navigator>
   );

@@ -5,11 +5,9 @@ import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
 import {Input, AttributeInput, Button, RoundedButton, CheckListItem} from '../common/components';
-import {useAuth} from '../contexts/AuthProvider';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 
 const LogoImg = require('../assets/img/logo/logo_white.png');
-const NFLImg = require('../assets/img/logo/NFL/NFL.png');
 const ArrowRight = require('../assets/img/hoc/arrowRight.png');
 const SearchImg = require('../assets/img/hoc/search.png');
 const TeamImg = require('../assets/img/team.png');
@@ -41,6 +39,27 @@ const positions = {
   P: 'Punter (P)',
 };
 
+const menSports = {
+  football: 'Football',
+  basketball: 'Basketball',
+  baseball: 'Baseball',
+  crossCountry: 'Cross Country',
+};
+
+const womenSports = {
+  basketball: 'Basketball',
+  trackFiled: 'Track / Field',
+  softball: 'Softball',
+  crossCountry: 'Cross Country',
+  tennis: 'Tennis',
+  volleyball: 'Volleyball',
+};
+
+const genders = {
+  male: 'Male',
+  female: 'Female',
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -62,15 +81,16 @@ const styles = StyleSheet.create({
     height: 30,
     resizeMode: 'contain',
   },
-  nflWrapper: {
+  avatarWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
     paddingTop: 40,
     paddingBottom: 80,
   },
-  nflLogo: {
-    width: 170,
-    height: 170,
+  avatarLogo: {
+    width: 225,
+    height: 225,
+    borderRadius: 999,
     resizeMode: 'contain',
   },
   optionsWrapper: {
@@ -81,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 20,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: COLORS.DIVIDER,
   },
   optionText: {
@@ -94,16 +114,6 @@ const styles = StyleSheet.create({
     height: 12,
     marginRight: 6,
     resizeMode: 'contain',
-  },
-  signOutWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginTop: 150,
-  },
-  signOut: {
-    fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.MD,
-    color: COLORS.PINK,
   },
   rightWrapper: {
     flex: 1,
@@ -140,50 +150,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const confirmModalStyles = StyleSheet.create({
-  modal: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  container: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: 480,
-    height: 210,
-    borderRadius: 24,
-    backgroundColor: COLORS.WHITE,
-  },
-  modalTitle: {
-    fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XXL,
-    color: COLORS.TEXT_DARK,
-    marginTop: 40,
-  },
-  modalButtonsWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 30,
-    gap: 30,
-  },
-  modalButton: {
-    width: 165,
-    height: 70,
-    borderRadius: 50,
-  },
-  confirm: {
-    backgroundColor: COLORS.GREEN,
-  },
-  cancel: {
-    backgroundColor: COLORS.RED,
-  },
-  modalButtonText: {
-    fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.XXL,
-    color: COLORS.WHITE,
-  },
-});
-
 const addPlayerModalStyles = StyleSheet.create({
   modal: {
     flexDirection: 'row',
@@ -212,7 +178,7 @@ const addPlayerModalStyles = StyleSheet.create({
     borderColor: COLORS.BORDER_LIGHT,
     backgroundColor: COLORS.BACKGROUND_INPUT_LIGHT,
   },
-  serachText: {
+  searchText: {
     fontSize: FONT_SIZE.MS,
     fontWeight: FONT_WEIGHT.LIGHT,
     color: COLORS.BLACK_LIGHT,
@@ -247,6 +213,7 @@ const addPlayerModalStyles = StyleSheet.create({
     resizeMode: 'contain',
   },
   modalBody: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 28,
@@ -259,10 +226,18 @@ const addPlayerModalStyles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 35,
   },
+  rowWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 20,
+  },
+  attrBtn: {
+    flex: 1,
+  },
   avatarWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-between',
     gap: 15,
   },
   avatar: {
@@ -329,7 +304,7 @@ const addPlayerModalStyles = StyleSheet.create({
   },
 });
 
-const positinModalStyles = StyleSheet.create({
+const positionModalStyles = StyleSheet.create({
   modal: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -394,6 +369,186 @@ const positinModalStyles = StyleSheet.create({
   },
 });
 
+const genderModalStyles = StyleSheet.create({
+  modal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  container: {
+    width: 400,
+    height: 300,
+    borderRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY_LIGHT,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY,
+  },
+  headerText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.XXL,
+    color: COLORS.WHITE,
+  },
+  modalBody: {
+    flex: 1,
+    flexDirection: 'column',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+  },
+  colWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  buttonsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: 20,
+  },
+  confirmBtn: {
+    flex: 1,
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.GREEN,
+  },
+  cancelBtn: {
+    flex: 1,
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.RED,
+  },
+  buttonText: {
+    fontWeight: FONT_WEIGHT.MIDDLE,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.WHITE,
+  },
+});
+
+const menModalStyles = StyleSheet.create({
+  modal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  container: {
+    width: 400,
+    borderRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY_LIGHT,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY,
+  },
+  headerText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.XXL,
+    color: COLORS.WHITE,
+  },
+  modalBody: {
+    flexDirection: 'column',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+  },
+  colWrapper: {
+    flexDirection: 'column',
+  },
+  buttonsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: 20,
+    marginTop: 30,
+  },
+  confirmBtn: {
+    flex: 1,
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.GREEN,
+  },
+  cancelBtn: {
+    flex: 1,
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.RED,
+  },
+  buttonText: {
+    fontWeight: FONT_WEIGHT.MIDDLE,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.WHITE,
+  },
+});
+
+const womenModalStyles = StyleSheet.create({
+  modal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  container: {
+    width: 400,
+    borderRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY_LIGHT,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    backgroundColor: COLORS.BACKGROUND_GREY,
+  },
+  headerText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.XXL,
+    color: COLORS.WHITE,
+  },
+  modalBody: {
+    flexDirection: 'column',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+  },
+  colWrapper: {
+    flexDirection: 'column',
+  },
+  buttonsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+    marginTop: 30,
+  },
+  confirmBtn: {
+    flex: 1,
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.GREEN,
+  },
+  cancelBtn: {
+    flex: 1,
+    borderRadius: 50,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: COLORS.RED,
+  },
+  buttonText: {
+    fontWeight: FONT_WEIGHT.MIDDLE,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.WHITE,
+  },
+});
+
 type TProps = {
   children: React.ReactNode;
   currentNav: string;
@@ -405,26 +560,22 @@ const PlayerLayout = (props: TProps) => {
     search: '',
     name: '',
     age: '',
-    position: '',
-    college: '',
-    gamesStarted: '',
-    gamesWon: '',
-    targetRound: '',
     height: '',
     weight: '',
+    gender: 'Male',
+    sport: '',
+    position: '',
   };
 
-  const [isConfirmVisible, setConfrimVisible] = useState(false);
   const [isPlayerVisible, setPlayerVisible] = useState(false);
   const [isPositionVisible, setPositionVisible] = useState(false);
+  const [isGenderVisible, setGenderVisible] = useState(false);
+  const [isMenVisible, setMenVisible] = useState(false);
+  const [isWomenVisible, setWomenVisible] = useState(false);
   const [state, setState] = useState(initState);
   const {t} = useTranslation();
-  const auth = useAuth();
-  const signOut = () => {
-    setConfrimVisible(true);
-  };
 
-  const onChangeField = (field: string, value: string | boolean) => {
+  const onChangeField = (field: string, value: string) => {
     setState({...state, [field]: value});
   };
 
@@ -443,39 +594,29 @@ const PlayerLayout = (props: TProps) => {
     setTimeout(() => setPlayerVisible(true), 600);
   };
 
-  const confirmModal = isConfirmVisible => (
-    <Modal
-      isVisible={isConfirmVisible}
-      style={confirmModalStyles.modal}
-      animationIn={'fadeIn'}
-      animationOut={'fadeOut'}
-      onBackdropPress={() => setConfrimVisible(false)}>
-      <View style={confirmModalStyles.container}>
-        <Text style={confirmModalStyles.modalTitle}>{t('general.confirm')}</Text>
-        <View style={confirmModalStyles.modalButtonsWrapper}>
-          <Button
-            customStyle={StyleSheet.flatten([
-              confirmModalStyles.modalButton,
-              confirmModalStyles.cancel,
-            ])}
-            onPress={() => setConfrimVisible(false)}>
-            <Text style={confirmModalStyles.modalButtonText}>{t('general.no')}</Text>
-          </Button>
-          <Button
-            customStyle={StyleSheet.flatten([
-              confirmModalStyles.modalButton,
-              confirmModalStyles.confirm,
-            ])}
-            onPress={() => {
-              auth.signOut();
-              setTimeout(() => setConfrimVisible(false), 300);
-            }}>
-            <Text style={confirmModalStyles.modalButtonText}>{t('general.yes')}</Text>
-          </Button>
-        </View>
-      </View>
-    </Modal>
-  );
+  const onGenderModalClose = (confirm: boolean) => {
+    if (!confirm) {
+      onChangeField('gender', '');
+    }
+    setTimeout(() => setGenderVisible(false), 150);
+    setTimeout(() => setPlayerVisible(true), 600);
+  };
+
+  const onMenModalClose = (confirm: boolean) => {
+    if (!confirm) {
+      onChangeField('sport', '');
+    }
+    setTimeout(() => setMenVisible(false), 150);
+    setTimeout(() => setPlayerVisible(true), 600);
+  };
+
+  const onWoenModalClose = (confirm: boolean) => {
+    if (!confirm) {
+      onChangeField('sport', '');
+    }
+    setTimeout(() => setWomenVisible(false), 150);
+    setTimeout(() => setPlayerVisible(true), 600);
+  };
 
   const addPlayerModal = isPlayerVisible => (
     <Modal
@@ -490,7 +631,7 @@ const PlayerLayout = (props: TProps) => {
             placeholder="Search"
             icon={<Image style={addPlayerModalStyles.serachImg} source={SearchImg} />}
             placeholderTextColor={COLORS.TEXT_GREY_LIGHT}
-            textStyle={addPlayerModalStyles.serachText}
+            textStyle={addPlayerModalStyles.searchText}
             inputStyle={addPlayerModalStyles.searchWrapper}
             onChangeText={(text: string) => onChangeField('search', text)}
           />
@@ -506,79 +647,92 @@ const PlayerLayout = (props: TProps) => {
           </View>
         </View>
         <View style={addPlayerModalStyles.modalBody}>
+          <View style={addPlayerModalStyles.avatarWrapper}>
+            <Image style={addPlayerModalStyles.avatar} source={AvatarImg} />
+            <RoundedButton
+              label={t('profile.uploadPhoto')}
+              customStyle={addPlayerModalStyles.uploadBtn}
+              onPress={() => console.log('Uplaod Photo')}
+            />
+          </View>
           <View style={addPlayerModalStyles.colWrapper}>
-            <View style={addPlayerModalStyles.avatarWrapper}>
-              <Image style={addPlayerModalStyles.avatar} source={AvatarImg} />
-              <RoundedButton
-                label={t('profile.uploadPhoto')}
-                customStyle={addPlayerModalStyles.uploadBtn}
-                onPress={() => console.log('Uplaod Photo')}
+            <View style={addPlayerModalStyles.rowWrapper}>
+              <AttributeInput
+                label={t('profile.name')}
+                value={state.name}
+                placeholder="Tom Brady"
+                onChangeText={(text: string) => onChangeField('name', text)}
+              />
+              <AttributeInput
+                label={t('profile.age')}
+                value={state.age}
+                placeholder="34"
+                onChangeText={(text: string) => onChangeField('age', text)}
               />
             </View>
-            <AttributeInput
-              label={t('profile.age')}
-              value={state.age}
-              placeholder="34"
-              onChangeText={(text: string) => onChangeField('age', text)}
-            />
-          </View>
-          <View style={addPlayerModalStyles.colWrapper}>
-            <AttributeInput
-              label={t('profile.name')}
-              value={state.name}
-              placeholder="Tom Brady"
-              onChangeText={(text: string) => onChangeField('name', text)}
-            />
-            <AttributeInput
-              label={t('profile.college')}
-              value={state.college}
-              placeholder="Michigan"
-              onChangeText={(text: string) => onChangeField('college', text)}
-            />
-            <AttributeInput
-              label={t('profile.gamesWon')}
-              value={state.gamesWon}
-              placeholder="20/44"
-              onChangeText={(text: string) => onChangeField('gamesWon', text)}
-            />
-            <AttributeInput
-              label={t('profile.height')}
-              value={state.height}
-              placeholder="5’5”"
-              onChangeText={(text: string) => onChangeField('height', text)}
-            />
-          </View>
-          <View style={addPlayerModalStyles.colWrapper}>
-            <Button
-              onPress={() => {
-                setPlayerVisible(false);
-                setTimeout(() => setPositionVisible(true), 450);
-              }}>
+            <View style={addPlayerModalStyles.rowWrapper}>
               <AttributeInput
-                label={t('profile.position')}
-                value={state.position}
-                placeholder="QB"
-                readOnly={true}
+                label={t('profile.height')}
+                value={state.height}
+                placeholder="5’5”"
+                onChangeText={(text: string) => onChangeField('height', text)}
               />
-            </Button>
-            <AttributeInput
-              label={t('profile.gamesStarted')}
-              value={state.gamesStarted}
-              placeholder="30/44"
-              onChangeText={(text: string) => onChangeField('gamesStarted', text)}
-            />
-            <AttributeInput
-              label={t('profile.targetRound')}
-              value={state.targetRound}
-              placeholder="3rd"
-              onChangeText={(text: string) => onChangeField('targetRound', text)}
-            />
-            <AttributeInput
-              label={t('profile.weight')}
-              value={state.weight}
-              placeholder="145 LBS"
-              onChangeText={(text: string) => onChangeField('weight', text)}
-            />
+              <AttributeInput
+                label={t('profile.weight')}
+                value={state.weight}
+                placeholder="145 LBS"
+                onChangeText={(text: string) => onChangeField('weight', text)}
+              />
+            </View>
+            <View style={addPlayerModalStyles.rowWrapper}>
+              <Button
+                customStyle={addPlayerModalStyles.attrBtn}
+                onPress={() => {
+                  setPlayerVisible(false);
+                  setTimeout(() => setGenderVisible(true), 450);
+                }}>
+                <AttributeInput
+                  label={t('profile.gender')}
+                  value={state.gender}
+                  placeholder="Male"
+                  readOnly={true}
+                />
+              </Button>
+              <Button
+                customStyle={addPlayerModalStyles.attrBtn}
+                onPress={() => {
+                  setPlayerVisible(false);
+                  setTimeout(
+                    () =>
+                      state.gender === 'Male' || state.gender === ''
+                        ? setMenVisible(true)
+                        : setWomenVisible(true),
+                    450,
+                  );
+                }}>
+                <AttributeInput
+                  label={t('profile.sport')}
+                  value={state.sport}
+                  placeholder="Football"
+                  readOnly={true}
+                />
+              </Button>
+            </View>
+            <View style={addPlayerModalStyles.rowWrapper}>
+              <Button
+                customStyle={{width: '50%'}}
+                onPress={() => {
+                  setPlayerVisible(false);
+                  setTimeout(() => setPositionVisible(true), 450);
+                }}>
+                <AttributeInput
+                  label={t('profile.position')}
+                  value={state.position}
+                  placeholder="QB"
+                  readOnly={true}
+                />
+              </Button>
+            </View>
           </View>
         </View>
         <View style={addPlayerModalStyles.modalFooter}>
@@ -603,61 +757,177 @@ const PlayerLayout = (props: TProps) => {
     </Modal>
   );
 
+  const genderModal = isGenderVisible => (
+    <Modal
+      isVisible={isGenderVisible}
+      style={genderModalStyles.modal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}>
+      <View style={genderModalStyles.container}>
+        <View style={genderModalStyles.modalHeader}>
+          <Text style={genderModalStyles.headerText}>{t('profile.genders.caption')}</Text>
+        </View>
+        <View style={genderModalStyles.modalBody}>
+          <View style={genderModalStyles.colWrapper}>
+            {Object.keys(genders).map((key: string, i: number) => (
+              <CheckListItem
+                key={i}
+                label={key}
+                options={genders}
+                status={state.gender === genders[key]}
+                setStatus={(status: string) => {
+                  onChangeField('sport', '');
+                  onChangeField('gender', genders[status]);
+                }}
+              />
+            ))}
+          </View>
+          <View style={genderModalStyles.buttonsWrapper}>
+            <Button
+              customStyle={genderModalStyles.cancelBtn}
+              onPress={() => onGenderModalClose(false)}>
+              <Text style={genderModalStyles.buttonText}>{t('general.cancel')}</Text>
+            </Button>
+            <Button
+              customStyle={genderModalStyles.confirmBtn}
+              onPress={() => onGenderModalClose(true)}>
+              <Text style={genderModalStyles.buttonText}>{t('general.save')}</Text>
+            </Button>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const menModal = isMenVisible => (
+    <Modal
+      isVisible={isMenVisible}
+      style={menModalStyles.modal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}>
+      <View style={menModalStyles.container}>
+        <View style={menModalStyles.modalHeader}>
+          <Text style={menModalStyles.headerText}>{t('profile.menSports.caption')}</Text>
+        </View>
+        <View style={menModalStyles.modalBody}>
+          <View style={menModalStyles.colWrapper}>
+            {Object.keys(menSports).map((key: string, i: number) => (
+              <CheckListItem
+                key={i}
+                label={key}
+                options={menSports}
+                status={state.sport === menSports[key]}
+                setStatus={(status: string) => onChangeField('sport', menSports[status])}
+              />
+            ))}
+          </View>
+          <View style={menModalStyles.buttonsWrapper}>
+            <Button customStyle={menModalStyles.cancelBtn} onPress={() => onMenModalClose(false)}>
+              <Text style={menModalStyles.buttonText}>{t('general.cancel')}</Text>
+            </Button>
+            <Button customStyle={menModalStyles.confirmBtn} onPress={() => onMenModalClose(true)}>
+              <Text style={menModalStyles.buttonText}>{t('general.save')}</Text>
+            </Button>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const womenModal = isWomenVisible => (
+    <Modal
+      isVisible={isWomenVisible}
+      style={womenModalStyles.modal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}>
+      <View style={womenModalStyles.container}>
+        <View style={womenModalStyles.modalHeader}>
+          <Text style={womenModalStyles.headerText}>{t('profile.womenSports.caption')}</Text>
+        </View>
+        <View style={womenModalStyles.modalBody}>
+          <View style={womenModalStyles.colWrapper}>
+            {Object.keys(womenSports).map((key: string, i: number) => (
+              <CheckListItem
+                key={i}
+                label={key}
+                options={womenSports}
+                status={state.sport === womenSports[key]}
+                setStatus={(status: string) => onChangeField('sport', womenSports[status])}
+              />
+            ))}
+          </View>
+          <View style={womenModalStyles.buttonsWrapper}>
+            <Button
+              customStyle={womenModalStyles.cancelBtn}
+              onPress={() => onWoenModalClose(false)}>
+              <Text style={womenModalStyles.buttonText}>{t('general.cancel')}</Text>
+            </Button>
+            <Button
+              customStyle={womenModalStyles.confirmBtn}
+              onPress={() => onWoenModalClose(true)}>
+              <Text style={womenModalStyles.buttonText}>{t('general.save')}</Text>
+            </Button>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
   const positionModal = isPositionVisible => (
     <Modal
       isVisible={isPositionVisible}
-      style={positinModalStyles.modal}
+      style={positionModalStyles.modal}
       animationIn={'fadeIn'}
       animationOut={'fadeOut'}>
-      <View style={positinModalStyles.container}>
-        <View style={positinModalStyles.modalHeader}>
-          <Text style={positinModalStyles.headerText}>{t('profile.positions.caption')}</Text>
+      <View style={positionModalStyles.container}>
+        <View style={positionModalStyles.modalHeader}>
+          <Text style={positionModalStyles.headerText}>{t('profile.positions.caption')}</Text>
         </View>
-        <View style={positinModalStyles.modalBody}>
-          <View style={positinModalStyles.colWrapper}>
+        <View style={positionModalStyles.modalBody}>
+          <View style={positionModalStyles.colWrapper}>
             {['QB', 'OL', 'RB', 'FB', 'TE', 'WR'].map((key: string, i: number) => (
               <CheckListItem
                 key={i}
                 label={key}
                 options={positions}
                 status={state.position === key}
-                setStatus={(status: string | boolean) => onChangeField('position', status)}
+                setStatus={(status: string) => onChangeField('position', status)}
               />
             ))}
           </View>
-          <View style={positinModalStyles.colWrapper}>
+          <View style={positionModalStyles.colWrapper}>
             {['DL', 'LB', 'CB', 'S', 'K', 'P'].map((key: string, i: number) => (
               <CheckListItem
                 key={i}
                 label={key}
                 options={positions}
                 status={state.position === key}
-                setStatus={(status: string | boolean) => onChangeField('position', status)}
+                setStatus={(status: string) => onChangeField('position', status)}
               />
             ))}
           </View>
-          <View style={positinModalStyles.lastWrapper}>
-            <View style={positinModalStyles.colWrapper}>
+          <View style={positionModalStyles.lastWrapper}>
+            <View style={positionModalStyles.colWrapper}>
               {['KR', 'PR', 'LS'].map((key: string, i: number) => (
                 <CheckListItem
                   key={i}
                   label={key}
                   options={positions}
                   status={state.position === key}
-                  setStatus={(status: string | boolean) => onChangeField('position', status)}
+                  setStatus={(status: string) => onChangeField('position', status)}
                 />
               ))}
             </View>
-            <View style={positinModalStyles.buttonsWrapper}>
+            <View style={positionModalStyles.buttonsWrapper}>
               <Button
-                customStyle={positinModalStyles.cancelBtn}
+                customStyle={positionModalStyles.cancelBtn}
                 onPress={() => onPositionModalClose(false)}>
-                <Text style={positinModalStyles.buttonText}>{t('general.cancel')}</Text>
+                <Text style={positionModalStyles.buttonText}>{t('general.cancel')}</Text>
               </Button>
               <Button
-                customStyle={positinModalStyles.confirmBtn}
+                customStyle={positionModalStyles.confirmBtn}
                 onPress={() => onPositionModalClose(true)}>
-                <Text style={positinModalStyles.buttonText}>{t('general.confirm')}</Text>
+                <Text style={positionModalStyles.buttonText}>{t('general.save')}</Text>
               </Button>
             </View>
           </View>
@@ -672,26 +942,15 @@ const PlayerLayout = (props: TProps) => {
         <View style={styles.logoWrapper}>
           <Image style={styles.logo} source={LogoImg} />
         </View>
-        <View style={styles.nflWrapper}>
-          <Image style={styles.nflLogo} source={NFLImg} />
+        <View style={styles.avatarWrapper}>
+          <Image style={styles.avatarLogo} source={AvatarImg} />
         </View>
         <View style={styles.optionsWrapper}>
           <Button customStyle={styles.optionWrapper} onPress={() => console.log('Edit Profile')}>
             <Text style={styles.optionText}>{t('app.editProfile')}</Text>
             <Image style={styles.optionImg} source={ArrowRight} />
           </Button>
-          <Button customStyle={styles.optionWrapper} onPress={() => console.log('Privacy Policy')}>
-            <Text style={styles.optionText}>{t('app.privacyPolicy')}</Text>
-            <Image style={styles.optionImg} source={ArrowRight} />
-          </Button>
-          <Button customStyle={styles.optionWrapper} onPress={() => console.log('Settings')}>
-            <Text style={styles.optionText}>{t('app.settings')}</Text>
-            <Image style={styles.optionImg} source={ArrowRight} />
-          </Button>
         </View>
-        <Button customStyle={styles.signOutWrapper} onPress={() => signOut()}>
-          <Text style={styles.signOut}>{t('app.signOut')}</Text>
-        </Button>
       </View>
       <View style={styles.rightWrapper}>
         <View style={styles.headerWrapper}>
@@ -716,9 +975,11 @@ const PlayerLayout = (props: TProps) => {
         {props.children}
       </View>
       <View style={styles.modalsWrapper}>
-        {confirmModal(isConfirmVisible)}
         {addPlayerModal(isPlayerVisible)}
         {positionModal(isPositionVisible)}
+        {genderModal(isGenderVisible)}
+        {menModal(isMenVisible)}
+        {womenModal(isWomenVisible)}
       </View>
     </View>
   );
