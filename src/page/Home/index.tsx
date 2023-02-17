@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList} from '../../navigation/AppStack';
@@ -20,6 +20,12 @@ const HomeScreen = () => {
   const route = useRoute<HomeScreenRouteProp>();
   const {activeNav} = route.params as Params;
 
+  useEffect(() => {
+    if (activeNav === NavigationConstants.PERSONAL_INFO) {
+      goToPlayerScreen();
+    }
+  }, [activeNav]);
+
   const setActiveNav = nav => {
     navigation.navigate(NavigationConstants.HOME, {activeNav: nav});
   };
@@ -36,9 +42,6 @@ const HomeScreen = () => {
         return <GMModeScreen />;
       case NavigationConstants.COACH_MODE:
         return <CoachModeScreen />;
-      case NavigationConstants.PERSONAL_INFO:
-        goToPlayerScreen();
-        break;
       default:
         break;
     }

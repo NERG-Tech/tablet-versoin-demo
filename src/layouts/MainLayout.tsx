@@ -647,10 +647,8 @@ const MainLayout = (props: TProps) => {
   };
 
   const onAddPlayerModalConfirm = () => {
-    setTimeout(() => {
-      setPlayerVisible(false);
-      props.onChangeNav(NavigationConstants.PERSONAL_INFO);
-    }, 150);
+    setTimeout(() => setPlayerVisible(false), 150);
+    setTimeout(() => props.onChangeNav(NavigationConstants.PERSONAL_INFO), 500);
 
     setState(initState);
   };
