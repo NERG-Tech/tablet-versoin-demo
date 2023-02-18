@@ -11,19 +11,24 @@ type PlayerScreenRouteProp = RouteProp<AppStackParamList, 'personal_info'>;
 
 interface Params {
   userId: string;
+  activeTab: string;
 }
 
 const PlayerScreen = () => {
   const navigation = useNavigation<PlayerScreenNavigationProp>();
   const route = useRoute<PlayerScreenRouteProp>();
-  const {userId} = route.params as Params;
+  const {userId, activeTab} = route.params as Params;
 
   const setActiveNav = nav => {
     navigation.navigate(NavigationConstants.HOME, {activeNav: nav});
   };
 
+  const setActiveTab = tab => {
+    navigation.navigate(NavigationConstants.PERSONAL_INFO, {userId: 'new', activeTab: tab});
+  };
+
   return (
-    <PlayerLayout currentNav={''} onChangeNav={setActiveNav}>
+    <PlayerLayout currentTab={activeTab} onChangeNav={setActiveNav} onChangeTab={setActiveTab}>
       <View>
         <Text>Player {userId}</Text>
       </View>

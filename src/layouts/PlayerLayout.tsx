@@ -28,6 +28,14 @@ const navigations = {
   [NavigationConstants.COACH_MODE]: 'Coach Mode',
 };
 
+const tabs = {
+  [NavigationConstants.SNAPSHOT]: 'Snapshot',
+  [NavigationConstants.NUTRIENTS]: 'Nutrients',
+  [NavigationConstants.EXERCISE]: 'Exercise',
+  [NavigationConstants.REST]: 'Rest',
+  [NavigationConstants.GENETICS]: 'Genetics',
+};
+
 const positions = {
   QB: 'Quarterback (QB)',
   OL: 'Offensive Linemen (OL)',
@@ -74,7 +82,7 @@ const styles = StyleSheet.create({
   },
   leftSideBarWrapper: {
     flexDirection: 'column',
-    width: 300,
+    width: 330,
     backgroundColor: COLORS.BLACK,
     paddingHorizontal: 36,
   },
@@ -88,17 +96,25 @@ const styles = StyleSheet.create({
     height: 30,
     resizeMode: 'contain',
   },
+  playerInfoWrapper: {
+    flexDirection: 'column',
+    marginBottom: 80,
+  },
   avatarWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
-    paddingTop: 40,
-    paddingBottom: 80,
+    marginTop: 40,
   },
   avatarLogo: {
-    width: 210,
-    height: 210,
+    width: 220,
+    height: 220,
     borderRadius: 999,
     resizeMode: 'contain',
+  },
+  descriptionText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.XXL,
+    color: COLORS.WHITE,
   },
   optionsWrapper: {
     flexDirection: 'column',
@@ -145,15 +161,51 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.L,
     color: COLORS.TEXT_GREY,
   },
-  navActiveText: {
-    fontWeight: FONT_WEIGHT.MIDDLE,
-    color: COLORS.BLUE_SKY,
-  },
   invite: {
     flex: 1,
   },
   modalsWrapper: {
     position: 'relative',
+  },
+  contentWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+    paddingVertical: 40,
+    paddingHorizontal: 30,
+  },
+  tabsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 50,
+    marginBottom: 40,
+  },
+  tabWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  tabText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.TEXT_DARK,
+    paddingVertical: 4,
+  },
+  tabBottom: {
+    width: '100%',
+    height: 6,
+    marginTop: 6,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: COLORS.WHITE_ALPHA,
+    backgroundColor: COLORS.BACKGROUND,
+  },
+  tabActiveBottom: {
+    width: '100%',
+    height: 6,
+    marginTop: 6,
+    borderRadius: 3,
+    backgroundColor: COLORS.BLUE_LIGHT,
   },
 });
 
@@ -558,12 +610,13 @@ const womenModalStyles = StyleSheet.create({
 
 type TProps = {
   children: React.ReactNode;
-  currentNav: string;
+  currentTab: string;
   onChangeNav: (nav: string) => void;
+  onChangeTab: (tab: string) => void;
 };
 
 const PlayerLayout = (props: TProps) => {
-  const initState = {
+  const initModalState = {
     search: '',
     name: '',
     age: '',
@@ -574,28 +627,38 @@ const PlayerLayout = (props: TProps) => {
     position: '',
   };
 
+  const initState = {
+    name: 'John Smith',
+    position: 'Quarter Back',
+  };
+
   const [isPlayerVisible, setPlayerVisible] = useState(false);
   const [isPositionVisible, setPositionVisible] = useState(false);
   const [isGenderVisible, setGenderVisible] = useState(false);
   const [isMenVisible, setMenVisible] = useState(false);
   const [isWomenVisible, setWomenVisible] = useState(false);
   const [state, setState] = useState(initState);
+  const [modalState, setModalState] = useState(initModalState);
   const {t} = useTranslation();
 
   const onChangeField = (field: string, value: string) => {
     setState({...state, [field]: value});
   };
 
+  const onChangeModalField = (field: string, value: string) => {
+    setModalState({...modalState, [field]: value});
+  };
+
   const onAddPlayerModalClose = (confirm: boolean) => {
     if (!confirm) {
-      setState(initState);
+      setModalState(initModalState);
     }
     setTimeout(() => setPlayerVisible(false), 150);
   };
 
   const onPositionModalClose = (confirm: boolean) => {
     if (!confirm) {
-      onChangeField('position', '');
+      onChangeModalField('position', '');
     }
     setTimeout(() => setPositionVisible(false), 150);
     setTimeout(() => setPlayerVisible(true), 600);
@@ -603,7 +666,7 @@ const PlayerLayout = (props: TProps) => {
 
   const onGenderModalClose = (confirm: boolean) => {
     if (!confirm) {
-      onChangeField('gender', '');
+      onChangeModalField('gender', '');
     }
     setTimeout(() => setGenderVisible(false), 150);
     setTimeout(() => setPlayerVisible(true), 600);
@@ -611,7 +674,7 @@ const PlayerLayout = (props: TProps) => {
 
   const onMenModalClose = (confirm: boolean) => {
     if (!confirm) {
-      onChangeField('sport', '');
+      onChangeModalField('sport', '');
     }
     setTimeout(() => setMenVisible(false), 150);
     setTimeout(() => setPlayerVisible(true), 600);
@@ -619,7 +682,7 @@ const PlayerLayout = (props: TProps) => {
 
   const onWoenModalClose = (confirm: boolean) => {
     if (!confirm) {
-      onChangeField('sport', '');
+      onChangeModalField('sport', '');
     }
     setTimeout(() => setWomenVisible(false), 150);
     setTimeout(() => setPlayerVisible(true), 600);
@@ -634,13 +697,13 @@ const PlayerLayout = (props: TProps) => {
       <View style={addPlayerModalStyles.container}>
         <View style={addPlayerModalStyles.modalHeader}>
           <Input
-            value={state.search}
+            value={modalState.search}
             placeholder="Search"
             icon={<Image style={addPlayerModalStyles.serachImg} source={SearchImg} />}
             placeholderTextColor={COLORS.TEXT_GREY_LIGHT}
             textStyle={addPlayerModalStyles.searchText}
             inputStyle={addPlayerModalStyles.searchWrapper}
-            onChangeText={(text: string) => onChangeField('search', text)}
+            onChangeText={(text: string) => onChangeModalField('search', text)}
           />
           <View style={addPlayerModalStyles.headerGroupWrapper}>
             <Button customStyle={addPlayerModalStyles.headerItemWrapper}>
@@ -666,29 +729,29 @@ const PlayerLayout = (props: TProps) => {
             <View style={addPlayerModalStyles.rowWrapper}>
               <AttributeInput
                 label={t('profile.name')}
-                value={state.name}
+                value={modalState.name}
                 placeholder="Tom Brady"
-                onChangeText={(text: string) => onChangeField('name', text)}
+                onChangeText={(text: string) => onChangeModalField('name', text)}
               />
               <AttributeInput
                 label={t('profile.age')}
-                value={state.age}
+                value={modalState.age}
                 placeholder="34"
-                onChangeText={(text: string) => onChangeField('age', text)}
+                onChangeText={(text: string) => onChangeModalField('age', text)}
               />
             </View>
             <View style={addPlayerModalStyles.rowWrapper}>
               <AttributeInput
                 label={t('profile.height')}
-                value={state.height}
+                value={modalState.height}
                 placeholder="5’5”"
-                onChangeText={(text: string) => onChangeField('height', text)}
+                onChangeText={(text: string) => onChangeModalField('height', text)}
               />
               <AttributeInput
                 label={t('profile.weight')}
-                value={state.weight}
+                value={modalState.weight}
                 placeholder="145 LBS"
-                onChangeText={(text: string) => onChangeField('weight', text)}
+                onChangeText={(text: string) => onChangeModalField('weight', text)}
               />
             </View>
             <View style={addPlayerModalStyles.rowWrapper}>
@@ -700,7 +763,7 @@ const PlayerLayout = (props: TProps) => {
                 }}>
                 <AttributeInput
                   label={t('profile.gender')}
-                  value={state.gender}
+                  value={modalState.gender}
                   placeholder="Male"
                   readOnly={true}
                 />
@@ -711,7 +774,7 @@ const PlayerLayout = (props: TProps) => {
                   setPlayerVisible(false);
                   setTimeout(
                     () =>
-                      state.gender === 'Male' || state.gender === ''
+                      modalState.gender === 'Male' || modalState.gender === ''
                         ? setMenVisible(true)
                         : setWomenVisible(true),
                     450,
@@ -719,7 +782,7 @@ const PlayerLayout = (props: TProps) => {
                 }}>
                 <AttributeInput
                   label={t('profile.sport')}
-                  value={state.sport}
+                  value={modalState.sport}
                   placeholder="Football"
                   readOnly={true}
                 />
@@ -734,7 +797,7 @@ const PlayerLayout = (props: TProps) => {
                 }}>
                 <AttributeInput
                   label={t('profile.position')}
-                  value={state.position}
+                  value={modalState.position}
                   placeholder="QB"
                   readOnly={true}
                 />
@@ -781,10 +844,10 @@ const PlayerLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={genders}
-                status={state.gender === genders[key]}
+                status={modalState.gender === genders[key]}
                 setStatus={(status: string) => {
-                  onChangeField('sport', '');
-                  onChangeField('gender', genders[status]);
+                  onChangeModalField('sport', '');
+                  onChangeModalField('gender', genders[status]);
                 }}
               />
             ))}
@@ -823,8 +886,8 @@ const PlayerLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={menSports}
-                status={state.sport === menSports[key]}
-                setStatus={(status: string) => onChangeField('sport', menSports[status])}
+                status={modalState.sport === menSports[key]}
+                setStatus={(status: string) => onChangeModalField('sport', menSports[status])}
               />
             ))}
           </View>
@@ -858,8 +921,8 @@ const PlayerLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={womenSports}
-                status={state.sport === womenSports[key]}
-                setStatus={(status: string) => onChangeField('sport', womenSports[status])}
+                status={modalState.sport === womenSports[key]}
+                setStatus={(status: string) => onChangeModalField('sport', womenSports[status])}
               />
             ))}
           </View>
@@ -897,8 +960,8 @@ const PlayerLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={positions}
-                status={state.position === key}
-                setStatus={(status: string) => onChangeField('position', status)}
+                status={modalState.position === key}
+                setStatus={(status: string) => onChangeModalField('position', status)}
               />
             ))}
           </View>
@@ -908,8 +971,8 @@ const PlayerLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={positions}
-                status={state.position === key}
-                setStatus={(status: string) => onChangeField('position', status)}
+                status={modalState.position === key}
+                setStatus={(status: string) => onChangeModalField('position', status)}
               />
             ))}
           </View>
@@ -920,8 +983,8 @@ const PlayerLayout = (props: TProps) => {
                   key={i}
                   label={key}
                   options={positions}
-                  status={state.position === key}
-                  setStatus={(status: string) => onChangeField('position', status)}
+                  status={modalState.position === key}
+                  setStatus={(status: string) => onChangeModalField('position', status)}
                 />
               ))}
             </View>
@@ -949,14 +1012,18 @@ const PlayerLayout = (props: TProps) => {
         <View style={styles.logoWrapper}>
           <Image style={styles.logo} source={LogoImg} />
         </View>
-        <View style={styles.avatarWrapper}>
-          <CircularProgressBar
-            progress={75}
-            diameter={220}
-            startColor={COLORS.GRADIENT_SKY}
-            endColor={COLORS.GRADIENT_BLUE}>
-            <Image style={styles.avatarLogo} source={AvatarImg} />
-          </CircularProgressBar>
+        <View style={styles.playerInfoWrapper}>
+          <View style={styles.avatarWrapper}>
+            <CircularProgressBar
+              progress={75}
+              diameter={224}
+              startColor={COLORS.GRADIENT_SKY}
+              endColor={COLORS.GRADIENT_BLUE}>
+              <Image style={styles.avatarLogo} source={AvatarImg} />
+            </CircularProgressBar>
+          </View>
+          <Text style={[styles.descriptionText, {marginTop: 40}]}>Name: {state.name}</Text>
+          <Text style={[styles.descriptionText, {marginTop: 20}]}>Position: {state.position}</Text>
         </View>
         <View style={styles.optionsWrapper}>
           <Button customStyle={styles.optionWrapper} onPress={() => console.log('Edit Profile')}>
@@ -970,13 +1037,7 @@ const PlayerLayout = (props: TProps) => {
           <View style={styles.navWrapper}>
             {Object.keys(navigations).map((nav: string, i: number) => (
               <Button key={i} customStyle={styles.navButton} onPress={() => props.onChangeNav(nav)}>
-                {props.currentNav === nav ? (
-                  <Text style={StyleSheet.flatten([styles.navText, styles.navActiveText])}>
-                    {navigations[nav]}
-                  </Text>
-                ) : (
-                  <Text style={styles.navText}>{navigations[nav]}</Text>
-                )}
+                <Text style={styles.navText}>{navigations[nav]}</Text>
               </Button>
             ))}
           </View>
@@ -985,7 +1046,24 @@ const PlayerLayout = (props: TProps) => {
             <Text style={styles.navText}>Invite</Text>
           </Button>
         </View>
-        {props.children}
+        <View style={styles.contentWrapper}>
+          <View style={styles.tabsWrapper}>
+            {Object.keys(tabs).map((tab: string, i: number) => (
+              <Button
+                key={i}
+                customStyle={styles.tabWrapper}
+                onPress={() => props.onChangeTab(tab)}>
+                <Text style={styles.tabText}>{tabs[tab]}</Text>
+                {tab === props.currentTab ? (
+                  <View style={styles.tabActiveBottom} />
+                ) : (
+                  <View style={styles.tabBottom} />
+                )}
+              </Button>
+            ))}
+          </View>
+          {props.children}
+        </View>
       </View>
       <View style={styles.modalsWrapper}>
         {addPlayerModal(isPlayerVisible)}
