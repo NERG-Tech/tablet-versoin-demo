@@ -40,14 +40,16 @@ const styles = StyleSheet.create({
   dContentWrapper: {
     flexDirection: 'column',
     paddingHorizontal: 30,
-    borderLeftColor: COLORS.DIVIDER_SKY,
     borderLeftWidth: 5,
   },
 });
 
 type TProps = {
-  hHours: string;
-  dHours: string;
+  lLabel: string;
+  rLabel: string;
+  lHours: string;
+  rHours: string;
+  dividerColor: string;
   customStyle?: ViewStyle;
 };
 
@@ -55,14 +57,15 @@ export const AnalysisDisplay = (props: TProps) => (
   <View style={StyleSheet.flatten([styles.container, props.customStyle])}>
     <View style={styles.hWrapper}>
       <View style={styles.hContentWrapper}>
-        <Text style={styles.label}>Hydration</Text>
-        <Text style={styles.hourText}>{props.hHours} hrs</Text>
+        <Text style={styles.label}>{props.lLabel}</Text>
+        <Text style={styles.hourText}>{props.lHours} hrs</Text>
       </View>
     </View>
     <View style={styles.dWrapper}>
-      <View style={styles.dContentWrapper}>
-        <Text style={styles.label}>Diet</Text>
-        <Text style={styles.hourText}>{props.dHours} hrs</Text>
+      <View
+        style={StyleSheet.flatten([styles.dContentWrapper, {borderLeftColor: props.dividerColor}])}>
+        <Text style={styles.label}>{props.rLabel}</Text>
+        <Text style={styles.hourText}>{props.rHours} hrs</Text>
       </View>
     </View>
   </View>
