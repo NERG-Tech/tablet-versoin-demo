@@ -20,7 +20,14 @@ const PlayerScreen = () => {
   const {userId, activeTab} = route.params as Params;
 
   const setActiveNav = nav => {
-    navigation.navigate(NavigationConstants.HOME, {activeNav: nav});
+    if (nav !== NavigationConstants.PERSONAL_INFO) {
+      navigation.navigate(NavigationConstants.HOME, {activeNav: nav});
+    } else {
+      navigation.navigate(NavigationConstants.PERSONAL_INFO, {
+        userId: 'new',
+        activeTab: NavigationConstants.SNAPSHOT,
+      });
+    }
   };
 
   const setActiveTab = tab => {

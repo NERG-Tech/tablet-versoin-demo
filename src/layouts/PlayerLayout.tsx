@@ -648,12 +648,18 @@ const PlayerLayout = (props: TProps) => {
   const onChangeModalField = (field: string, value: string) => {
     setModalState({...modalState, [field]: value});
   };
-
   const onAddPlayerModalClose = (confirm: boolean) => {
     if (!confirm) {
       setModalState(initModalState);
     }
     setTimeout(() => setPlayerVisible(false), 150);
+  };
+
+  const onAddPlayerModalConfirm = () => {
+    setTimeout(() => setPlayerVisible(false), 150);
+    setTimeout(() => props.onChangeNav(NavigationConstants.PERSONAL_INFO), 500);
+
+    setModalState(initModalState);
   };
 
   const onPositionModalClose = (confirm: boolean) => {
@@ -818,7 +824,7 @@ const PlayerLayout = (props: TProps) => {
             </Button>
             <Button
               customStyle={addPlayerModalStyles.confirmBtn}
-              onPress={() => onAddPlayerModalClose(true)}>
+              onPress={() => onAddPlayerModalConfirm()}>
               <Text style={addPlayerModalStyles.buttonText}>{t('profile.createSave')}</Text>
             </Button>
           </View>
