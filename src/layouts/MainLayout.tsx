@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 20,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1.5,
     borderBottomColor: COLORS.DIVIDER,
   },
   optionText: {
@@ -233,7 +233,7 @@ const addPlayerModalStyles = StyleSheet.create({
     borderColor: COLORS.BORDER_LIGHT,
     backgroundColor: COLORS.BACKGROUND_INPUT_LIGHT,
   },
-  serachText: {
+  searchText: {
     fontSize: FONT_SIZE.MS,
     fontWeight: FONT_WEIGHT.LIGHT,
     color: COLORS.BLACK_LIGHT,
@@ -646,6 +646,13 @@ const MainLayout = (props: TProps) => {
     setTimeout(() => setPlayerVisible(false), 150);
   };
 
+  const onAddPlayerModalConfirm = () => {
+    setTimeout(() => setPlayerVisible(false), 150);
+    setTimeout(() => props.onChangeNav(NavigationConstants.PERSONAL_INFO), 500);
+
+    setState(initState);
+  };
+
   const onPositionModalClose = (confirm: boolean) => {
     if (!confirm) {
       onChangeField('position', '');
@@ -725,7 +732,7 @@ const MainLayout = (props: TProps) => {
             placeholder="Search"
             icon={<Image style={addPlayerModalStyles.serachImg} source={SearchImg} />}
             placeholderTextColor={COLORS.TEXT_GREY_LIGHT}
-            textStyle={addPlayerModalStyles.serachText}
+            textStyle={addPlayerModalStyles.searchText}
             inputStyle={addPlayerModalStyles.searchWrapper}
             onChangeText={(text: string) => onChangeField('search', text)}
           />
@@ -842,7 +849,7 @@ const MainLayout = (props: TProps) => {
             </Button>
             <Button
               customStyle={addPlayerModalStyles.confirmBtn}
-              onPress={() => onAddPlayerModalClose(true)}>
+              onPress={() => onAddPlayerModalConfirm()}>
               <Text style={addPlayerModalStyles.buttonText}>{t('profile.createSave')}</Text>
             </Button>
           </View>

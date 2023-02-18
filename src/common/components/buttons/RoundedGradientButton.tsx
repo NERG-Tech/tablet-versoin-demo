@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
 
 type TProps = {
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
+  startColor: string;
+  endColor: string;
   customStyle: ViewStyle;
   textStyle?: TextStyle;
   label: string;
@@ -30,7 +32,7 @@ export const RoundedGradientButton = (props: TProps) => {
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
-        colors={[COLORS.BLUE_LIGHT, COLORS.BLACK]}
+        colors={[props.startColor, props.endColor]}
         style={StyleSheet.flatten([styles.gradientButton, props.customStyle])}>
         <Text style={StyleSheet.flatten([styles.text, props.textStyle])}>{props.label}</Text>
       </LinearGradient>

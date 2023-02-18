@@ -1,16 +1,16 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-const PlayerScreen = () => {
+const RestScreen = () => {
   return (
     <View
       style={{
         flex: 1,
         justifyContent: 'center',
       }}>
-      <Text style={{textAlign: 'center'}}>Player Screen</Text>
+      <Text style={{textAlign: 'center'}}>Rest</Text>
     </View>
   );
 };
 
-export default PlayerScreen;
+export default RestScreen;
