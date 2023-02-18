@@ -154,6 +154,8 @@ const SignInScreen = () => {
           </Button>
           <RoundedGradientButton
             onPress={() => handleSignIn()}
+            startColor={COLORS.BLUE_LIGHT}
+            endColor={COLORS.BLACK}
             customStyle={styles.sigInButton}
             textStyle={styles.signInText}
             label={t('app.signIn')}
