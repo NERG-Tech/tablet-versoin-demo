@@ -1,13 +1,48 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import Modal from 'react-native-modal';
 import {Text, Image, View, StyleSheet} from 'react-native';
-import {CircularProgressBar, GradientBorderButton} from '../../common/components';
+import {Button, CircularProgressBar, GradientBorderButton} from '../../common/components';
 import {COLORS, FONT_WEIGHT, FONT_SIZE} from '../../common/constants/StyleConstants';
 import WeeklyResult from './sections/WeeklyResult';
 
 const ArrowUpImg = require('../../assets/img/arrowUp.png');
 const TreasureImg = require('../../assets/img/treasure.png');
 const CPUImg = require('../../assets/img/cpu.png');
+const MealImg = require('../../assets/img/meal.png');
+
+const nutrientTabs = {
+  foodItems: 'Food Items',
+  vitamins: 'Vitamins',
+  supplements: 'Supplements',
+};
+
+const foodItems = [
+  'Breakfast: Water, watermelon, iceberg lettuce, fruits and vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+  'Lunch: Milk, grains, fruits, vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+  'Dinner: Milk, grains, fruits, vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+];
+
+const vitamins = [
+  'Breakfast: Water, watermelon, iceberg lettuce, fruits and vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+  'Lunch: Milk, grains, fruits, vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+  'Dinner: Milk, grains, fruits, vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+];
+
+const supplements = [
+  'Breakfast: Water, watermelon, iceberg lettuce, fruits and vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+  'Lunch: Milk, grains, fruits, vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+  'Dinner: Milk, grains, fruits, vegetables.',
+  'Snack: Milk, grains, fruits, vegetables.',
+];
 
 const styles = StyleSheet.create({
   container: {
@@ -229,10 +264,163 @@ const styles = StyleSheet.create({
   playerHealthButtonsCol: {
     flex: 1,
   },
+  modalsWrapper: {
+    position: 'relative',
+  },
+});
+
+const nutrientModalStyles = StyleSheet.create({
+  modal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  container: {
+    width: 700,
+    borderRadius: 25,
+    backgroundColor: COLORS.WHITE,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: 40,
+    paddingHorizontal: 25,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+  },
+  modalHeaderTitle: {
+    fontWeight: FONT_WEIGHT.SEMI_BOLD,
+    fontSize: FONT_SIZE.L,
+    color: COLORS.TEXT_DARK,
+  },
+  modalHeaderTabsWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 24,
+  },
+  modalHeaderTabWrapper: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: 120,
+  },
+  modalHeaderTabText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.MD,
+    color: COLORS.TEXT_DARK,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+  },
+  modalHeaderTabBottom: {
+    width: '100%',
+    height: 8,
+    marginTop: 8,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: COLORS.WHITE_ALPHA,
+    backgroundColor: COLORS.BACKGROUND,
+    elevation: 2,
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    shadowColor: COLORS.BLACK_LIGHT,
+    shadowOffset: {width: 2, height: 2},
+  },
+  modalHeaderTabActiveBottom: {
+    width: '100%',
+    height: 8,
+    marginTop: 8,
+    borderRadius: 4,
+    backgroundColor: COLORS.BLUE_LIGHT,
+    elevation: 2,
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    shadowColor: COLORS.BLACK_LIGHT,
+    shadowOffset: {width: 2, height: 2},
+  },
+  modalBody: {
+    flexDirection: 'column',
+    gap: 40,
+    paddingVertical: 60,
+    paddingHorizontal: 30,
+  },
+  descWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  descImg: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+  },
+  descText: {
+    fontWeight: FONT_WEIGHT.LIGHT,
+    fontSize: FONT_SIZE.L,
+    color: COLORS.BLACK,
+    marginLeft: 10,
+  },
 });
 
 const SnapshotScreen = () => {
+  const [isNutrientModal, setNutrientModal] = useState(false);
+  const [nutrientTab, setNutrientTab] = useState('foodItems');
   const {t} = useTranslation();
+
+  const onNutrientModalClose = () => {
+    setTimeout(() => setNutrientModal(false), 150);
+  };
+
+  const nutrientModal = isNutrientModal => (
+    <Modal
+      isVisible={isNutrientModal}
+      style={nutrientModalStyles.modal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
+      onBackdropPress={onNutrientModalClose}>
+      <View style={nutrientModalStyles.container}>
+        <View style={nutrientModalStyles.modalHeader}>
+          <Text style={nutrientModalStyles.modalHeaderTitle}>Nutrient Guide</Text>
+          <View style={nutrientModalStyles.modalHeaderTabsWrapper}>
+            {Object.keys(nutrientTabs).map((tab: string, i: number) => (
+              <Button
+                key={i}
+                customStyle={nutrientModalStyles.modalHeaderTabWrapper}
+                onPress={() => setNutrientTab(tab)}>
+                <Text style={nutrientModalStyles.modalHeaderTabText}>{nutrientTabs[tab]}</Text>
+                {tab === nutrientTab ? (
+                  <View style={nutrientModalStyles.modalHeaderTabActiveBottom} />
+                ) : (
+                  <View style={nutrientModalStyles.modalHeaderTabBottom} />
+                )}
+              </Button>
+            ))}
+          </View>
+        </View>
+        <View style={nutrientModalStyles.modalBody}>
+          {nutrientTab === 'foodItems' &&
+            foodItems.map((desc: string, i: number) => (
+              <View key={i} style={nutrientModalStyles.descWrapper}>
+                <Image style={nutrientModalStyles.descImg} source={MealImg} />
+                <Text style={nutrientModalStyles.descText}>{desc}</Text>
+              </View>
+            ))}
+          {nutrientTab === 'vitamins' &&
+            vitamins.map((desc: string, i: number) => (
+              <View key={i} style={nutrientModalStyles.descWrapper}>
+                <Image style={nutrientModalStyles.descImg} source={MealImg} />
+                <Text style={nutrientModalStyles.descText}>{desc}</Text>
+              </View>
+            ))}
+          {nutrientTab === 'supplements' &&
+            supplements.map((desc: string, i: number) => (
+              <View key={i} style={nutrientModalStyles.descWrapper}>
+                <Image style={nutrientModalStyles.descImg} source={MealImg} />
+                <Text style={nutrientModalStyles.descText}>{desc}</Text>
+              </View>
+            ))}
+        </View>
+      </View>
+    </Modal>
+  );
 
   return (
     <View style={styles.container}>
@@ -282,10 +470,12 @@ const SnapshotScreen = () => {
                 </View>
               </View>
             </CircularProgressBar>
-            <View style={styles.dailySubInfoGuideWrapper}>
+            <Button
+              customStyle={styles.dailySubInfoGuideWrapper}
+              onPress={() => setNutrientModal(true)}>
               <Text style={styles.dailySubInfoGuideText}>View Guide</Text>
               <Image style={styles.dailySubInfoGuideImg} source={TreasureImg} />
-            </View>
+            </Button>
           </View>
           <View style={styles.dailySubInfoWrapper}>
             <CircularProgressBar
@@ -533,6 +723,7 @@ const SnapshotScreen = () => {
           </View>
         </View>
       </View>
+      <View style={styles.modalsWrapper}>{nutrientModal(isNutrientModal)}</View>
     </View>
   );
 };
