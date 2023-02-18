@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   resultWrapper: {
     flexDirection: 'column',
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: COLORS.BORDER_ALPHA_LIGHT,
     borderRadius: 24,
     paddingVertical: 20,

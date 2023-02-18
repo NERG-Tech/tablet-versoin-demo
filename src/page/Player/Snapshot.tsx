@@ -1,15 +1,13 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, Image, View, StyleSheet} from 'react-native';
-import {CircularProgressBar} from '../../common/components';
+import {CircularProgressBar, GradientBorderButton} from '../../common/components';
 import {COLORS, FONT_WEIGHT, FONT_SIZE} from '../../common/constants/StyleConstants';
 import WeeklyResult from './sections/WeeklyResult';
 
 const ArrowUpImg = require('../../assets/img/arrowUp.png');
 const TreasureImg = require('../../assets/img/treasure.png');
 const CPUImg = require('../../assets/img/cpu.png');
-const CircleLeftImg = require('../../assets/img/circleLeft.png');
-const MealImg = require('../../assets/img/meal.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +18,7 @@ const styles = StyleSheet.create({
   },
   dailyInfoWrapper: {
     flexDirection: 'column',
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: COLORS.BORDER_ALPHA_LIGHT,
     borderRadius: 24,
     paddingVertical: 20,
@@ -146,7 +144,9 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   playerSelfInfoWrapper: {
+    flex: 1,
     flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   playerAssessmentWrapper: {
     flexDirection: 'column',
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 16,
+    marginTop: 30,
   },
   assessmentWrapper: {
     flexDirection: 'column',
@@ -170,16 +170,21 @@ const styles = StyleSheet.create({
   assessmentContentWrapper: {
     flex: 1,
     flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   assessmentContentDesc: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MS,
+    fontSize: FONT_SIZE.XS,
     color: COLORS.TEXT_DARK,
+    textAlign: 'center',
+    width: 60,
   },
   assessmentContentValue: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
     fontSize: FONT_SIZE.XL,
     color: COLORS.TEXT_DARK,
+    paddingBottom: 10,
   },
   assessmentArrowWrapper: {
     flexDirection: 'row',
@@ -190,6 +195,39 @@ const styles = StyleSheet.create({
     width: 27,
     height: 27,
     resizeMode: 'contain',
+  },
+  playerHealthWrapper: {
+    flexDirection: 'column',
+    marginTop: 30,
+  },
+  playerHealthTitleWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  playerHealthTitleText: {
+    fontWeight: FONT_WEIGHT.SEMI_BOLD,
+    fontSize: FONT_SIZE.L,
+    color: COLORS.TEXT_DARK_LIGHT,
+  },
+  playerHealthTitleImg: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+    marginLeft: 6,
+  },
+  playerHealthButtonsWrapper: {
+    flexDirection: 'column',
+    gap: 20,
+    marginTop: 20,
+  },
+  playerHealthButtonsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 20,
+  },
+  playerHealthButtonsCol: {
+    flex: 1,
   },
 });
 
@@ -359,6 +397,137 @@ const SnapshotScreen = () => {
                 <Text style={styles.weeklyResultInfoDescText}>
                   {t('personalInfo.snapshot.weeklyResult.st')}
                 </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={styles.playerSelfInfoWrapper}>
+          <View style={styles.playerAssessmentWrapper}>
+            <Text style={styles.assessmentTitle}>Player Self Assessments</Text>
+            <View style={styles.assessmentsWrapper}>
+              <View style={styles.assessmentWrapper}>
+                <CircularProgressBar
+                  progress={75}
+                  diameter={100}
+                  startColor={COLORS.GRADIENT_SKY}
+                  endColor={COLORS.GRADIENT_PURPLE}>
+                  <View style={styles.assessmentContentWrapper}>
+                    <Text style={styles.assessmentContentDesc}>
+                      {t('personalInfo.snapshot.options.mf')}
+                    </Text>
+                    <Text style={styles.assessmentContentValue}>7 / 10</Text>
+                  </View>
+                </CircularProgressBar>
+                <View style={styles.assessmentArrowWrapper}>
+                  <Image style={styles.assessmentArrowImg} source={ArrowUpImg} />
+                </View>
+              </View>
+              <View style={styles.assessmentWrapper}>
+                <CircularProgressBar
+                  progress={75}
+                  diameter={100}
+                  startColor={COLORS.GRADIENT_SKY}
+                  endColor={COLORS.GRADIENT_PURPLE}>
+                  <View style={styles.assessmentContentWrapper}>
+                    <Text style={styles.assessmentContentDesc}>
+                      {t('personalInfo.snapshot.options.gc')}
+                    </Text>
+                    <Text style={styles.assessmentContentValue}>7 / 10</Text>
+                  </View>
+                </CircularProgressBar>
+                <View style={styles.assessmentArrowWrapper}>
+                  <Image style={styles.assessmentArrowImg} source={ArrowUpImg} />
+                </View>
+              </View>
+              <View style={styles.assessmentWrapper}>
+                <CircularProgressBar
+                  progress={75}
+                  diameter={100}
+                  startColor={COLORS.GRADIENT_SKY}
+                  endColor={COLORS.GRADIENT_PURPLE}>
+                  <View style={styles.assessmentContentWrapper}>
+                    <Text style={styles.assessmentContentDesc}>
+                      {t('personalInfo.snapshot.options.mt')}
+                    </Text>
+                    <Text style={styles.assessmentContentValue}>7 / 10</Text>
+                  </View>
+                </CircularProgressBar>
+                <View style={styles.assessmentArrowWrapper}>
+                  <Image style={styles.assessmentArrowImg} source={ArrowUpImg} />
+                </View>
+              </View>
+              <View style={styles.assessmentWrapper}>
+                <CircularProgressBar
+                  progress={75}
+                  diameter={100}
+                  startColor={COLORS.GRADIENT_SKY}
+                  endColor={COLORS.GRADIENT_PURPLE}>
+                  <View style={styles.assessmentContentWrapper}>
+                    <Text style={styles.assessmentContentDesc}>
+                      {t('personalInfo.snapshot.options.jnp')}
+                    </Text>
+                    <Text style={styles.assessmentContentValue}>7 / 10</Text>
+                  </View>
+                </CircularProgressBar>
+                <View style={styles.assessmentArrowWrapper}>
+                  <Image style={styles.assessmentArrowImg} source={ArrowUpImg} />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.playerHealthWrapper}>
+            <View style={styles.playerHealthTitleWrapper}>
+              <Text style={styles.playerHealthTitleText}>Player Health Reports</Text>
+              <Image style={styles.playerHealthTitleImg} source={CPUImg} />
+            </View>
+            <View style={styles.playerHealthButtonsWrapper}>
+              <View style={styles.playerHealthButtonsRow}>
+                <View style={styles.playerHealthButtonsCol}>
+                  <GradientBorderButton
+                    startColor={COLORS.GRADIENT_RED}
+                    endColor={COLORS.GRADIENT_PURPLE}
+                    label={t('personalInfo.snapshot.playerHealth.bg')}
+                  />
+                </View>
+                <View style={styles.playerHealthButtonsCol}>
+                  <GradientBorderButton
+                    startColor={COLORS.GRADIENT_RED}
+                    endColor={COLORS.GRADIENT_PURPLE}
+                    label={t('personalInfo.snapshot.playerHealth.bo')}
+                  />
+                </View>
+              </View>
+              <View style={styles.playerHealthButtonsRow}>
+                <View style={styles.playerHealthButtonsCol}>
+                  <GradientBorderButton
+                    startColor={COLORS.GRADIENT_RED}
+                    endColor={COLORS.GRADIENT_PURPLE}
+                    label={t('personalInfo.snapshot.playerHealth.bp')}
+                  />
+                </View>
+                <View style={styles.playerHealthButtonsCol}>
+                  <GradientBorderButton
+                    startColor={COLORS.GRADIENT_RED}
+                    endColor={COLORS.GRADIENT_PURPLE}
+                    label={t('personalInfo.snapshot.playerHealth.hrv')}
+                  />
+                </View>
+              </View>
+              <View style={styles.playerHealthButtonsRow}>
+                <View style={styles.playerHealthButtonsCol}>
+                  <GradientBorderButton
+                    startColor={COLORS.GRADIENT_RED}
+                    endColor={COLORS.GRADIENT_PURPLE}
+                    label={t('personalInfo.snapshot.playerHealth.ecg')}
+                  />
+                </View>
+                <View style={styles.playerHealthButtonsCol}>
+                  <GradientBorderButton
+                    startColor={COLORS.GRADIENT_RED}
+                    endColor={COLORS.GRADIENT_PURPLE}
+                    label={t('personalInfo.snapshot.playerHealth.stress')}
+                  />
+                </View>
               </View>
             </View>
           </View>
