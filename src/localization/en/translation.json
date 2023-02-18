@@ -131,8 +131,10 @@
       "weeklyResult": {
         "caption": "Weekly results",
         "hl": "Hydration Levels",
+        "pn": "Proper Nutrition",
         "ha": "Health Activity",
         "br": "Body Rejuvenation",
+        "tp": "Total Percentage",
         "st": "Sedentary Time",
         "publish": "Publish"
       },

@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 20,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1.5,
     borderBottomColor: COLORS.DIVIDER,
   },
   optionText: {
@@ -172,13 +172,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingVertical: 40,
     paddingHorizontal: 30,
+    backgroundColor: COLORS.WHITE,
   },
   tabsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 50,
-    marginBottom: 40,
+    marginBottom: 10,
   },
   tabWrapper: {
     flex: 1,
@@ -199,6 +200,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.WHITE_ALPHA,
     backgroundColor: COLORS.BACKGROUND,
+    elevation: 2,
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    shadowColor: COLORS.BLACK_LIGHT,
+    shadowOffset: {width: 2, height: 2},
   },
   tabActiveBottom: {
     width: '100%',
@@ -206,6 +212,11 @@ const styles = StyleSheet.create({
     marginTop: 6,
     borderRadius: 3,
     backgroundColor: COLORS.BLUE_LIGHT,
+    elevation: 2,
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    shadowColor: COLORS.BLACK_LIGHT,
+    shadowOffset: {width: 2, height: 2},
   },
   scrollViewContainer: {
     flex: 1,
