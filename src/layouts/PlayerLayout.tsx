@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Image} from 'react-native';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, ScrollView, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
@@ -206,6 +206,10 @@ const styles = StyleSheet.create({
     marginTop: 6,
     borderRadius: 3,
     backgroundColor: COLORS.BLUE_LIGHT,
+  },
+  scrollViewContainer: {
+    flex: 1,
+    flexDirection: 'column',
   },
 });
 
@@ -1068,7 +1072,9 @@ const PlayerLayout = (props: TProps) => {
               </Button>
             ))}
           </View>
-          {props.children}
+          <ScrollView style={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
+            {props.children}
+          </ScrollView>
         </View>
       </View>
       <View style={styles.modalsWrapper}>
