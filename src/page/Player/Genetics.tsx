@@ -508,7 +508,7 @@ const GeneticsScreen = () => {
     }
   };
 
-  const MeasurementModal = ({isVisible}: {isVisible: boolean}) => (
+  const measurementModal = (isVisible: boolean) => (
     <Modal
       isVisible={isVisible}
       style={measurementModalStyles.modal}
@@ -595,21 +595,14 @@ const GeneticsScreen = () => {
     </Modal>
   );
 
-  const SelectModal = ({
-    isVisible,
-    field,
-    title,
-    options,
-    onConfirm,
-    onCancel,
-  }: {
-    isVisible: boolean;
-    field: string;
-    title: string;
-    options: object;
-    onConfirm: (field: string) => void;
-    onCancel: (field: string) => void;
-  }) => (
+  const selectModal = (
+    isVisible: boolean,
+    field: string,
+    title: string,
+    options: object,
+    onConfirm: (field: string) => void,
+    onCancel: (field: string) => void,
+  ) => (
     <Modal
       isVisible={isVisible}
       style={selectModalStyles.modal}
@@ -644,17 +637,7 @@ const GeneticsScreen = () => {
     </Modal>
   );
 
-  const AboutModal = ({
-    isVisible,
-    title,
-    field,
-    description,
-  }: {
-    isVisible: boolean;
-    title: string;
-    field: string;
-    description: string;
-  }) => (
+  const aboutModal = (isVisible: boolean, title: string, field: string, description: string) => (
     <Modal
       isVisible={isVisible}
       style={aboutModalStyles.modal}
@@ -875,43 +858,43 @@ const GeneticsScreen = () => {
         </View>
       </View>
       <View style={styles.modalsWrapper}>
-        <MeasurementModal isVisible={isMeasurement} />
-        <SelectModal
-          isVisible={isEthnicity}
-          title={t('personalInfo.genetics.gah.ethnicity')}
-          field="ethnicity"
-          options={ethnicitys}
-          onConfirm={onSelectConfirm}
-          onCancel={onSelectCancel}
-        />
-        <SelectModal
-          isVisible={isComplexion}
-          title={t('personalInfo.genetics.gah.complexion')}
-          field="complexion"
-          options={complexions}
-          onConfirm={onSelectConfirm}
-          onCancel={onSelectCancel}
-        />
-        <SelectModal
-          isVisible={isBloodType}
-          title={t('personalInfo.genetics.gah.bloodType')}
-          field="bloodType"
-          options={bloodTypes}
-          onConfirm={onSelectConfirm}
-          onCancel={onSelectCancel}
-        />
-        <AboutModal
-          isVisible={isBloodAbout}
-          title={t('personalInfo.genetics.bloodModal.caption')}
-          field="blood"
-          description={t('personalInfo.genetics.bloodModal.content')}
-        />
-        <AboutModal
-          isVisible={isWaterAbout}
-          title={t('personalInfo.genetics.waterModal.caption')}
-          field="water"
-          description={t('personalInfo.genetics.waterModal.content')}
-        />
+        {measurementModal(isMeasurement)}
+        {selectModal(
+          isEthnicity,
+          'ethnicity',
+          t('personalInfo.genetics.gah.ethnicity'),
+          ethnicitys,
+          onSelectConfirm,
+          onSelectCancel,
+        )}
+        {selectModal(
+          isComplexion,
+          'complexion',
+          t('personalInfo.genetics.gah.complexion'),
+          complexions,
+          onSelectConfirm,
+          onSelectCancel,
+        )}
+        {selectModal(
+          isBloodType,
+          'bloodType',
+          t('personalInfo.genetics.gah.bloodType'),
+          bloodTypes,
+          onSelectConfirm,
+          onSelectCancel,
+        )}
+        {aboutModal(
+          isBloodAbout,
+          t('personalInfo.genetics.bloodModal.caption'),
+          'blood',
+          t('personalInfo.genetics.bloodModal.content'),
+        )}
+        {aboutModal(
+          isWaterAbout,
+          t('personalInfo.genetics.waterModal.caption'),
+          'water',
+          t('personalInfo.genetics.waterModal.content'),
+        )}
       </View>
     </View>
   );
