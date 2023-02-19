@@ -33,7 +33,7 @@ const HomeScreen = () => {
   const goToPlayerScreen = () => {
     navigation.navigate(NavigationConstants.PERSONAL_INFO, {
       userId: 'new',
-      activeTab: NavigationConstants.SNAPSHOT,
+      activeTab: NavigationConstants.GENETICS,
     });
   };
 

@@ -37,9 +37,12 @@ const styles = StyleSheet.create({
 });
 
 type TProps = {
-  morning: number;
-  afternoon: number;
-  night: number;
+  startLabel: string;
+  startValue: number;
+  middleLabel: string;
+  middleValue: number;
+  endLabel: string;
+  endValue: number;
   customStyle?: ViewStyle;
 };
 
@@ -48,22 +51,22 @@ export const AnalysisBar = (props: TProps) => (
     <View style={styles.itemWrapper}>
       <View style={[styles.itemIcon, {backgroundColor: COLORS.INFO_MORNING}]} />
       <View style={styles.itemDescWrapper}>
-        <Text style={styles.itemDescLabel}>Morning</Text>
-        <Text style={styles.itemDescValue}>{props.morning} %</Text>
+        <Text style={styles.itemDescLabel}>{props.startLabel}</Text>
+        <Text style={styles.itemDescValue}>{props.startValue} %</Text>
       </View>
     </View>
     <View style={styles.itemWrapper}>
       <View style={[styles.itemIcon, {backgroundColor: COLORS.INFO_AFTERNOON}]} />
       <View style={styles.itemDescWrapper}>
-        <Text style={styles.itemDescLabel}>Afternoon</Text>
-        <Text style={styles.itemDescValue}>{props.afternoon} %</Text>
+        <Text style={styles.itemDescLabel}>{props.middleLabel}</Text>
+        <Text style={styles.itemDescValue}>{props.middleValue} %</Text>
       </View>
     </View>
     <View style={styles.itemWrapper}>
       <View style={[styles.itemIcon, {backgroundColor: COLORS.INFO_NIGHT}]} />
       <View style={styles.itemDescWrapper}>
-        <Text style={styles.itemDescLabel}>Night</Text>
-        <Text style={styles.itemDescValue}>{props.night} %</Text>
+        <Text style={styles.itemDescLabel}>{props.endLabel}</Text>
+        <Text style={styles.itemDescValue}>{props.endValue} %</Text>
       </View>
     </View>
   </View>

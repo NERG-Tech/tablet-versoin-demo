@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     backgroundColor: COLORS.WHITE,
-    borderRadius: 24,
     paddingVertical: 30,
     paddingHorizontal: 20,
   },
@@ -120,7 +119,6 @@ const styles = StyleSheet.create({
   },
   analysisWrapper: {
     flexDirection: 'column',
-    marginTop: 16,
   },
   analysisTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
@@ -305,8 +303,23 @@ const NutrientsScreen = () => {
         <View style={styles.analysisWrapper}>
           <Text style={styles.analysisTitle}>Nutrient Log Analysis</Text>
           <View style={styles.analysisInfoWrapper}>
-            <AnalysisDisplay hHours="02:00" dHours="05:21" customStyle={{marginTop: 16}} />
-            <AnalysisBar morning={24} afternoon={46} night={30} customStyle={{marginTop: 16}} />
+            <AnalysisDisplay
+              lLabel="Hydration"
+              lHours="02:00"
+              rLabel="Diet"
+              rHours="05:21"
+              dividerColor={COLORS.DIVIDER_SKY}
+              customStyle={{marginTop: 16}}
+            />
+            <AnalysisBar
+              startLabel="Morning"
+              startValue={24}
+              middleLabel="Afternooon"
+              middleValue={46}
+              endLabel="Night"
+              endValue={30}
+              customStyle={{marginTop: 16}}
+            />
           </View>
         </View>
         <View style={styles.dataWrapper}>

@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
     flexDirection: 'column',
-    paddingVertical: 40,
+    paddingTop: 40,
     paddingHorizontal: 30,
     backgroundColor: COLORS.WHITE,
   },

@@ -170,16 +170,16 @@
       "macro": "Macro's",
       "vitamins": "Vitamins",
       "minerals": "Minerals",
-      "water": "Minerals",
+      "water": "Water",
       "carbohydrates": "Carbohydrates",
       "dri": "Dietary Reference Intake (DRI)"
     },
     "exercise": {
       "caption": "Exercise",
       "ctbd": "Calories To Burn Daily",
-      "st": "Steps Taken",
+      "td": "Total Distance",
       "aza": "Activity Zone Analysis",
-      "ha": "Healthy Activty",
+      "ma": "Minimal Activity",
       "pa": "Performance Activtiy",
       "recovery": "Recovery",
       "weightLoss": "Weight Loss",
@@ -189,7 +189,7 @@
       "ahr": "Active Heart Rate",
       "hr": "Heart Rate Reserve",
       "hrr": "Heart Rate Recovery",
-      "il": "Intensity Level"
+      "mm": "MET Max"
     },
     "rest": {
       "caption": "Rest",
@@ -215,12 +215,14 @@
         "age": "Age",
         "weight": "Weight",
         "height": "Height",
-        "apm": "Add Player Measurements"
+        "ko": "Key Only",
+        "apm": "Add Player Measurements",
+        "pm": "Player Measurements"
       },
       "gah": {
         "caption": "Genetics and health",
         "ethnicity": "Ethnicity",
-        "complextion": "Complextion",
+        "complexion": "Complexion",
         "bloodType": "Blood Type",
         "apec": "Add Pre-Existing Conditions",
         "adm": "Add Food Allergies / Diet Restrictions / Medications",
