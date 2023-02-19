@@ -29,7 +29,7 @@ const PlayerScreen = () => {
     } else {
       navigation.navigate(NavigationConstants.PERSONAL_INFO, {
         userId: userId,
-        activeTab: NavigationConstants.SNAPSHOT,
+        activeTab: NavigationConstants.GENETICS,
       });
     }
   };

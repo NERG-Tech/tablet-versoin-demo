@@ -39,7 +39,7 @@ export const AppStack = () => {
         name={NavigationConstants.PERSONAL_INFO}
         component={PlayerScreen}
         options={{headerShown: false}}
-        initialParams={{userId: '', activeTab: NavigationConstants.SNAPSHOT}}
+        initialParams={{userId: '', activeTab: NavigationConstants.GENETICS}}
       />
     </Navigator>
   );
