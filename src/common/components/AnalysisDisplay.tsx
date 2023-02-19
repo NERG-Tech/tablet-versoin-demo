@@ -17,27 +17,32 @@ const styles = StyleSheet.create({
     fontWeight: FONT_WEIGHT.BOLD,
     fontSize: 28,
     color: COLORS.WHITE,
+  },
+  hourWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 9,
     marginTop: 20,
   },
-  hWrapper: {
+  lWrapper: {
     flex: 1,
     paddingVertical: 20,
     borderTopLeftRadius: 16,
     borderBottomLeftRadius: 16,
     backgroundColor: COLORS.GREY,
   },
-  hContentWrapper: {
+  lContentWrapper: {
     flexDirection: 'column',
     paddingHorizontal: 30,
   },
-  dWrapper: {
+  rWrapper: {
     flex: 1,
     paddingVertical: 20,
     borderTopRightRadius: 16,
     borderBottomRightRadius: 16,
     backgroundColor: COLORS.GREY_LIGHT,
   },
-  dContentWrapper: {
+  rContentWrapper: {
     flexDirection: 'column',
     paddingHorizontal: 30,
     borderLeftWidth: 5,
@@ -49,23 +54,31 @@ type TProps = {
   rLabel: string;
   lHours: string;
   rHours: string;
+  lIcon?: React.ReactNode;
+  rIcon?: React.ReactNode;
   dividerColor: string;
   customStyle?: ViewStyle;
 };
 
 export const AnalysisDisplay = (props: TProps) => (
   <View style={StyleSheet.flatten([styles.container, props.customStyle])}>
-    <View style={styles.hWrapper}>
-      <View style={styles.hContentWrapper}>
+    <View style={styles.lWrapper}>
+      <View style={styles.lContentWrapper}>
         <Text style={styles.label}>{props.lLabel}</Text>
-        <Text style={styles.hourText}>{props.lHours} hrs</Text>
+        <View style={styles.hourWrapper}>
+          {!!props.lIcon && props.lIcon}
+          <Text style={styles.hourText}>{props.lHours} hrs</Text>
+        </View>
       </View>
     </View>
-    <View style={styles.dWrapper}>
+    <View style={styles.rWrapper}>
       <View
-        style={StyleSheet.flatten([styles.dContentWrapper, {borderLeftColor: props.dividerColor}])}>
+        style={StyleSheet.flatten([styles.rContentWrapper, {borderLeftColor: props.dividerColor}])}>
         <Text style={styles.label}>{props.rLabel}</Text>
-        <Text style={styles.hourText}>{props.rHours} hrs</Text>
+        <View style={styles.hourWrapper}>
+          {!!props.rIcon && props.rIcon}
+          <Text style={styles.hourText}>{props.rHours} hrs</Text>
+        </View>
       </View>
     </View>
   </View>
