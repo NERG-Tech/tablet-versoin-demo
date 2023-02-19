@@ -215,7 +215,9 @@
         "age": "Age",
         "weight": "Weight",
         "height": "Height",
-        "apm": "Add Player Measurements"
+        "ko": "Key Only",
+        "apm": "Add Player Measurements",
+        "pm": "Player Measurements"
       },
       "gah": {
         "caption": "Genetics and health",

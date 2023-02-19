@@ -34,8 +34,14 @@ const styles = StyleSheet.create({
     color: COLORS.TEXT_GREY_LIGHTER,
     paddingVertical: 10,
     paddingHorizontal: 30,
-    borderRightWidth: 2,
+    borderRightWidth: 1.5,
     borderRightColor: COLORS.DIVIDER_LIGHT,
+  },
+  text: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -51,7 +57,9 @@ type TProps = {
   autoFocus?: boolean;
   selectionColor?: string;
   textStyle?: TextStyle;
+  labelStyle?: TextStyle;
   inputStyle?: ViewStyle;
+  isOnlyText?: boolean;
 };
 
 export const AttributeInput = (props: TProps) => {
@@ -67,7 +75,9 @@ export const AttributeInput = (props: TProps) => {
     autoFocus,
     selectionColor,
     textStyle,
+    labelStyle,
     inputStyle,
+    isOnlyText,
   } = props;
 
   useEffect(() => {
@@ -80,21 +90,27 @@ export const AttributeInput = (props: TProps) => {
 
   return (
     <View style={StyleSheet.flatten([styles.container, inputStyle])}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput
-        ref={inputRef}
-        keyboardType={keyboardType}
-        secureTextEntry={secureTextEntry}
-        editable={!readOnly}
-        placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor || COLORS.TEXT_GREY}
-        autoCorrect={false}
-        autoFocus={autoFocus}
-        selectionColor={selectionColor || COLORS.TEXT_GREY}
-        style={StyleSheet.flatten([styles.input, textStyle])}
-        value={value}
-        onChangeText={props.onChangeText}
-      />
+      <Text style={StyleSheet.flatten([styles.label, labelStyle])}>{label}</Text>
+      {isOnlyText ? (
+        <View style={styles.text}>
+          <Text style={textStyle}>{value}</Text>
+        </View>
+      ) : (
+        <TextInput
+          ref={inputRef}
+          keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
+          editable={!readOnly}
+          placeholder={placeholder}
+          placeholderTextColor={placeholderTextColor || COLORS.TEXT_GREY}
+          autoCorrect={false}
+          autoFocus={autoFocus}
+          selectionColor={selectionColor || COLORS.TEXT_GREY}
+          style={StyleSheet.flatten([styles.input, textStyle])}
+          value={value}
+          onChangeText={props.onChangeText}
+        />
+      )}
     </View>
   );
 };
