@@ -19,12 +19,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    gap: 60,
-    backgroundColor: COLORS.WHITE,
     paddingVertical: 30,
-    paddingHorizontal: 20,
+    paddingHorizontal: 50,
   },
   playerInfoInputsWrapper: {
+    flex: 1,
     flexDirection: 'column',
   },
   bmiWrapper: {
@@ -123,6 +122,7 @@ const styles = StyleSheet.create({
   dataWrapper: {
     flex: 1,
     flexDirection: 'column',
+    marginLeft: 60,
   },
   dataTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   dataInfoRow: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   progressbtn: {
-    flex: 1,
+    flex: 0,
   },
   policyWrapper: {
     flex: 1,
