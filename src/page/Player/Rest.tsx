@@ -138,10 +138,10 @@ const RestScreen = () => {
           <AnalysisDisplay
             lLabel={t('personalInfo.rest.bedTime')}
             lHours="22:00"
-            lIcon={<Image style={styles.sunImg} source={SunImg} />}
+            lIcon={<Image style={styles.moonImg} source={MoonImg} />}
             rLabel={t('personalInfo.rest.wakeup')}
             rHours="05:21"
-            rIcon={<Image style={styles.moonImg} source={MoonImg} />}
+            rIcon={<Image style={styles.sunImg} source={SunImg} />}
             dividerColor={COLORS.DIVIDER_PURPLE}
             customStyle={{marginTop: 16}}
           />
@@ -176,10 +176,7 @@ const RestScreen = () => {
               startColor={COLORS.GRADIENT_PURPLE_LIGHT}
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.logWrapper}>
-                <View style={styles.percentGroupWrapper}>
-                  <Text style={styles.percentValue}>2000</Text>
-                  <Text style={styles.unitText}>F</Text>
-                </View>
+                <Text style={styles.percentValue}>2000</Text>
                 <Text style={styles.percentDescText}>{t('personalInfo.rest.br')}</Text>
               </View>
             </CircularProgressBar>
