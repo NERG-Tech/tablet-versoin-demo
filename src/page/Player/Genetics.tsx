@@ -418,7 +418,7 @@ const GeneticsScreen = () => {
     weight: '',
     height: '',
     ethnicity: '',
-    complextion: '',
+    complexion: '',
     bloodType: '',
     neck: '',
     wingSpan: '',
@@ -745,7 +745,7 @@ const GeneticsScreen = () => {
               <Button customStyle={styles.attrBtn} onPress={() => setComplexion(true)}>
                 <AttributeInput
                   label={t('personalInfo.genetics.gah.complexion')}
-                  value={state.complextion}
+                  value={state.complexion}
                   placeholder="Dark"
                   readOnly={true}
                   labelStyle={styles.gahInputLabel}
