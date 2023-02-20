@@ -28,7 +28,7 @@ const {Screen, Navigator} = createStackNavigator<AppStackParamList>();
 
 export const AppStack = () => {
   return (
-    <Navigator initialRouteName={NavigationConstants.PERSONAL_INFO}>
+    <Navigator initialRouteName={NavigationConstants.HOME}>
       <Screen
         name={NavigationConstants.HOME}
         component={HomeScreen}

@@ -113,6 +113,9 @@ const styles = StyleSheet.create({
   },
   gahInputLabel: {
     paddingHorizontal: 15,
+    paddingVertical: 0,
+    textAlign: 'center',
+    width: 100,
   },
   gahButtonWrapper: {
     flex: 1,
