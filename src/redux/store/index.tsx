@@ -1,6 +1,6 @@
 import {Action, configureStore, ThunkAction} from '@reduxjs/toolkit';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
-import {rootReducer, RootState} from './rootReducer';
+import {rootReducer, RootState} from '../reducers';
 import {
   TypedUseSelectorHook,
   useDispatch as useReduxDispatch,

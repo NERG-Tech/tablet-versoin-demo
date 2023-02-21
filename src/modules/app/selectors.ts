@@ -1,4 +1,4 @@
-import {RootState} from '../../redux/store/rootReducer';
+import {RootState} from '../../redux/reducers';
 import {Themes} from '../../common/theme';
 
 export const themeTypeSelector = (state: RootState) => state.app.theme;
