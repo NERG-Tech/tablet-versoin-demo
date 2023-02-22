@@ -7,18 +7,26 @@ export type TWaistAndHip = {
   hip: number;
 };
 
-export const addWaistAndHip = async (props: TWaistAndHip) => {
-  const url = `${apiUrl}/player/wh`;
-  const res = await axios.post(url, props);
+export const getWaistAndHip = async (props: TWaistAndHip) => {
+  try {
+    const url = `${apiUrl}/player/wh`;
+    const res = await axios.post(url, props);
 
-  return Promise.resolve(res.data);
+    return Promise.resolve(res.data);
+  } catch (err) {
+    console.log('getWaistAndHip Error: ', err);
+  }
 };
 
 export const getVo2 = async (pulse: number) => {
-  const url = `${apiUrl}/player/vo2`;
-  const res = await axios.post(url, {pulse});
+  try {
+    const url = `${apiUrl}/player/vo2`;
+    const res = await axios.post(url, {pulse});
 
-  return Promise.resolve(res.data);
+    return Promise.resolve(res.data);
+  } catch (err) {
+    console.log('getVo2 Error: ', err);
+  }
 };
 
 export type TMet = {
@@ -27,10 +35,14 @@ export type TMet = {
 };
 
 export const getMET = async (props: TMet) => {
-  const url = `${apiUrl}/player/met`;
-  const res = await axios.post(url, props);
+  try {
+    const url = `${apiUrl}/player/met`;
+    const res = await axios.post(url, props);
 
-  return Promise.resolve(res.data);
+    return Promise.resolve(res.data);
+  } catch (err) {
+    console.log('getMET Error: ', err);
+  }
 };
 
 export type TKeyMeasurement = {
@@ -43,14 +55,18 @@ export type TKeyMeasurement = {
 };
 
 export const getKeyMeasurements = async (props: TKeyMeasurement) => {
-  const url = `${apiUrl}/player/key`;
-  const res = await axios.post(url, props);
+  try {
+    const url = `${apiUrl}/player/key`;
+    const res = await axios.post(url, props);
 
-  return Promise.resolve(res.data);
+    return Promise.resolve(res.data);
+  } catch (err) {
+    console.log('getKeyMeasurements Error: ', err);
+  }
 };
 
 export const authService = {
-  addWaistAndHip,
+  getWaistAndHip,
   getVo2,
   getMET,
   getKeyMeasurements,

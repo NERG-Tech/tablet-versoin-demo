@@ -8,6 +8,9 @@ import {Input, AttributeInput, Button, RoundedButton, CheckListItem} from '../co
 import {useAuth} from '../contexts/AuthProvider';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 
+import {addPlayer} from '../redux/actions/plyerActions';
+import {TAddPlayer} from '../services/playerService';
+
 const LogoImg = require('../assets/img/logo/logo_white.png');
 const NFLImg = require('../assets/img/logo/NFL/NFL.png');
 const ArrowRight = require('../assets/img/hoc/arrowRight.png');
@@ -611,7 +614,7 @@ type TProps = {
 };
 
 const MainLayout = (props: TProps) => {
-  const initState = {
+  const initPlayerState = {
     search: '',
     name: '',
     age: '',
@@ -628,29 +631,42 @@ const MainLayout = (props: TProps) => {
   const [isGenderVisible, setGenderVisible] = useState(false);
   const [isMenVisible, setMenVisible] = useState(false);
   const [isWomenVisible, setWomenVisible] = useState(false);
-  const [state, setState] = useState(initState);
+  const [playerState, setPlayerState] = useState(initPlayerState);
   const {t} = useTranslation();
-  const auth = useAuth();
-  const signOut = () => {
+  const {authData, signOut} = useAuth();
+
+  const handleSignOut = () => {
     setConfrimVisible(true);
   };
 
   const onChangeField = (field: string, value: string) => {
-    setState({...state, [field]: value});
+    setPlayerState({...playerState, [field]: value});
   };
 
   const onAddPlayerModalClose = (confirm: boolean) => {
     if (!confirm) {
-      setState(initState);
+      setPlayerState(initPlayerState);
     }
     setTimeout(() => setPlayerVisible(false), 150);
   };
 
   const onAddPlayerModalConfirm = () => {
     setTimeout(() => setPlayerVisible(false), 150);
-    setTimeout(() => props.onChangeNav(NavigationConstants.PERSONAL_INFO), 500);
+    setTimeout(() => {
+      const playerData: TAddPlayer = {
+        name: playerState.name,
+        age: parseInt(playerState.age),
+        sex: playerState.gender,
+        weight: parseFloat(playerState.weight),
+        height: parseFloat(playerState.height),
+        sport: playerState.sport,
+        position: playerState.position,
+        accessToken: authData?.accessToken,
+      };
+      addPlayer(playerData);
+    }, 500);
 
-    setState(initState);
+    // setPlayerState(initPlayerState);
   };
 
   const onPositionModalClose = (confirm: boolean) => {
@@ -709,7 +725,7 @@ const MainLayout = (props: TProps) => {
               confirmModalStyles.confirm,
             ])}
             onPress={() => {
-              auth.signOut();
+              signOut();
               setTimeout(() => setConfrimVisible(false), 300);
             }}>
             <Text style={confirmModalStyles.modalButtonText}>{t('general.yes')}</Text>
@@ -728,7 +744,7 @@ const MainLayout = (props: TProps) => {
       <View style={addPlayerModalStyles.container}>
         <View style={addPlayerModalStyles.modalHeader}>
           <Input
-            value={state.search}
+            value={playerState.search}
             placeholder="Search"
             icon={<Image style={addPlayerModalStyles.serachImg} source={SearchImg} />}
             placeholderTextColor={COLORS.TEXT_GREY_LIGHT}
@@ -760,13 +776,13 @@ const MainLayout = (props: TProps) => {
             <View style={addPlayerModalStyles.rowWrapper}>
               <AttributeInput
                 label={t('profile.name')}
-                value={state.name}
+                value={playerState.name}
                 placeholder="Tom Brady"
                 onChangeText={(text: string) => onChangeField('name', text)}
               />
               <AttributeInput
                 label={t('profile.age')}
-                value={state.age}
+                value={playerState.age}
                 placeholder="34"
                 onChangeText={(text: string) => onChangeField('age', text)}
               />
@@ -774,13 +790,13 @@ const MainLayout = (props: TProps) => {
             <View style={addPlayerModalStyles.rowWrapper}>
               <AttributeInput
                 label={t('profile.height')}
-                value={state.height}
+                value={playerState.height}
                 placeholder="5’5”"
                 onChangeText={(text: string) => onChangeField('height', text)}
               />
               <AttributeInput
                 label={t('profile.weight')}
-                value={state.weight}
+                value={playerState.weight}
                 placeholder="145 LBS"
                 onChangeText={(text: string) => onChangeField('weight', text)}
               />
@@ -794,7 +810,7 @@ const MainLayout = (props: TProps) => {
                 }}>
                 <AttributeInput
                   label={t('profile.gender')}
-                  value={state.gender}
+                  value={playerState.gender}
                   placeholder="Male"
                   readOnly={true}
                 />
@@ -805,7 +821,7 @@ const MainLayout = (props: TProps) => {
                   setPlayerVisible(false);
                   setTimeout(
                     () =>
-                      state.gender === 'Male' || state.gender === ''
+                      playerState.gender === 'Male' || playerState.gender === ''
                         ? setMenVisible(true)
                         : setWomenVisible(true),
                     450,
@@ -813,7 +829,7 @@ const MainLayout = (props: TProps) => {
                 }}>
                 <AttributeInput
                   label={t('profile.sport')}
-                  value={state.sport}
+                  value={playerState.sport}
                   placeholder="Football"
                   readOnly={true}
                 />
@@ -828,7 +844,7 @@ const MainLayout = (props: TProps) => {
                 }}>
                 <AttributeInput
                   label={t('profile.position')}
-                  value={state.position}
+                  value={playerState.position}
                   placeholder="QB"
                   readOnly={true}
                 />
@@ -875,7 +891,7 @@ const MainLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={genders}
-                status={state.gender === genders[key]}
+                status={playerState.gender === genders[key]}
                 setStatus={(status: string) => {
                   onChangeField('sport', '');
                   onChangeField('gender', genders[status]);
@@ -917,7 +933,7 @@ const MainLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={menSports}
-                status={state.sport === menSports[key]}
+                status={playerState.sport === menSports[key]}
                 setStatus={(status: string) => onChangeField('sport', menSports[status])}
               />
             ))}
@@ -952,7 +968,7 @@ const MainLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={womenSports}
-                status={state.sport === womenSports[key]}
+                status={playerState.sport === womenSports[key]}
                 setStatus={(status: string) => onChangeField('sport', womenSports[status])}
               />
             ))}
@@ -991,7 +1007,7 @@ const MainLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={positions}
-                status={state.position === key}
+                status={playerState.position === key}
                 setStatus={(status: string) => onChangeField('position', status)}
               />
             ))}
@@ -1002,7 +1018,7 @@ const MainLayout = (props: TProps) => {
                 key={i}
                 label={key}
                 options={positions}
-                status={state.position === key}
+                status={playerState.position === key}
                 setStatus={(status: string) => onChangeField('position', status)}
               />
             ))}
@@ -1014,7 +1030,7 @@ const MainLayout = (props: TProps) => {
                   key={i}
                   label={key}
                   options={positions}
-                  status={state.position === key}
+                  status={playerState.position === key}
                   setStatus={(status: string) => onChangeField('position', status)}
                 />
               ))}
@@ -1060,7 +1076,7 @@ const MainLayout = (props: TProps) => {
             <Image style={styles.optionImg} source={ArrowRight} />
           </Button>
         </View>
-        <Button customStyle={styles.signOutWrapper} onPress={() => signOut()}>
+        <Button customStyle={styles.signOutWrapper} onPress={() => handleSignOut()}>
           <Text style={styles.signOut}>{t('app.signOut')}</Text>
         </Button>
       </View>
