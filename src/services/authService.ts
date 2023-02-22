@@ -56,7 +56,7 @@ export const validateToken = async ({userIdToken}: TValidateUser) => {
   return Promise.resolve(res.data);
 };
 
-export const revokeToken = async (uid: string) => {
+export const revokeToken = async (uid: string | undefined) => {
   const url = `${apiUrl}/user/revoke/${uid}`;
   const res = await axios.post(url, {
     uid: uid,
