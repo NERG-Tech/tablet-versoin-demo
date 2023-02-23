@@ -507,8 +507,6 @@ const GeneticsScreen = () => {
   const playerData = useSelector<TPlayerState>(state => state.player);
 
   useEffect(() => {
-    console.log('Player Data: ', playerData);
-
     const tempState = {
       age: playerData.age,
       weight: playerData.weight,
