@@ -19,14 +19,12 @@ export type TToken = {
 
 export const addPlayer = async (params: TAddPlayer) => {
   const url = `${apiUrl}/player`;
-  console.log('service params: ', params);
   if (params.accessToken) {
     try {
       const res = await axios.post(url, {
         ...params,
-        headers: {authorization: `Bearer ${params.accessToken}`},
+        idToken: params.accessToken,
       });
-      console.log('service res: ', res);
       return Promise.resolve(res.data);
     } catch (err) {
       console.log('addPlayer Error: ', err);
