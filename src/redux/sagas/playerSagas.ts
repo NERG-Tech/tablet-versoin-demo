@@ -11,7 +11,7 @@ import {
 
 type TAddPlayerResponse = SagaReturnType<typeof addPlayerRequest>;
 
-function* addPlayer(action: Effect) {
+function* addPlayer(action: Effect<string, TAddPlayer>) {
   try {
     console.log('params: ', action.payload);
     const res: TAddPlayerResponse = yield call(addPlayerRequest, action.payload);

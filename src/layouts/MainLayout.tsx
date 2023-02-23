@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
 import {Input, AttributeInput, Button, RoundedButton, CheckListItem} from '../common/components';
 import {useAuth} from '../contexts/AuthProvider';
+import {useDispatch, useSelector} from '../redux/store';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 
 import {addPlayer} from '../redux/actions/plyerActions';
@@ -634,6 +635,7 @@ const MainLayout = (props: TProps) => {
   const [playerState, setPlayerState] = useState(initPlayerState);
   const {t} = useTranslation();
   const {authData, signOut} = useAuth();
+  const dispatch = useDispatch();
 
   const handleSignOut = () => {
     setConfrimVisible(true);
@@ -663,7 +665,7 @@ const MainLayout = (props: TProps) => {
         position: playerState.position,
         accessToken: authData?.accessToken,
       };
-      addPlayer(playerData);
+      dispatch(addPlayer(playerData));
     }, 500);
 
     // setPlayerState(initPlayerState);

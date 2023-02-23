@@ -1,3 +1,5 @@
+import {applyMiddleware} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
@@ -7,6 +9,7 @@ import {
   useSelector as useReduxSelector,
 } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import logger from 'redux-logger';
 import {rootReducer, RootState} from '../reducers';
 import rootSaga from '../sagas';
 
@@ -28,10 +31,12 @@ const middleware = [
   }),
   sagaMiddleware,
 ];
+const enhancer = applyMiddleware(...middleware);
 
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: middleware,
+  enhancers: [composeWithDevTools(enhancer)],
 });
 
 export const persistor = persistStore(store);

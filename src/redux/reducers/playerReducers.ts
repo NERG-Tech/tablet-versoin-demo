@@ -51,12 +51,7 @@ const initState: TPlayerInfo = {
 
 export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) => {
   switch (action.type) {
-    case ADD_PLYAER: {
-      console.log('reducer: ', action.payload);
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
+    default:
+      return state;
   }
 };
