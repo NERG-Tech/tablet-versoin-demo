@@ -9,9 +9,9 @@ export const HOME = 'home';
 export const DASHBOARD = 'dashboard';
 export const GM_MODE = 'gm_mode';
 export const COACH_MODE = 'coach_mode';
-export const PERSONAL_INFO = 'personal_info';
+export const PLAYER_INFO = 'player_info';
 
-// PERSONAL INFO NAVIGATOR
+// PLAYER INFO NAVIGATOR
 export const SNAPSHOT = 'snapshot';
 export const NUTRIENTS = 'nutrients';
 export const EXERCISE = 'exercise';

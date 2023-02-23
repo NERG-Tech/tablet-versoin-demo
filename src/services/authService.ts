@@ -1,34 +1,82 @@
-import {signInWithEmailAndPassword, signOut, getAuth, auth} from '../firebase/firebase';
+import axios from 'axios';
 
-export type AuthDataI = {
+const apiUrl = 'https://us-central1-nerg-one.cloudfunctions.net/api';
+
+export type TAuthData = {
   token: string;
-  email: string | null;
-  name: string;
+  uid: string;
+  accessToken: string;
+  expirationTime: number;
+  expired: number;
+  refreshToken: string;
 };
 
-const signInWithFirebase = async (email: string, password: string): Promise<AuthDataI> => {
-  // this is a mock of an API call, in a real app
-  // will be need connect with some real API,
-  // send email and password, and if credential is corret
-  // the API will resolve with some token and another datas as the below
-  const {user} = await signInWithEmailAndPassword(auth, email, password);
-  const data = await user.getIdTokenResult();
-
-  return new Promise(resolve =>
-    resolve({
-      token: data.token,
-      email: user.email,
-      name: user.displayName || 'NERGone User',
-    }),
-  );
+export type TLoginWithEmail = {
+  email: string;
+  password: string;
 };
 
-const signOutFromFirebase = () => {
-  const auth = getAuth();
-  signOut(auth);
+export const loginWithEmail = async ({email, password}: TLoginWithEmail): Promise<TAuthData> => {
+  const url = `${apiUrl}/login`;
+  const res = await axios.post(url, {email, password});
+
+  return Promise.resolve({
+    token: res.data.token,
+    uid: res.data.uid.user.uid,
+    accessToken: res.data.uid.user.stsTokenManager.accessToken,
+    expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
+    refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
+    expired: res.data.uid._tokenResponse.expiresIn,
+  });
+};
+
+export type TSignUpWithEmail = {
+  email: string;
+  password: string;
+  secureNote: string;
+};
+
+export const signUpWithEmail = async (props: TSignUpWithEmail): Promise<TAuthData> => {
+  const url = `${apiUrl}/register`;
+  const res = await axios.post(url, props);
+
+  return Promise.resolve({
+    token: res.data.token,
+    uid: res.data.uid.user.uid,
+    accessToken: res.data.uid.user.stsTokenManager.accessToken,
+    expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
+    refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
+    expired: res.data.uid._tokenResponse.expiresIn,
+  });
+};
+
+type TValidateUser = {
+  userIdToken: string;
+};
+
+export const validateToken = async ({userIdToken}: TValidateUser) => {
+  const url = `${apiUrl}/user/validateToken/`;
+  const res = await axios.get(url, {
+    headers: {
+      authorization: `Bearer ${userIdToken}`,
+    },
+  });
+
+  return Promise.resolve(res.data);
+};
+
+export const revokeToken = async (uid: string | undefined) => {
+  const url = `${apiUrl}/user/revoke/${uid}`;
+  const res = await axios.post(url, {
+    uid: uid,
+  });
+
+  return Promise.resolve(res.data);
 };
 
 export const authService = {
-  signIn: signInWithFirebase,
-  signOut: signOutFromFirebase,
+  loginWithEmail,
+  signUpWithEmail,
+  validateToken,
+  revokeToken,
 };

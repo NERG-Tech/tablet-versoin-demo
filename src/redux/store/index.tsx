@@ -1,12 +1,17 @@
-import {Action, configureStore, ThunkAction} from '@reduxjs/toolkit';
+import {applyMiddleware} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
-import {rootReducer, RootState} from '../reducers';
 import {
   TypedUseSelectorHook,
   useDispatch as useReduxDispatch,
   useSelector as useReduxSelector,
 } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import logger from 'redux-logger';
+import {rootReducer, RootState} from '../reducers';
+import rootSaga from '../sagas';
 
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
@@ -15,19 +20,29 @@ const persistConfig: PersistConfig<RootState> = {
   timeout: 1000,
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+const middleware = [
+  ...getDefaultMiddleware({
+    thunk: false,
+    immutableCheck: false,
+    serializableCheck: false,
+  }),
+  sagaMiddleware,
+];
+const enhancer = applyMiddleware(...middleware);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+  middleware: middleware,
+  enhancers: [composeWithDevTools(enhancer)],
 });
 
 export const persistor = persistStore(store);
 
+sagaMiddleware.run(rootSaga);
+
 type AppDispatch = typeof store.dispatch;
-export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
 export const useDispatch = () => useReduxDispatch<AppDispatch>();
 export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;

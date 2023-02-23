@@ -21,7 +21,7 @@ const HomeScreen = () => {
   const {activeNav} = route.params as Params;
 
   useEffect(() => {
-    if (activeNav === NavigationConstants.PERSONAL_INFO) {
+    if (activeNav === NavigationConstants.PLAYER_INFO) {
       goToPlayerScreen();
     }
   }, [activeNav]);
@@ -31,8 +31,8 @@ const HomeScreen = () => {
   };
 
   const goToPlayerScreen = () => {
-    navigation.navigate(NavigationConstants.PERSONAL_INFO, {
-      userId: 'new',
+    navigation.navigate(NavigationConstants.PLAYER_INFO, {
+      playerId: 'new',
       activeTab: NavigationConstants.GENETICS,
     });
   };

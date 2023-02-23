@@ -3,6 +3,8 @@ import {combineReducers} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 
 import {appReducer} from '../../modules/app/reducer';
+import {PlayerReducer} from './playerReducer';
+
 const appPersistConfig = {
   storage: AsyncStorage,
   key: 'app',
@@ -10,6 +12,7 @@ const appPersistConfig = {
 
 export const reducers = {
   app: persistReducer(appPersistConfig, appReducer),
+  player: PlayerReducer,
 };
 
 export const rootReducer = combineReducers(reducers);

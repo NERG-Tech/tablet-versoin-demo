@@ -1,10 +1,10 @@
 import React, {createContext, useState, useContext, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {AuthDataI, authService} from '../services/authService';
+import {TAuthData, authService} from '../services/authService';
 
 type AuthContextData = {
-  authData?: AuthDataI;
+  authData?: TAuthData;
   loading: boolean;
   setLoading(isLoading: boolean): void;
   signIn(email: string, password: string): Promise<void>;
@@ -15,7 +15,7 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider = ({children}: {children: any}) => {
-  const [authData, setAuthData] = useState<AuthDataI>();
+  const [authData, setAuthData] = useState<TAuthData>();
   const [errors, setErrors] = useState<string>();
 
   // the AuthContext start with loading equals true
@@ -34,7 +34,7 @@ const AuthProvider = ({children}: {children: any}) => {
       const authDataSerialized = await AsyncStorage.getItem('@AuthData');
       if (authDataSerialized) {
         // If there are data, it's converted to an Object and the state is updated.
-        const _authData: AuthDataI = JSON.parse(authDataSerialized);
+        const _authData: TAuthData = JSON.parse(authDataSerialized);
         setAuthData(_authData);
       }
     } catch (error) {
@@ -49,13 +49,14 @@ const AuthProvider = ({children}: {children: any}) => {
     try {
       // call the service passing credential (email and password).
       // In a real App this data will be provided by the user from some InputText components.
-      const _authData = await authService.signIn(email, password);
+      const _authData = await authService.loginWithEmail({email, password});
+
+      setAuthData(_authData);
 
       // clear Error msg
       setErrors('');
       // Set the data in the context, so the App can be notified
       // and send the user to the AuthStack
-      setAuthData(_authData);
 
       // Persist the data in the Async Storage
       // to be recovered in the next user session.
@@ -71,7 +72,7 @@ const AuthProvider = ({children}: {children: any}) => {
 
   const signOut = async () => {
     try {
-      await authService.signOut();
+      await authService.revokeToken(authData?.uid);
       // Remove data from context, so the App can be notified
       // and send the user to the AuthStack
       setAuthData(undefined);

@@ -8,6 +8,7 @@ export const Loading = ({size = 'large'}: {size?: number | 'small' | 'large' | u
       style={{
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
       }}>
       <ActivityIndicator color={COLORS.BLACK_LIGHT} animating={true} size={size} />
     </View>

@@ -10,32 +10,32 @@ import ExerciseScreen from './Exercise';
 import RestScreen from './Rest';
 import GeneticsScreen from './Genetics';
 
-type PlayerScreenNavigationProp = StackNavigationProp<AppStackParamList, 'personal_info'>;
-type PlayerScreenRouteProp = RouteProp<AppStackParamList, 'personal_info'>;
+type PlayerScreenNavigationProp = StackNavigationProp<AppStackParamList, 'player_info'>;
+type PlayerScreenRouteProp = RouteProp<AppStackParamList, 'player_info'>;
 
 interface Params {
-  userId: string;
+  playerId: string;
   activeTab: string;
 }
 
 const PlayerScreen = () => {
   const navigation = useNavigation<PlayerScreenNavigationProp>();
   const route = useRoute<PlayerScreenRouteProp>();
-  const {userId, activeTab} = route.params as Params;
+  const {playerId, activeTab} = route.params as Params;
 
   const setActiveNav = nav => {
-    if (nav !== NavigationConstants.PERSONAL_INFO) {
+    if (nav !== NavigationConstants.PLAYER_INFO) {
       navigation.navigate(NavigationConstants.HOME, {activeNav: nav});
     } else {
-      navigation.navigate(NavigationConstants.PERSONAL_INFO, {
-        userId: userId,
+      navigation.navigate(NavigationConstants.PLAYER_INFO, {
+        playerId: playerId,
         activeTab: NavigationConstants.GENETICS,
       });
     }
   };
 
   const setActiveTab = tab => {
-    navigation.navigate(NavigationConstants.PERSONAL_INFO, {userId: userId, activeTab: tab});
+    navigation.navigate(NavigationConstants.PLAYER_INFO, {playerId: playerId, activeTab: tab});
   };
 
   const ScreenView = tab => {
