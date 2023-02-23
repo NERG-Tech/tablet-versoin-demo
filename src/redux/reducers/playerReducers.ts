@@ -1,7 +1,7 @@
 import {addPlayer} from '../../services/playerService';
 import {getMET, getVo2, getWaistAndHip, getKeyMeasurements} from '../../services/formulaService';
 import {ADD_PLYAER} from '../actions/types/player';
-import {TPlayerInfo} from '../types/plyaer';
+import {TPlayerInfo} from '../types/player';
 import {TAction} from '../types/action';
 
 const initState: TPlayerInfo = {

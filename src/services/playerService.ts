@@ -13,13 +13,17 @@ export type TAddPlayer = {
   accessToken: string | undefined;
 };
 
-export const addPlayer = async (props: TAddPlayer) => {
+export type TToken = {
+  accessToken: string;
+};
+
+export const addPlayer = async (params: TAddPlayer) => {
   const url = `${apiUrl}/player`;
-  if (props.accessToken) {
+  if (params.accessToken) {
     try {
       const res = await axios.post(url, {
-        ...props,
-        headers: {authorization: `Bearer ${props.accessToken}`},
+        ...params,
+        headers: {authorization: `Bearer ${params.accessToken}`},
       });
       console.log('service: ', res);
       return Promise.resolve(res.data);
@@ -31,11 +35,23 @@ export const addPlayer = async (props: TAddPlayer) => {
   }
 };
 
-export const getPlayer = async () => {
-  const url = `${apiUrl}/player`;
-  const res = await axios.get(url, {});
+export const getPlayer = async (accessToken: TToken) => {
+  if (accessToken) {
+    try {
+      const url = `${apiUrl}/player/${accessToken.accessToken}`;
+      const options = {
+        method: 'GET',
+        url: url,
+      };
+      const res = await axios.request(options);
 
-  return Promise.resolve(res.data);
+      return Promise.resolve(res.data);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  } else {
+    return Promise.reject('no access');
+  }
 };
 
 export const authService = {

@@ -1,4 +1,4 @@
-import {call, put, takeEvery, fork} from 'redux-saga/effects';
+import {call, put, takeEvery, fork, Effect, SagaReturnType} from 'redux-saga/effects';
 import {ADD_PLYAER} from '../actions/types/player';
 import {TAddPlayer} from '../../services/playerService';
 import {addPlayer as addPlayerRequest} from '../../services/playerService';
@@ -9,14 +9,12 @@ import {
   getKeyMeasurements as getKeyMeasurementsRequest,
 } from '../../services/formulaService';
 
-type TAddPlayerData = {
-  data: TAddPlayer;
-  type: string;
-};
+type TAddPlayerResponse = SagaReturnType<typeof addPlayerRequest>;
 
-function* addPlayer(params: TAddPlayerData) {
+function* addPlayer(action: Effect) {
   try {
-    const res = yield call(addPlayerRequest, params.data);
+    console.log('params: ', action.payload);
+    const res: TAddPlayerResponse = yield call(addPlayerRequest, action.payload);
     console.log('saga: ', res);
   } catch (err) {
     console.log('saga error: ', err);

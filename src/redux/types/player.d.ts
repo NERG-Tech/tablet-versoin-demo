@@ -10,18 +10,18 @@ export type TLeanBodyMass = {kg: number; pounds: number};
 export type TRmr = {value: number; unit: string};
 
 export type TPlayerInfo = {
-  age: number;
-  bmi: number;
+  name: string;
   sex: string;
+  age: number;
+  position: string;
+  sport: string;
+  bmi: number;
   height: THeight;
   weight: TWeight;
-  adjustedBodyWeight: TAdjustedBodyWeight;
+  rmr: TRmr;
   bloodVolumn: TBloodVolumn;
+  adjustedBodyWeight: TAdjustedBodyWeight;
   bodyWaterWeight: TBodyWaterWeight;
   idealWeight: TIdealWeight;
   leanBodyMass: TLeanBodyMass;
-  name: string;
-  position: string;
-  rmr: TRmr;
-  sport: string;
 };

@@ -6,6 +6,9 @@ export type TAuthData = {
   token: string;
   uid: string;
   accessToken: string;
+  expirationTime: number;
+  expired: number;
+  refreshToken: string;
 };
 
 export type TLoginWithEmail = {
@@ -21,6 +24,9 @@ export const loginWithEmail = async ({email, password}: TLoginWithEmail): Promis
     token: res.data.token,
     uid: res.data.uid.user.uid,
     accessToken: res.data.uid.user.stsTokenManager.accessToken,
+    expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
+    refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
+    expired: res.data.uid._tokenResponse.expiresIn,
   });
 };
 
@@ -30,7 +36,7 @@ export type TSignUpWithEmail = {
   secureNote: string;
 };
 
-export const signUpWithEmail = async (props: TSignUpWithEmail) => {
+export const signUpWithEmail = async (props: TSignUpWithEmail): Promise<TAuthData> => {
   const url = `${apiUrl}/register`;
   const res = await axios.post(url, props);
 
@@ -38,6 +44,9 @@ export const signUpWithEmail = async (props: TSignUpWithEmail) => {
     token: res.data.token,
     uid: res.data.uid.user.uid,
     accessToken: res.data.uid.user.stsTokenManager.accessToken,
+    expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
+    refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
+    expired: res.data.uid._tokenResponse.expiresIn,
   });
 };
 
