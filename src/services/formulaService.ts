@@ -16,6 +16,7 @@ export const getWaistAndHip = async (params: TWaistAndHip) => {
     return Promise.resolve(res.data);
   } catch (err) {
     console.log('getWaistAndHip Error: ', err);
+    return Promise.reject(err);
   }
 };
 
@@ -32,6 +33,7 @@ export const getVo2 = async (params: TVo2) => {
     return Promise.resolve(res.data);
   } catch (err) {
     console.log('getVo2 Error: ', err);
+    return Promise.reject(err);
   }
 };
 
@@ -49,6 +51,7 @@ export const getMET = async (params: TMet) => {
     return Promise.resolve(res.data);
   } catch (err) {
     console.log('getMET Error: ', err);
+    return Promise.reject(err);
   }
 };
 
@@ -69,6 +72,7 @@ export const getKeyMeasurements = async (params: TKeyMeasurement) => {
     return Promise.resolve(res.data);
   } catch (err) {
     console.log('getKeyMeasurements Error: ', err);
+    return Promise.reject(err);
   }
 };
 

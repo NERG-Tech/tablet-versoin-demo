@@ -8,7 +8,7 @@ import PlayerScreen from '../page/Player';
 
 export type AppStackParamList = {
   [NavigationConstants.HOME]: {activeNav: string};
-  [NavigationConstants.PERSONAL_INFO]: {playerId: string; activeTab: string};
+  [NavigationConstants.PLAYER_INFO]: {playerId: string; activeTab: string};
 };
 
 export type AppStackNavigationProp<RouteName extends keyof AppStackParamList> = StackNavigationProp<
@@ -36,7 +36,7 @@ export const AppStack = () => {
         initialParams={{activeNav: NavigationConstants.DASHBOARD}}
       />
       <Screen
-        name={NavigationConstants.PERSONAL_INFO}
+        name={NavigationConstants.PLAYER_INFO}
         component={PlayerScreen}
         options={{headerShown: false}}
         initialParams={{playerId: '', activeTab: NavigationConstants.GENETICS}}

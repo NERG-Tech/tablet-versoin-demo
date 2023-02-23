@@ -10,8 +10,8 @@ import ExerciseScreen from './Exercise';
 import RestScreen from './Rest';
 import GeneticsScreen from './Genetics';
 
-type PlayerScreenNavigationProp = StackNavigationProp<AppStackParamList, 'personal_info'>;
-type PlayerScreenRouteProp = RouteProp<AppStackParamList, 'personal_info'>;
+type PlayerScreenNavigationProp = StackNavigationProp<AppStackParamList, 'player_info'>;
+type PlayerScreenRouteProp = RouteProp<AppStackParamList, 'player_info'>;
 
 interface Params {
   playerId: string;
@@ -24,10 +24,10 @@ const PlayerScreen = () => {
   const {playerId, activeTab} = route.params as Params;
 
   const setActiveNav = nav => {
-    if (nav !== NavigationConstants.PERSONAL_INFO) {
+    if (nav !== NavigationConstants.PLAYER_INFO) {
       navigation.navigate(NavigationConstants.HOME, {activeNav: nav});
     } else {
-      navigation.navigate(NavigationConstants.PERSONAL_INFO, {
+      navigation.navigate(NavigationConstants.PLAYER_INFO, {
         playerId: playerId,
         activeTab: NavigationConstants.GENETICS,
       });
@@ -35,7 +35,7 @@ const PlayerScreen = () => {
   };
 
   const setActiveTab = tab => {
-    navigation.navigate(NavigationConstants.PERSONAL_INFO, {playerId: playerId, activeTab: tab});
+    navigation.navigate(NavigationConstants.PLAYER_INFO, {playerId: playerId, activeTab: tab});
   };
 
   const ScreenView = tab => {

@@ -1,11 +1,14 @@
 import {ADD_PLYAER, HANDLE_PLYAER_SUCCESS, HANDLE_PLYAER_FAILED} from '../actions/types/player';
+import {SET_KEY_MEASUREMENTS} from '../actions/types/formula';
 import {TPlayerInfo} from '../types/player';
+import {TKeyMeasurement} from '../../services/formulaService';
 import {TAction} from '../types/action';
 
-type TPlayerState = TPlayerInfo & {
-  loading: boolean;
-  error: string;
-};
+export type TPlayerState = TPlayerInfo &
+  TKeyMeasurement & {
+    loading: boolean;
+    error: string;
+  };
 
 const initState: TPlayerState = {
   loading: false,
@@ -52,6 +55,12 @@ const initState: TPlayerState = {
     value: 0,
     unit: '',
   },
+  neckCircumference: 0,
+  wingSpan: 0,
+  handSize: 0,
+  hipsCircumference: 0,
+  gluteCircumference: 0,
+  waistCircumference: 0,
 };
 
 export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) => {
@@ -76,6 +85,12 @@ export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) =
         ...state,
         loading: false,
         error: payload,
+      };
+    }
+    case SET_KEY_MEASUREMENTS: {
+      return {
+        ...state,
+        ...payload,
       };
     }
     default:

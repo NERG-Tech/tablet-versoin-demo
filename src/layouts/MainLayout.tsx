@@ -675,7 +675,7 @@ const MainLayout = (props: TProps) => {
       };
       dispatch(addPlayer(playerData));
 
-      props.onChangeNav(NavigationConstants.PERSONAL_INFO);
+      // props.onChangeNav(NavigationConstants.PLAYER_INFO);
     }, 500);
 
     setPlayerState(initPlayerState);
@@ -796,7 +796,6 @@ const MainLayout = (props: TProps) => {
                 label={t('profile.age')}
                 value={playerState.age}
                 placeholder="34"
-                keyboardType="numeric"
                 onChangeText={(text: string) => onChangeField('age', text)}
               />
             </View>
@@ -805,14 +804,12 @@ const MainLayout = (props: TProps) => {
                 label={t('profile.height')}
                 value={playerState.height}
                 placeholder="5’5”"
-                keyboardType="numeric"
                 onChangeText={(text: string) => onChangeField('height', text)}
               />
               <AttributeInput
                 label={t('profile.weight')}
                 value={playerState.weight}
                 placeholder="145 LBS"
-                keyboardType="numeric"
                 onChangeText={(text: string) => onChangeField('weight', text)}
               />
             </View>

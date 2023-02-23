@@ -1,4 +1,5 @@
-export const GET_WAIST_HIP = 'get_waist_hip';
-export const GET_VO2 = 'get_vo2';
-export const GET_MET = 'get_met';
-export const GET_KEY_MEASUREMENTS = 'get_key_measurements';
+export const ADD_WAIST_HIP = 'add_waist_hip';
+export const ADD_VO2 = 'add_vo2';
+export const ADD_MET = 'add_met';
+export const ADD_KEY_MEASUREMENTS = 'add_key_measurements';
+export const SET_KEY_MEASUREMENTS = 'set_key_measurements';

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image} from 'react-native';
 import {Text, View, ScrollView, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
@@ -19,6 +19,7 @@ import * as NavigationConstants from '../common/constants/NavigationConstants';
 
 import {addPlayer} from '../redux/actions/plyerActions';
 import {TAddPlayer} from '../services/playerService';
+import {TPlayerState} from '../redux/reducers/playerReducer';
 
 const LogoImg = require('../assets/img/logo/logo_white.png');
 const ArrowRight = require('../assets/img/hoc/arrowRight.png');
@@ -636,6 +637,11 @@ type TProps = {
   onChangeTab: (tab: string) => void;
 };
 
+type TState = {
+  name: string;
+  position: string;
+};
+
 const PlayerLayout = (props: TProps) => {
   const initPlayerModalState = {
     search: '',
@@ -648,9 +654,9 @@ const PlayerLayout = (props: TProps) => {
     position: '',
   };
 
-  const initState = {
-    name: 'John Smith',
-    position: 'Quarter Back',
+  const initState: TState = {
+    name: '',
+    position: '',
   };
 
   const [isPlayerVisible, setPlayerVisible] = useState(false);
@@ -663,6 +669,15 @@ const PlayerLayout = (props: TProps) => {
   const {t} = useTranslation();
   const {authData} = useAuth();
   const dispatch = useDispatch();
+  const playerData = useSelector<TPlayerState>(state => state.player);
+
+  useEffect(() => {
+    const tempState: TState = {...initState};
+    tempState.name = playerData.name;
+    tempState.position = playerData.position;
+
+    setState({...state, ...tempState});
+  }, [playerData]);
 
   const onChangeField = (field: string, value: string) => {
     setState({...state, [field]: value});
@@ -693,7 +708,7 @@ const PlayerLayout = (props: TProps) => {
       };
       dispatch(addPlayer(playerData));
 
-      props.onChangeNav(NavigationConstants.PERSONAL_INFO);
+      // props.onChangeNav(NavigationConstants.PLAYER_INFO);
     }, 500);
 
     setPlayerModalState(initPlayerModalState);
@@ -1066,7 +1081,9 @@ const PlayerLayout = (props: TProps) => {
             </CircularProgressBar>
           </View>
           <Text style={[styles.descriptionText, {marginTop: 40}]}>Name: {state.name}</Text>
-          <Text style={[styles.descriptionText, {marginTop: 20}]}>Position: {state.position}</Text>
+          <Text style={[styles.descriptionText, {marginTop: 20}]}>
+            Position: {positions[state.position]?.slice(0, -4)}
+          </Text>
         </View>
         <View style={styles.optionsWrapper}>
           <Button customStyle={styles.optionWrapper} onPress={() => console.log('Edit Profile')}>
@@ -1106,7 +1123,7 @@ const PlayerLayout = (props: TProps) => {
             ))}
           </View>
           <ScrollView style={styles.scrollViewContainer} showsVerticalScrollIndicator={false}>
-            {props.children}
+            {playerData.loading ? <Loading /> : props.children}
           </ScrollView>
         </View>
       </View>

@@ -8,6 +8,8 @@ import {
   getWaistAndHip as getWaistAndHipRequest,
   getKeyMeasurements as getKeyMeasurementsRequest,
 } from '../../services/formulaService';
+import {navigate} from '../actions/navigationActions';
+import * as NavigationConstants from '../../common/constants/NavigationConstants';
 
 type TAddPlayerResponse = SagaReturnType<typeof addPlayerRequest>;
 
@@ -15,6 +17,14 @@ function* addPlayer(action: Effect<string, TAddPlayer>) {
   try {
     const res: TAddPlayerResponse = yield call(addPlayerRequest, action.payload);
     yield put({type: HANDLE_PLYAER_SUCCESS, payload: res.list});
+    yield call(
+      navigate,
+      NavigationConstants.PLAYER_INFO as never,
+      {
+        playerId: 'new',
+        activeTab: NavigationConstants.GENETICS,
+      } as never,
+    );
   } catch (err) {
     yield put({type: HANDLE_PLYAER_FAILED, payload: err});
     console.log('addPlayer saga error: ', err);
