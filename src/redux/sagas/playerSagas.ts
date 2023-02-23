@@ -1,5 +1,5 @@
-import {call, put, takeEvery, fork, Effect, SagaReturnType} from 'redux-saga/effects';
-import {ADD_PLYAER} from '../actions/types/player';
+import {call, put, takeEvery, Effect, SagaReturnType} from 'redux-saga/effects';
+import {ADD_PLYAER, HANDLE_PLYAER_SUCCESS, HANDLE_PLYAER_FAILED} from '../actions/types/player';
 import {TAddPlayer} from '../../services/playerService';
 import {addPlayer as addPlayerRequest} from '../../services/playerService';
 import {
@@ -14,9 +14,10 @@ type TAddPlayerResponse = SagaReturnType<typeof addPlayerRequest>;
 function* addPlayer(action: Effect<string, TAddPlayer>) {
   try {
     const res: TAddPlayerResponse = yield call(addPlayerRequest, action.payload);
-    console.log('saga: ', res);
+    yield put({type: HANDLE_PLYAER_SUCCESS, payload: res.list});
   } catch (err) {
-    console.log('saga error: ', err);
+    yield put({type: HANDLE_PLYAER_FAILED, payload: err});
+    console.log('addPlayer saga error: ', err);
   }
 }
 

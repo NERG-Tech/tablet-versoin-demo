@@ -4,7 +4,14 @@ import {Text, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
-import {Input, AttributeInput, Button, RoundedButton, CheckListItem} from '../common/components';
+import {
+  Loading,
+  Input,
+  AttributeInput,
+  Button,
+  RoundedButton,
+  CheckListItem,
+} from '../common/components';
 import {useAuth} from '../contexts/AuthProvider';
 import {useDispatch, useSelector} from '../redux/store';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
@@ -636,6 +643,7 @@ const MainLayout = (props: TProps) => {
   const {t} = useTranslation();
   const {authData, signOut} = useAuth();
   const dispatch = useDispatch();
+  const {loading} = useSelector(state => state.player);
 
   const handleSignOut = () => {
     setConfrimVisible(true);
@@ -666,9 +674,11 @@ const MainLayout = (props: TProps) => {
         accessToken: authData?.accessToken,
       };
       dispatch(addPlayer(playerData));
+
+      props.onChangeNav(NavigationConstants.PERSONAL_INFO);
     }, 500);
 
-    // setPlayerState(initPlayerState);
+    setPlayerState(initPlayerState);
   };
 
   const onPositionModalClose = (confirm: boolean) => {
@@ -786,6 +796,7 @@ const MainLayout = (props: TProps) => {
                 label={t('profile.age')}
                 value={playerState.age}
                 placeholder="34"
+                keyboardType="numeric"
                 onChangeText={(text: string) => onChangeField('age', text)}
               />
             </View>
@@ -794,12 +805,14 @@ const MainLayout = (props: TProps) => {
                 label={t('profile.height')}
                 value={playerState.height}
                 placeholder="5’5”"
+                keyboardType="numeric"
                 onChangeText={(text: string) => onChangeField('height', text)}
               />
               <AttributeInput
                 label={t('profile.weight')}
                 value={playerState.weight}
                 placeholder="145 LBS"
+                keyboardType="numeric"
                 onChangeText={(text: string) => onChangeField('weight', text)}
               />
             </View>
@@ -1102,7 +1115,7 @@ const MainLayout = (props: TProps) => {
             <Text style={styles.navText}>Invite</Text>
           </Button>
         </View>
-        {props.children}
+        {loading ? <Loading /> : props.children}
       </View>
       <View style={styles.modalsWrapper}>
         {confirmModal(isConfirmVisible)}

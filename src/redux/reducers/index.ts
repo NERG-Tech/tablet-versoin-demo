@@ -3,7 +3,7 @@ import {combineReducers} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 
 import {appReducer} from '../../modules/app/reducer';
-import {PlayerReducer} from './playerReducers';
+import {PlayerReducer} from './playerReducer';
 
 const appPersistConfig = {
   storage: AsyncStorage,

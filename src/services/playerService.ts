@@ -27,7 +27,7 @@ export const addPlayer = async (params: TAddPlayer) => {
       });
       return Promise.resolve(res.data);
     } catch (err) {
-      console.log('addPlayer Error: ', err);
+      return Promise.reject(err);
     }
   } else {
     return Promise.reject('no access');
