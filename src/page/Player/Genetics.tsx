@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   bmiInputText: {
     marginHorizontal: normalize(10),
-    paddingHorizontal: normalize(20),
+    paddingHorizontal: normalize(0),
     fontSize: normalize(FONT_SIZE.MD),
   },
   bmiButtonWrapper: {
@@ -83,6 +83,8 @@ const styles = StyleSheet.create({
   bmiOddWrapper: {
     flex: 1,
     height: normalize(58, orientation.HEIGHT),
+    borderRadius: normalize(16),
+    paddingVertical: normalizeRate(10, 0),
   },
   bmiOddlabel: {
     fontWeight: FONT_WEIGHT.BOLD,
@@ -98,6 +100,8 @@ const styles = StyleSheet.create({
     color: COLORS.WHITE,
     textAlign: 'center',
     width: normalize(90),
+    marginHorizontal: normalize(10),
+    paddingHorizontal: normalize(0),
   },
   skeletonImg: {
     width: normalize(151),
