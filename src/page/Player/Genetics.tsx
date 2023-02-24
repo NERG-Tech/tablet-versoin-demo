@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: FONT_WEIGHT.LIGHT,
     fontSize: FONT_SIZE.XXL,
     color: COLORS.BLACK,
-    marginLeft: 10,
+    marginLeft: 6,
   },
   percentDescText: {
     fontWeight: FONT_WEIGHT.LIGHT,
@@ -434,6 +434,7 @@ type TGeneticsState = {
   hips: string;
   glute: string;
   waist: string;
+  waterRatio: string;
 };
 
 const GeneticsScreen = () => {
@@ -447,6 +448,7 @@ const GeneticsScreen = () => {
     hips: '',
     glute: '',
     waist: '',
+    waterRatio: '',
   };
 
   const [state, setState] = useState(initState);
@@ -471,6 +473,9 @@ const GeneticsScreen = () => {
     } else {
       setBmiBtn(true);
     }
+
+    const ratio = (playerData.bodyWaterWeight.kg / playerData.idealWeight.kg) * 100;
+    onChangeField('waterRatio', ratio.toFixed(2).toString());
   }, [playerData]);
 
   const onChangeField = (field: string, value: string) => {
@@ -868,7 +873,7 @@ const GeneticsScreen = () => {
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.logWrapper}>
                 <Text style={styles.percentValue}>
-                  {playerData.waistHipsRatio ? playerData.waistHipsRatio : 0}
+                  {playerData.waistHipsRatio ? playerData.waistHipsRatio : 'N/A'}
                 </Text>
                 <Text style={styles.percentDescText}>{t('personalInfo.genetics.wthr')}</Text>
               </View>
@@ -885,8 +890,8 @@ const GeneticsScreen = () => {
                   <View style={styles.percentGroupWrapper}>
                     <Text style={styles.percentValue}>
                       {playerData.bodyWaterWeight && playerData.idealWeight
-                        ? (playerData.bodyWaterWeight.kg / playerData.idealWeight.kg) * 100
-                        : 0}
+                        ? state.waterRatio
+                        : 'N/A'}
                     </Text>
                     <Text style={styles.unitText}>%</Text>
                   </View>
