@@ -707,8 +707,6 @@ const PlayerLayout = (props: TProps) => {
         accessToken: authData?.accessToken,
       };
       dispatch(addPlayer(playerData));
-
-      // props.onChangeNav(NavigationConstants.PLAYER_INFO);
     }, 500);
 
     setPlayerModalState(initPlayerModalState);

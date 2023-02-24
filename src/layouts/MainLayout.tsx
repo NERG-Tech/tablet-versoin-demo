@@ -674,8 +674,6 @@ const MainLayout = (props: TProps) => {
         accessToken: authData?.accessToken,
       };
       dispatch(addPlayer(playerData));
-
-      // props.onChangeNav(NavigationConstants.PLAYER_INFO);
     }, 500);
 
     setPlayerState(initPlayerState);
