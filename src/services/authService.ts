@@ -3,7 +3,6 @@ import axios from 'axios';
 const apiUrl = 'https://us-central1-nerg-one.cloudfunctions.net/api';
 
 export type TAuthData = {
-  token: string;
   uid: string;
   accessToken: string;
   expirationTime: number;
@@ -21,7 +20,6 @@ export const loginWithEmail = async ({email, password}: TLoginWithEmail): Promis
   const res = await axios.post(url, {email, password});
 
   return Promise.resolve({
-    token: res.data.token,
     uid: res.data.uid.user.uid,
     accessToken: res.data.uid.user.stsTokenManager.accessToken,
     expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
@@ -41,7 +39,6 @@ export const signUpWithEmail = async (props: TSignUpWithEmail): Promise<TAuthDat
   const res = await axios.post(url, props);
 
   return Promise.resolve({
-    token: res.data.token,
     uid: res.data.uid.user.uid,
     accessToken: res.data.uid.user.stsTokenManager.accessToken,
     expirationTime: res.data.uid.user.stsTokenManager.expirationTime,

@@ -14,7 +14,7 @@ export const navigationRef = createNavigationContainerRef();
 export const AppNavigator = () => {
   const {authData, loading} = useAuth();
 
-  const isLogin = authData?.token.length;
+  const isLogin = authData?.accessToken.length;
 
   if (loading) {
     return <Loading />;
