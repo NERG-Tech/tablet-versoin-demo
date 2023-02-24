@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: normalize(FONT_SIZE.XXL),
+    fontSize: normalizeHalf(FONT_SIZE.XXL),
     color: COLORS.WHITE,
   },
   optionsWrapper: {
@@ -1117,7 +1117,7 @@ const PlayerLayout = (props: TProps) => {
           <View style={styles.avatarWrapper}>
             <CircularProgressBar
               progress={100}
-              diameter={224}
+              diameter={normalize(224)}
               startColor={COLORS.GRADIENT_SKY}
               endColor={COLORS.GRADIENT_BLUE}>
               <Image style={styles.avatarLogo} source={AvatarImg} />

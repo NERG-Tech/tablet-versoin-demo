@@ -16,6 +16,7 @@ import {useAuth} from '../../contexts/AuthProvider';
 import {addKeyMeasurements, addGenetics} from '../../redux/actions/plyerActions';
 import {TPlayerState} from '../../redux/reducers/playerReducer';
 import {TKeyMeasurement, TGenetics} from '../../services/formulaService';
+import {orientation, normalize, normalizeHalf, normalizeRate} from '../../utils/normalize';
 
 const SkeletonIMg = require('../../assets/img/skeleton.png');
 const LogoImg = require('../../assets/img/logo/logo.png');
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    paddingVertical: 30,
-    paddingHorizontal: 50,
+    paddingVertical: normalizeHalf(30),
+    paddingHorizontal: normalizeHalf(50),
   },
   playerInfoInputsWrapper: {
     flex: 1,
@@ -35,63 +36,72 @@ const styles = StyleSheet.create({
   bmiWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 30,
+    gap: normalize(30),
   },
   bmiInfoWrapper: {
     flexDirection: 'column',
   },
   bmiTitle: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
   },
   bmiInputsWrapper: {
     flexDirection: 'column',
-    gap: 20,
-    width: 180,
-    marginTop: 24,
+    gap: normalize(20),
+    width: normalize(180),
+    marginTop: normalize(24, orientation.HEIGHT),
   },
   bmiInputWrapper: {
     flex: 1,
-    height: 58,
-    borderRadius: 16,
+    height: normalize(58, orientation.HEIGHT),
+    borderRadius: normalize(16),
+    paddingVertical: normalizeRate(10, 0),
   },
   bmiInputLabel: {
-    paddingHorizontal: 20,
+    fontSize: normalize(FONT_SIZE.XS),
+    paddingHorizontal: normalize(20),
+    paddingVertical: normalizeRate(10, 0),
+  },
+  bmiInputText: {
+    marginHorizontal: normalize(10),
+    paddingHorizontal: normalize(20),
+    fontSize: normalize(FONT_SIZE.MD),
   },
   bmiButtonWrapper: {
-    height: 58,
-    borderRadius: 16,
+    width: '100%',
+    height: normalize(58, orientation.HEIGHT),
+    borderRadius: normalize(16),
   },
   bmiButtonText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XS,
+    fontSize: normalize(FONT_SIZE.XS),
     color: COLORS.WHITE,
     textAlign: 'center',
-    width: 110,
+    width: normalize(110),
   },
   bmiOddWrapper: {
     flex: 1,
-    height: 58,
+    height: normalize(58, orientation.HEIGHT),
   },
   bmiOddlabel: {
     fontWeight: FONT_WEIGHT.BOLD,
-    fontSize: FONT_SIZE.XS,
+    fontSize: normalize(FONT_SIZE.XS),
     textAlign: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: normalize(10, orientation.HEIGHT),
     paddingVertical: 0,
-    width: 60,
+    width: normalize(60),
   },
   bmiOddText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XS,
+    fontSize: normalize(FONT_SIZE.XS),
     color: COLORS.WHITE,
     textAlign: 'center',
-    width: 90,
+    width: normalize(90),
   },
   skeletonImg: {
-    width: 151,
-    height: 376,
+    width: normalize(151),
+    height: normalize(376, orientation.HEIGHT),
     resizeMode: 'contain',
   },
   geneticsHealthWrapper: {
@@ -99,49 +109,50 @@ const styles = StyleSheet.create({
   },
   geneticsHealthTitle: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
   },
   geneticsHealthInfoWrapper: {
     flexDirection: 'column',
-    gap: 20,
-    marginTop: 20,
-    marginBottom: 30,
+    gap: normalize(20),
+    marginTop: normalize(20),
+    marginBottom: normalize(30),
   },
   geneticsHealthInfoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 20,
+    gap: normalize(20),
   },
   attrBtn: {
     flex: 1,
   },
   gahInputLabel: {
-    paddingHorizontal: 15,
+    paddingHorizontal: normalize(15),
     paddingVertical: 0,
+    fontSize: normalize(FONT_SIZE.XS),
     textAlign: 'center',
-    width: 100,
+    width: normalize(100),
   },
   gahButtonWrapper: {
     flex: 1,
-    height: 58,
-    borderRadius: 16,
+    height: normalize(58, orientation.HEIGHT),
+    borderRadius: normalize(16),
   },
   dataWrapper: {
     flex: 1,
     flexDirection: 'column',
-    marginLeft: 60,
+    marginLeft: normalize(60),
   },
   dataTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
   },
   dataInfoWrapper: {
     flexDirection: 'column',
-    gap: 40,
-    marginTop: 20,
+    gap: normalizeHalf(40),
+    marginTop: normalize(20),
   },
   dataInfoRow: {
     flex: 1,
@@ -154,28 +165,28 @@ const styles = StyleSheet.create({
   },
   percentValue: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: 36,
+    fontSize: normalize(36),
     color: COLORS.BLACK,
   },
   unitText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XXL,
+    fontSize: normalize(FONT_SIZE.XXL),
     color: COLORS.BLACK,
-    marginLeft: 6,
+    marginLeft: normalize(6),
   },
   percentDescText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MS,
+    fontSize: normalize(FONT_SIZE.MS),
     color: COLORS.TEXT_DARK,
     textAlign: 'center',
-    width: 110,
-    marginBottom: 9,
+    width: normalize(110),
+    marginBottom: normalize(9),
   },
   cpuImg: {
-    width: 24,
-    height: 24,
+    width: normalize(24),
+    height: normalize(24),
     resizeMode: 'contain',
-    marginTop: 16,
+    marginTop: normalize(16),
   },
   percentGroupWrapper: {
     flexDirection: 'row',
@@ -191,7 +202,7 @@ const styles = StyleSheet.create({
   },
   policyText: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.MS,
+    fontSize: normalize(FONT_SIZE.MS),
     color: COLORS.TEXT_BLUE,
   },
   modalsWrapper: {
@@ -293,6 +304,7 @@ const selectModalStyles = StyleSheet.create({
     width: 400,
     borderRadius: 16,
     backgroundColor: COLORS.BACKGROUND_GREY_LIGHT,
+    marginVertical: 30,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -736,6 +748,7 @@ const GeneticsScreen = () => {
                 placeholder="34"
                 labelStyle={styles.bmiInputLabel}
                 inputStyle={styles.bmiInputWrapper}
+                textStyle={styles.bmiInputText}
                 onChangeText={(text: string) => onChangeField('age', text)}
               />
               <AttributeInput
@@ -744,6 +757,7 @@ const GeneticsScreen = () => {
                 placeholder="145 LBS"
                 labelStyle={styles.bmiInputLabel}
                 inputStyle={styles.bmiInputWrapper}
+                textStyle={styles.bmiInputText}
                 onChangeText={(text: string) => onChangeField('weight', text)}
               />
               <AttributeInput
@@ -752,6 +766,7 @@ const GeneticsScreen = () => {
                 placeholder="5’5”"
                 labelStyle={styles.bmiInputLabel}
                 inputStyle={styles.bmiInputWrapper}
+                textStyle={styles.bmiInputText}
                 onChangeText={(text: string) => onChangeField('height', text)}
               />
               {isBmiBtn ? (
@@ -787,6 +802,7 @@ const GeneticsScreen = () => {
                   readOnly={true}
                   labelStyle={styles.gahInputLabel}
                   inputStyle={styles.bmiInputWrapper}
+                  textStyle={styles.bmiInputText}
                 />
               </Button>
               <Button customStyle={styles.attrBtn} onPress={() => setComplexion(true)}>
@@ -797,6 +813,7 @@ const GeneticsScreen = () => {
                   readOnly={true}
                   labelStyle={styles.gahInputLabel}
                   inputStyle={styles.bmiInputWrapper}
+                  textStyle={styles.bmiInputText}
                 />
               </Button>
             </View>
@@ -809,6 +826,7 @@ const GeneticsScreen = () => {
                   readOnly={true}
                   labelStyle={styles.gahInputLabel}
                   inputStyle={styles.bmiInputWrapper}
+                  textStyle={styles.bmiInputText}
                 />
               </Button>
               <RoundedButton
@@ -845,7 +863,7 @@ const GeneticsScreen = () => {
             <View style={styles.dataInfoRow}>
               <CircularProgressBar
                 progress={100}
-                diameter={170}
+                diameter={normalize(170)}
                 startColor={COLORS.GRADIENT_SKY_LIGHT}
                 endColor={COLORS.GRADIENT_BLUE}>
                 <View style={styles.logWrapper}>
@@ -857,7 +875,7 @@ const GeneticsScreen = () => {
               </CircularProgressBar>
               <CircularProgressBar
                 progress={100}
-                diameter={170}
+                diameter={normalize(170)}
                 startColor={COLORS.GRADIENT_SKY_LIGHT}
                 endColor={COLORS.GRADIENT_BLUE}>
                 <View style={styles.logWrapper}>
@@ -872,7 +890,7 @@ const GeneticsScreen = () => {
           <View style={styles.dataInfoRow}>
             <CircularProgressBar
               progress={100}
-              diameter={170}
+              diameter={normalize(170)}
               startColor={COLORS.GRADIENT_SKY_LIGHT}
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.logWrapper}>
@@ -884,7 +902,7 @@ const GeneticsScreen = () => {
             </CircularProgressBar>
             <CircularProgressBar
               progress={100}
-              diameter={170}
+              diameter={normalize(170)}
               startColor={COLORS.GRADIENT_SKY_LIGHT}
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.logWrapper}>
@@ -899,7 +917,7 @@ const GeneticsScreen = () => {
             <Button customStyle={styles.progressbtn} onPress={() => setWaterAbout(true)}>
               <CircularProgressBar
                 progress={100}
-                diameter={170}
+                diameter={normalize(170)}
                 startColor={COLORS.GRADIENT_SKY_LIGHT}
                 endColor={COLORS.GRADIENT_BLUE}>
                 <View style={styles.logWrapper}>
@@ -918,7 +936,7 @@ const GeneticsScreen = () => {
             <Button customStyle={styles.progressbtn} onPress={() => setBloodAbout(true)}>
               <CircularProgressBar
                 progress={100}
-                diameter={170}
+                diameter={normalize(170)}
                 startColor={COLORS.GRADIENT_SKY_LIGHT}
                 endColor={COLORS.GRADIENT_BLUE}>
                 <View style={styles.logWrapper}>
