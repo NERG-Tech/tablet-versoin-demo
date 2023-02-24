@@ -4,9 +4,9 @@ import {TAddPlayer} from '../../services/playerService';
 import {addPlayer as addPlayerRequest} from '../../services/playerService';
 import {
   getMET as getMETRequest,
-  getVo2 as getVo2Request,
-  getWaistAndHip as getWaistAndHipRequest,
-  getKeyMeasurements as getKeyMeasurementsRequest,
+  addVo2 as addVo2Request,
+  addWaistAndHip as addWaistAndHipRequest,
+  addKeyMeasurements as addKeyMeasurementsRequest,
 } from '../../services/formulaService';
 import {navigate} from '../actions/navigationActions';
 import * as NavigationConstants from '../../common/constants/NavigationConstants';

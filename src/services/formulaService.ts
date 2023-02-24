@@ -8,14 +8,14 @@ export type TWaistAndHip = {
   idToken: string;
 };
 
-export const getWaistAndHip = async (params: TWaistAndHip) => {
+export const addWaistAndHip = async (params: TWaistAndHip) => {
   try {
     const url = `${apiUrl}/player/wh`;
     const res = await axios.post(url, params);
 
     return Promise.resolve(res.data);
   } catch (err) {
-    console.log('getWaistAndHip Error: ', err);
+    console.log('addWaistAndHip Error: ', err);
     return Promise.reject(err);
   }
 };
@@ -25,14 +25,14 @@ export type TVo2 = {
   idToken: string;
 };
 
-export const getVo2 = async (params: TVo2) => {
+export const addVo2 = async (params: TVo2) => {
   try {
     const url = `${apiUrl}/player/vo2`;
     const res = await axios.post(url, params);
 
     return Promise.resolve(res.data);
   } catch (err) {
-    console.log('getVo2 Error: ', err);
+    console.log('addVo2 Error: ', err);
     return Promise.reject(err);
   }
 };
@@ -55,6 +55,25 @@ export const getMET = async (params: TMet) => {
   }
 };
 
+export type TGenetics = {
+  ethnicity: string;
+  complexion: string;
+  bloodType: string;
+  idToken: string;
+};
+
+export const getGenetics = async (params: TMet) => {
+  try {
+    const url = `${apiUrl}/player/genetic`;
+    const res = await axios.post(url, params);
+
+    return Promise.resolve(res.data);
+  } catch (err) {
+    console.log('getGenetics Error: ', err);
+    return Promise.reject(err);
+  }
+};
+
 export type TKeyMeasurement = {
   neckCircumference: number;
   wingSpan: number;
@@ -62,23 +81,25 @@ export type TKeyMeasurement = {
   hipsCircumference: number;
   gluteCircumference: number;
   waistCircumference: number;
+  idToken: string;
 };
 
-export const getKeyMeasurements = async (params: TKeyMeasurement) => {
+export const addKeyMeasurements = async (params: TKeyMeasurement) => {
   try {
     const url = `${apiUrl}/player/key`;
     const res = await axios.post(url, params);
 
     return Promise.resolve(res.data);
   } catch (err) {
-    console.log('getKeyMeasurements Error: ', err);
+    console.log('addKeyMeasurements Error: ', err);
     return Promise.reject(err);
   }
 };
 
 export const authService = {
-  getWaistAndHip,
-  getVo2,
+  addWaistAndHip,
+  addVo2,
   getMET,
-  getKeyMeasurements,
+  getGenetics,
+  addKeyMeasurements,
 };
