@@ -31,7 +31,7 @@ export type TVo2 = TVo2Data & {
   idToken: string | undefined;
 };
 
-export const addVo2 = async (params: TVo2) => {
+export const getVo2 = async (params: TVo2) => {
   try {
     const url = `${apiUrl}/player/vo2`;
     const res = await axios.post(url, params);
@@ -74,7 +74,7 @@ export type TGenetics = TGeneticsData & {
   idToken: string | undefined;
 };
 
-export const getGenetics = async (params: TGenetics) => {
+export const addGenetics = async (params: TGenetics) => {
   try {
     const url = `${apiUrl}/player/genetic`;
     const res = await axios.post(url, params);
@@ -113,8 +113,8 @@ export const addKeyMeasurements = async (params: TKeyMeasurement) => {
 
 export const authService = {
   addWaistAndHip,
-  addVo2,
+  getVo2,
   getMET,
-  getGenetics,
+  addGenetics,
   addKeyMeasurements,
 };
