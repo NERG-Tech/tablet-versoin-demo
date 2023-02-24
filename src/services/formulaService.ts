@@ -2,10 +2,13 @@ import axios from 'axios';
 
 const apiUrl = 'https://us-central1-nerg-one.cloudfunctions.net/api';
 
-export type TWaistAndHip = {
+export type TWaistAndHipData = {
   waist: number;
   hip: number;
-  idToken: string;
+};
+
+export type TWaistAndHip = TWaistAndHipData & {
+  idToken: string | undefined;
 };
 
 export const addWaistAndHip = async (params: TWaistAndHip) => {
@@ -20,9 +23,12 @@ export const addWaistAndHip = async (params: TWaistAndHip) => {
   }
 };
 
-export type TVo2 = {
+export type TVo2Data = {
   pulse: number;
-  idToken: string;
+};
+
+export type TVo2 = TVo2Data & {
+  idToken: string | undefined;
 };
 
 export const addVo2 = async (params: TVo2) => {
@@ -37,10 +43,13 @@ export const addVo2 = async (params: TVo2) => {
   }
 };
 
-export type TMet = {
+export type TMetData = {
   minutes: number;
   seconds: number;
-  idToken: string;
+};
+
+export type TMet = TMetData & {
+  idToken: string | undefined;
 };
 
 export const getMET = async (params: TMet) => {
@@ -55,14 +64,17 @@ export const getMET = async (params: TMet) => {
   }
 };
 
-export type TGenetics = {
+export type TGeneticsData = {
   ethnicity: string;
   complexion: string;
   bloodType: string;
-  idToken: string;
 };
 
-export const getGenetics = async (params: TMet) => {
+export type TGenetics = TGeneticsData & {
+  idToken: string | undefined;
+};
+
+export const getGenetics = async (params: TGenetics) => {
   try {
     const url = `${apiUrl}/player/genetic`;
     const res = await axios.post(url, params);
@@ -74,14 +86,17 @@ export const getGenetics = async (params: TMet) => {
   }
 };
 
-export type TKeyMeasurement = {
+export type TKeyMeasurementData = {
   neckCircumference: number;
   wingSpan: number;
   handSize: number;
   hipsCircumference: number;
   gluteCircumference: number;
   waistCircumference: number;
-  idToken: string;
+};
+
+export type TKeyMeasurement = TKeyMeasurementData & {
+  idToken: string | undefined | undefined;
 };
 
 export const addKeyMeasurements = async (params: TKeyMeasurement) => {
