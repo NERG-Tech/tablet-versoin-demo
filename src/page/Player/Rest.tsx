@@ -3,6 +3,7 @@ import {Text, Image, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {COLORS, FONT_WEIGHT, FONT_SIZE} from '../../common/constants/StyleConstants';
 import {CircularProgressBar, AnalysisDisplay, AnalysisBar} from '../../common/components';
+import {orientation, normalize, normalizeHalf, normalizeRate} from '../../utils/normalize';
 
 const CPUImg = require('../../assets/img/cpu.png');
 const SunImg = require('../../assets/img/hoc/sun.png');
@@ -13,17 +14,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    gap: 60,
+    gap: normalize(60),
     backgroundColor: COLORS.WHITE,
-    paddingVertical: 30,
-    paddingHorizontal: 20,
+    paddingVertical: normalizeHalf(30),
+    paddingHorizontal: normalizeHalf(20),
   },
   analysisWrapper: {
     flexDirection: 'column',
   },
   logsWrapper: {
     flexDirection: 'row',
-    gap: 30,
+    gap: normalize(30),
   },
   logWrapper: {
     flexDirection: 'column',
@@ -31,32 +32,32 @@ const styles = StyleSheet.create({
   },
   percentValue: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: 36,
+    fontSize: normalize(36),
     color: COLORS.BLACK,
   },
   unitText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XXL,
+    fontSize: normalize(FONT_SIZE.XXL),
     color: COLORS.BLACK,
-    marginLeft: 10,
+    marginLeft: normalize(10),
   },
   percentDescText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MS,
+    fontSize: normalize(FONT_SIZE.MS),
     color: COLORS.TEXT_DARK,
     textAlign: 'center',
-    width: 120,
+    width: normalize(120),
   },
   cpuImg: {
-    width: 24,
-    height: 24,
+    width: normalize(24),
+    height: normalize(24),
     resizeMode: 'contain',
-    marginTop: 16,
+    marginTop: normalize(16, orientation.HEIGHT),
   },
   percentGroupWrapper: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginTop: 20,
+    marginTop: normalize(20, orientation.HEIGHT),
   },
   analysisTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
@@ -65,8 +66,8 @@ const styles = StyleSheet.create({
   },
   analysisInfoWrapper: {
     flexDirection: 'column',
-    width: 400,
-    marginTop: 40,
+    width: normalize(400),
+    marginTop: normalize(40, orientation.HEIGHT),
   },
   dataWrapper: {
     flex: 1,
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   dataTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.BLACK,
   },
   dataInfoWrapper: {
@@ -83,16 +84,16 @@ const styles = StyleSheet.create({
   dataInfoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 30,
+    marginTop: normalize(30),
   },
   sunImg: {
-    width: 21,
-    height: 21,
+    width: normalize(21),
+    height: normalize(21),
     resizeMode: 'contain',
   },
   moonImg: {
-    width: 17,
-    height: 17,
+    width: normalize(17),
+    height: normalize(17),
     resizeMode: 'contain',
   },
 });
@@ -106,7 +107,7 @@ const RestScreen = () => {
         <View style={styles.logsWrapper}>
           <CircularProgressBar
             progress={75}
-            diameter={190}
+            diameter={normalize(190)}
             startColor={COLORS.GRADIENT_YELLOW}
             endColor={COLORS.GRADIENT_PURPLE_MIDDLE}>
             <View style={styles.logWrapper}>
@@ -120,7 +121,7 @@ const RestScreen = () => {
           </CircularProgressBar>
           <CircularProgressBar
             progress={75}
-            diameter={190}
+            diameter={normalize(190)}
             startColor={COLORS.GRADIENT_PURPLE_MIDDLE}
             endColor={COLORS.GRADIENT_PURPLE_DARK}>
             <View style={styles.logWrapper}>
@@ -161,8 +162,8 @@ const RestScreen = () => {
         <View style={styles.dataInfoWrapper}>
           <View style={styles.dataInfoRow}>
             <CircularProgressBar
-              progress={75}
-              diameter={170}
+              progress={100}
+              diameter={normalize(170)}
               startColor={COLORS.GRADIENT_PURPLE_LIGHT}
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.logWrapper}>
@@ -171,8 +172,8 @@ const RestScreen = () => {
               </View>
             </CircularProgressBar>
             <CircularProgressBar
-              progress={75}
-              diameter={170}
+              progress={100}
+              diameter={normalize(170)}
               startColor={COLORS.GRADIENT_PURPLE_LIGHT}
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.logWrapper}>
@@ -184,8 +185,8 @@ const RestScreen = () => {
         </View>
         <View style={styles.dataInfoRow}>
           <CircularProgressBar
-            progress={75}
-            diameter={170}
+            progress={100}
+            diameter={normalize(170)}
             startColor={COLORS.GRADIENT_PURPLE_LIGHT}
             endColor={COLORS.GRADIENT_BLUE}>
             <View style={styles.logWrapper}>
@@ -195,8 +196,8 @@ const RestScreen = () => {
             </View>
           </CircularProgressBar>
           <CircularProgressBar
-            progress={75}
-            diameter={170}
+            progress={100}
+            diameter={normalize(170)}
             startColor={COLORS.GRADIENT_PURPLE_LIGHT}
             endColor={COLORS.GRADIENT_BLUE}>
             <View style={styles.logWrapper}>
@@ -208,8 +209,8 @@ const RestScreen = () => {
         </View>
         <View style={styles.dataInfoRow}>
           <CircularProgressBar
-            progress={75}
-            diameter={170}
+            progress={100}
+            diameter={normalize(170)}
             startColor={COLORS.GRADIENT_PURPLE_LIGHT}
             endColor={COLORS.GRADIENT_BLUE}>
             <View style={styles.logWrapper}>
@@ -219,8 +220,8 @@ const RestScreen = () => {
             </View>
           </CircularProgressBar>
           <CircularProgressBar
-            progress={75}
-            diameter={170}
+            progress={100}
+            diameter={normalize(170)}
             startColor={COLORS.GRADIENT_PURPLE_LIGHT}
             endColor={COLORS.GRADIENT_BLUE}>
             <View style={styles.logWrapper}>
