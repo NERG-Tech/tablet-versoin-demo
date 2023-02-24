@@ -3,7 +3,7 @@ import {Text, Image, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {COLORS, FONT_WEIGHT, FONT_SIZE} from '../../common/constants/StyleConstants';
 import {CircularProgressBar, AnalysisDisplay, AnalysisBar} from '../../common/components';
-import {orientation, normalize, normalizeHalf, normalizeRate} from '../../utils/normalize';
+import {orientation, normalize, normalizeHalf} from '../../utils/normalize';
 
 const CPUImg = require('../../assets/img/cpu.png');
 const SunImg = require('../../assets/img/hoc/sun.png');
@@ -144,7 +144,7 @@ const RestScreen = () => {
             rHours="05:21"
             rIcon={<Image style={styles.sunImg} source={SunImg} />}
             dividerColor={COLORS.DIVIDER_PURPLE}
-            customStyle={{marginTop: 16}}
+            customStyle={{marginTop: normalize(16)}}
           />
           <AnalysisBar
             startLabel={t('personalInfo.rest.remSleep')}
@@ -153,7 +153,7 @@ const RestScreen = () => {
             middleValue={46}
             endLabel={t('personalInfo.rest.lightSleep')}
             endValue={30}
-            customStyle={{marginTop: 16}}
+            customStyle={{marginTop: normalize(16)}}
           />
         </View>
       </View>

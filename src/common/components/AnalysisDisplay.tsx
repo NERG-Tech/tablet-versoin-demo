@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     marginTop: normalize(20, orientation.HEIGHT),
   },
   lWrapper: {
-    flex: 1,
+    justifyContent: 'center',
+    height: normalize(120, orientation.HEIGHT),
     paddingVertical: normalize(20, orientation.HEIGHT),
     borderTopLeftRadius: normalize(16),
     borderBottomLeftRadius: normalize(16),
@@ -37,7 +38,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(30),
   },
   rWrapper: {
-    flex: 1,
+    justifyContent: 'center',
+    height: normalize(120, orientation.HEIGHT),
     paddingVertical: normalize(20, orientation.HEIGHT),
     borderTopRightRadius: normalize(16),
     borderBottomRightRadius: normalize(16),
