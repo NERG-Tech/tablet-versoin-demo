@@ -498,18 +498,6 @@ const GeneticsScreen = () => {
     onChangeField('waterRatio', ratio.toFixed(2).toString());
   }, [playerData]);
 
-  useEffect(() => {
-    if (!!state.bloodType && !!state.ethnicity && !!state.complexion) {
-      const geneticsData: TGenetics = {
-        ethnicity: state.ethnicity,
-        complexion: state.complexion,
-        bloodType: state.bloodType,
-        idToken: authData?.accessToken,
-      };
-      dispatch(addGenetics(geneticsData));
-    }
-  }, [state.bloodType, state.complexion, state.ethnicity]);
-
   const onChangeField = (field: string, value: string) => {
     setState({...state, [field]: value});
   };
