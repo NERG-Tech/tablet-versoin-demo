@@ -11,9 +11,9 @@ import {
   AttributeInput,
   CircularProgressBar,
 } from '../../common/components';
-import {useAuth} from '../../contexts/AuthProvider';
 import {useDispatch, useSelector} from '../../redux/store';
-import {setKeyMeasurements} from '../../redux/actions/plyerActions';
+import {useAuth} from '../../contexts/AuthProvider';
+import {addKeyMeasurements} from '../../redux/actions/plyerActions';
 import {TPlayerState} from '../../redux/reducers/playerReducer';
 import {TKeyMeasurement} from '../../services/formulaService';
 import {TPlayerInfo} from '../../redux/types/player';
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: FONT_WEIGHT.LIGHT,
     fontSize: FONT_SIZE.XXL,
     color: COLORS.BLACK,
-    marginLeft: 10,
+    marginLeft: 6,
   },
   percentDescText: {
     fontWeight: FONT_WEIGHT.LIGHT,
@@ -424,7 +424,7 @@ const bloodTypes = {
   ab: 'AB-',
 };
 
-type TGeneticsState = TPlayerInfo & {
+type TGeneticsState = {
   ethnicity: string;
   complexion: string;
   bloodType: string;
@@ -434,52 +434,11 @@ type TGeneticsState = TPlayerInfo & {
   hips: string;
   glute: string;
   waist: string;
+  waterRatio: string;
 };
 
 const GeneticsScreen = () => {
   const initState: TGeneticsState = {
-    name: '',
-    age: 0,
-    sex: '',
-    sport: '',
-    position: '',
-    bmi: 0,
-    height: {
-      cm: 0,
-      mt: 0,
-      feet: {
-        feet: 0,
-        inch: 0,
-      },
-    },
-    weight: {
-      kg: 0,
-      pounds: 0,
-    },
-    adjustedBodyWeight: {
-      kg: 0,
-      pounds: 0,
-    },
-    bloodVolumn: {
-      value: 0,
-      unit: '',
-    },
-    bodyWaterWeight: {
-      kg: 0,
-      pounds: 0,
-    },
-    idealWeight: {
-      kg: 0,
-      pounds: 0,
-    },
-    leanBodyMass: {
-      kg: 0,
-      pounds: 0,
-    },
-    rmr: {
-      value: 0,
-      unit: '',
-    },
     ethnicity: '',
     complexion: '',
     bloodType: '',
@@ -489,6 +448,7 @@ const GeneticsScreen = () => {
     hips: '',
     glute: '',
     waist: '',
+    waterRatio: '',
   };
 
   const [state, setState] = useState(initState);
@@ -499,35 +459,23 @@ const GeneticsScreen = () => {
   const [isBloodAbout, setBloodAbout] = useState(false);
   const [isWaterAbout, setWaterAbout] = useState(false);
   const [isBmiBtn, setBmiBtn] = useState(true);
+  const {authData} = useAuth();
 
   const {t} = useTranslation();
 
-  const {authData} = useAuth();
   const dispatch = useDispatch();
   const playerData = useSelector<TPlayerState>(state => state.player);
 
   useEffect(() => {
-    const tempState = {
-      age: playerData.age,
-      weight: playerData.weight,
-      height: playerData.height,
-      bmi: playerData.bmi,
-      adjustedBodyWeight: playerData.adjustedBodyWeight,
-      leanBodyMass: playerData.leanBodyMass,
-      bodyWaterWeight: playerData.bodyWaterWeight,
-      idealWeight: playerData.idealWeight,
-      bloodVolumn: playerData.bloodVolumn,
-      ethnicity: state.ethnicity,
-      complexion: state.complexion,
-      bloodType: state.bloodType,
-      wingSpan: playerData.wingSpan.toString(),
-      handSize: playerData.handSize.toString(),
-      neck: playerData.neckCircumference.toString(),
-      hips: playerData.hipsCircumference.toString(),
-      glute: playerData.gluteCircumference.toString(),
-      waist: playerData.waistCircumference.toString(),
-    };
-    setState({...state, ...tempState});
+    console.log(playerData);
+    if (playerData?.waistHipsRatio) {
+      setBmiBtn(false);
+    } else {
+      setBmiBtn(true);
+    }
+
+    const ratio = (playerData.bodyWaterWeight.kg / playerData.idealWeight.kg) * 100;
+    onChangeField('waterRatio', ratio.toFixed(2).toString());
   }, [playerData]);
 
   const onChangeField = (field: string, value: string) => {
@@ -543,7 +491,7 @@ const GeneticsScreen = () => {
     tempState.hips = '';
     tempState.glute = '';
     tempState.waist = '';
-    setState({...tempState});
+    setState({...state, ...tempState});
   };
 
   const onMeasurementModalConfirm = () => {
@@ -555,9 +503,9 @@ const GeneticsScreen = () => {
       hipsCircumference: parseFloat(state.hips),
       gluteCircumference: parseFloat(state.glute),
       waistCircumference: parseFloat(state.waist),
+      idToken: authData?.accessToken,
     };
-    dispatch(setKeyMeasurements(measurementData));
-    setBmiBtn(false);
+    dispatch(addKeyMeasurements(measurementData));
   };
 
   const onSelectConfirm = (field: string) => {
@@ -768,7 +716,7 @@ const GeneticsScreen = () => {
             <View style={styles.bmiInputsWrapper}>
               <AttributeInput
                 label={t('personalInfo.genetics.bmi.age')}
-                value={state.age.toString()}
+                value={playerData.age.toString()}
                 placeholder="34"
                 labelStyle={styles.bmiInputLabel}
                 inputStyle={styles.bmiInputWrapper}
@@ -776,7 +724,7 @@ const GeneticsScreen = () => {
               />
               <AttributeInput
                 label={t('personalInfo.genetics.bmi.weight')}
-                value={`${state.weight.kg} kg`}
+                value={`${playerData.weight.kg} kg`}
                 placeholder="145 LBS"
                 labelStyle={styles.bmiInputLabel}
                 inputStyle={styles.bmiInputWrapper}
@@ -784,7 +732,7 @@ const GeneticsScreen = () => {
               />
               <AttributeInput
                 label={t('personalInfo.genetics.bmi.height')}
-                value={`${state.height.feet.feet}’ ${state.height.feet.inch}”`}
+                value={`${playerData.height.feet.feet}’ ${playerData.height.feet.inch}”`}
                 placeholder="5’5”"
                 labelStyle={styles.bmiInputLabel}
                 inputStyle={styles.bmiInputWrapper}
@@ -880,25 +828,25 @@ const GeneticsScreen = () => {
           <View style={styles.dataInfoWrapper}>
             <View style={styles.dataInfoRow}>
               <CircularProgressBar
-                progress={75}
+                progress={100}
                 diameter={170}
                 startColor={COLORS.GRADIENT_SKY_LIGHT}
                 endColor={COLORS.GRADIENT_BLUE}>
                 <View style={styles.logWrapper}>
-                  <Text style={styles.percentValue}>{state.bmi}</Text>
+                  <Text style={styles.percentValue}>{playerData.bmi}</Text>
                   <Text style={styles.percentDescText}>
                     {t('personalInfo.genetics.bmi.caption')}
                   </Text>
                 </View>
               </CircularProgressBar>
               <CircularProgressBar
-                progress={75}
+                progress={100}
                 diameter={170}
                 startColor={COLORS.GRADIENT_SKY_LIGHT}
                 endColor={COLORS.GRADIENT_BLUE}>
                 <View style={styles.logWrapper}>
                   <View style={styles.percentGroupWrapper}>
-                    <Text style={styles.percentValue}>{state.adjustedBodyWeight.kg}</Text>
+                    <Text style={styles.percentValue}>{playerData.adjustedBodyWeight.kg}</Text>
                   </View>
                   <Text style={styles.percentDescText}>{t('personalInfo.genetics.abw')}</Text>
                 </View>
@@ -907,25 +855,25 @@ const GeneticsScreen = () => {
           </View>
           <View style={styles.dataInfoRow}>
             <CircularProgressBar
-              progress={75}
+              progress={100}
               diameter={170}
               startColor={COLORS.GRADIENT_SKY_LIGHT}
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.logWrapper}>
                 <View style={styles.percentGroupWrapper}>
-                  <Text style={styles.percentValue}>{state.leanBodyMass.kg}</Text>
+                  <Text style={styles.percentValue}>{playerData.leanBodyMass.kg}</Text>
                 </View>
                 <Text style={styles.percentDescText}>{t('personalInfo.genetics.lbm')}</Text>
               </View>
             </CircularProgressBar>
             <CircularProgressBar
-              progress={75}
+              progress={100}
               diameter={170}
               startColor={COLORS.GRADIENT_SKY_LIGHT}
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.logWrapper}>
                 <Text style={styles.percentValue}>
-                  {parseInt(state.waist) / parseInt(state.hips)}
+                  {playerData.waistHipsRatio ? playerData.waistHipsRatio : 'N/A'}
                 </Text>
                 <Text style={styles.percentDescText}>{t('personalInfo.genetics.wthr')}</Text>
               </View>
@@ -934,14 +882,16 @@ const GeneticsScreen = () => {
           <View style={styles.dataInfoRow}>
             <Button customStyle={styles.progressbtn} onPress={() => setWaterAbout(true)}>
               <CircularProgressBar
-                progress={75}
+                progress={100}
                 diameter={170}
                 startColor={COLORS.GRADIENT_SKY_LIGHT}
                 endColor={COLORS.GRADIENT_BLUE}>
                 <View style={styles.logWrapper}>
                   <View style={styles.percentGroupWrapper}>
                     <Text style={styles.percentValue}>
-                      {(state.bodyWaterWeight.kg / state.idealWeight.kg) * 100}
+                      {playerData.bodyWaterWeight && playerData.idealWeight
+                        ? state.waterRatio
+                        : 'N/A'}
                     </Text>
                     <Text style={styles.unitText}>%</Text>
                   </View>
@@ -951,14 +901,14 @@ const GeneticsScreen = () => {
             </Button>
             <Button customStyle={styles.progressbtn} onPress={() => setBloodAbout(true)}>
               <CircularProgressBar
-                progress={75}
+                progress={100}
                 diameter={170}
                 startColor={COLORS.GRADIENT_SKY_LIGHT}
                 endColor={COLORS.GRADIENT_BLUE}>
                 <View style={styles.logWrapper}>
                   <View style={styles.percentGroupWrapper}>
-                    <Text style={styles.percentValue}>{state.bloodVolumn.value}</Text>
-                    <Text style={styles.unitText}>{state.bloodVolumn.unit}</Text>
+                    <Text style={styles.percentValue}>{playerData.bloodVolumn.value}</Text>
+                    <Text style={styles.unitText}>{playerData.bloodVolumn.unit}</Text>
                   </View>
                   <Text style={styles.percentDescText}>{t('personalInfo.genetics.bv')}</Text>
                 </View>

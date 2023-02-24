@@ -3,12 +3,7 @@ import axios from 'axios';
 const apiUrl = 'https://us-central1-nerg-one.cloudfunctions.net/api';
 
 export type TAuthData = {
-  token: string;
-  uid: string;
   accessToken: string;
-  expirationTime: number;
-  expired: number;
-  refreshToken: string;
 };
 
 export type TLoginWithEmail = {
@@ -21,12 +16,7 @@ export const loginWithEmail = async ({email, password}: TLoginWithEmail): Promis
   const res = await axios.post(url, {email, password});
 
   return Promise.resolve({
-    token: res.data.token,
-    uid: res.data.uid.user.uid,
-    accessToken: res.data.uid.user.stsTokenManager.accessToken,
-    expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
-    refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
-    expired: res.data.uid._tokenResponse.expiresIn,
+    accessToken: res.data.customToken,
   });
 };
 
@@ -41,12 +31,7 @@ export const signUpWithEmail = async (props: TSignUpWithEmail): Promise<TAuthDat
   const res = await axios.post(url, props);
 
   return Promise.resolve({
-    token: res.data.token,
-    uid: res.data.uid.user.uid,
-    accessToken: res.data.uid.user.stsTokenManager.accessToken,
-    expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
-    refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
-    expired: res.data.uid._tokenResponse.expiresIn,
+    accessToken: res.data.customToken,
   });
 };
 
@@ -65,10 +50,10 @@ export const validateToken = async ({userIdToken}: TValidateUser) => {
   return Promise.resolve(res.data);
 };
 
-export const revokeToken = async (uid: string | undefined) => {
-  const url = `${apiUrl}/user/revoke/${uid}`;
+export const revokeToken = async (idToken: string | undefined) => {
+  const url = `${apiUrl}/user/revoke/`;
   const res = await axios.post(url, {
-    uid: uid,
+    idToken,
   });
 
   return Promise.resolve(res.data);

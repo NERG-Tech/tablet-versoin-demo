@@ -1073,7 +1073,7 @@ const PlayerLayout = (props: TProps) => {
         <View style={styles.playerInfoWrapper}>
           <View style={styles.avatarWrapper}>
             <CircularProgressBar
-              progress={75}
+              progress={100}
               diameter={224}
               startColor={COLORS.GRADIENT_SKY}
               endColor={COLORS.GRADIENT_BLUE}>

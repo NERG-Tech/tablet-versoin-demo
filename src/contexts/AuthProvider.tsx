@@ -72,7 +72,7 @@ const AuthProvider = ({children}: {children: any}) => {
 
   const signOut = async () => {
     try {
-      await authService.revokeToken(authData?.uid);
+      await authService.revokeToken(authData?.accessToken);
       // Remove data from context, so the App can be notified
       // and send the user to the AuthStack
       setAuthData(undefined);

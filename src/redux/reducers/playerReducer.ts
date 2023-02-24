@@ -1,13 +1,14 @@
 import {ADD_PLYAER, HANDLE_PLYAER_SUCCESS, HANDLE_PLYAER_FAILED} from '../actions/types/player';
-import {SET_KEY_MEASUREMENTS} from '../actions/types/formula';
+import {ADD_KEY_MEASUREMENTS, SET_KEY_MEASUREMENTS, SET_WAIST_HIPS} from '../actions/types/formula';
 import {TPlayerInfo} from '../types/player';
-import {TKeyMeasurement} from '../../services/formulaService';
+import {TKeyMeasurementData} from '../../services/formulaService';
 import {TAction} from '../types/action';
 
 export type TPlayerState = TPlayerInfo &
-  TKeyMeasurement & {
+  TKeyMeasurementData & {
     loading: boolean;
     error: string;
+    waistHipsRatio: number;
   };
 
 const initState: TPlayerState = {
@@ -61,6 +62,7 @@ const initState: TPlayerState = {
   hipsCircumference: 0,
   gluteCircumference: 0,
   waistCircumference: 0,
+  waistHipsRatio: 0,
 };
 
 export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) => {
@@ -87,10 +89,26 @@ export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) =
         error: payload,
       };
     }
+    case ADD_KEY_MEASUREMENTS: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
     case SET_KEY_MEASUREMENTS: {
       return {
         ...state,
+        loading: false,
         ...payload,
+      };
+    }
+    case SET_WAIST_HIPS: {
+      return {
+        ...state,
+        loading: false,
+        waistCircumference: payload.waist,
+        hipsCircumference: payload.hip,
+        waistHipsRatio: payload.ratio,
       };
     }
     default:

@@ -13,10 +13,6 @@ export type TAddPlayer = {
   accessToken: string | undefined;
 };
 
-export type TToken = {
-  accessToken: string;
-};
-
 export const addPlayer = async (params: TAddPlayer) => {
   const url = `${apiUrl}/player`;
   if (params.accessToken) {
@@ -34,10 +30,14 @@ export const addPlayer = async (params: TAddPlayer) => {
   }
 };
 
-export const getPlayer = async (accessToken: TToken) => {
-  if (accessToken) {
+export type TToken = {
+  accessToken: string;
+};
+
+export const getPlayer = async (params: TToken) => {
+  if (params) {
     try {
-      const url = `${apiUrl}/player/${accessToken.accessToken}`;
+      const url = `${apiUrl}/player/${params.accessToken}`;
       const options = {
         method: 'GET',
         url: url,
