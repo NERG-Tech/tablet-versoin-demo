@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, Image, View, StyleSheet} from 'react-native';
+import {Text, Image, View, ScrollView, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
 import {useTranslation} from 'react-i18next';
 import {COLORS, FONT_WEIGHT, FONT_SIZE} from '../../common/constants/StyleConstants';
@@ -13,10 +13,9 @@ import {
 } from '../../common/components';
 import {useDispatch, useSelector} from '../../redux/store';
 import {useAuth} from '../../contexts/AuthProvider';
-import {addKeyMeasurements} from '../../redux/actions/plyerActions';
+import {addKeyMeasurements, addGenetics} from '../../redux/actions/plyerActions';
 import {TPlayerState} from '../../redux/reducers/playerReducer';
-import {TKeyMeasurement} from '../../services/formulaService';
-import {TPlayerInfo} from '../../redux/types/player';
+import {TKeyMeasurement, TGenetics} from '../../services/formulaService';
 
 const SkeletonIMg = require('../../assets/img/skeleton.png');
 const LogoImg = require('../../assets/img/logo/logo.png');
@@ -401,27 +400,33 @@ const aboutModalStyles = StyleSheet.create({
 });
 
 const ethnicitys = {
-  indian: 'American Indian or Alaska Native',
-  asian: 'Asian',
-  black: 'Black or African American',
-  hispanic: 'Hispanic or Latino',
-  other: 'Native Hawaiian or Other Pacific Islander',
-  white: 'White',
+  afro: 'Afro-Caribbean',
+  native: 'Alaska Native / American Indigenous ',
+  asian: 'Asian / Pacific Islander',
+  black: 'Black / African',
+  irish: 'Irish',
+  italian: 'Italian',
+  latino: 'Latino / Hispanic',
+  spanish: 'Spanish / Portuguese',
+  german: 'White / German',
+  other: 'White / Other',
 };
 
 const complexions = {
-  fair: 'Fair',
+  light: 'Light',
   medium: 'Medium',
-  olive: 'Olive',
-  brown: 'Brown',
-  black: 'Black',
+  dark: 'Dark',
 };
 
 const bloodTypes = {
-  o: 'O-',
-  a: 'A-',
-  b: 'B-',
-  ab: 'AB-',
+  om: 'O-',
+  op: 'O+',
+  am: 'A-',
+  ap: 'A+',
+  bm: 'B-',
+  bp: 'B+',
+  abm: 'AB-',
+  abp: 'AB+',
 };
 
 type TGeneticsState = {
@@ -467,7 +472,6 @@ const GeneticsScreen = () => {
   const playerData = useSelector<TPlayerState>(state => state.player);
 
   useEffect(() => {
-    console.log(playerData);
     if (playerData?.waistHipsRatio) {
       setBmiBtn(false);
     } else {
@@ -477,6 +481,18 @@ const GeneticsScreen = () => {
     const ratio = (playerData.bodyWaterWeight.kg / playerData.idealWeight.kg) * 100;
     onChangeField('waterRatio', ratio.toFixed(2).toString());
   }, [playerData]);
+
+  useEffect(() => {
+    if (!!state.bloodType && !!state.ethnicity && !!state.complexion) {
+      const geneticsData: TGenetics = {
+        ethnicity: state.ethnicity,
+        complexion: state.complexion,
+        bloodType: state.bloodType,
+        idToken: authData?.accessToken,
+      };
+      dispatch(addGenetics(geneticsData));
+    }
+  }, [state.bloodType, state.complexion, state.ethnicity]);
 
   const onChangeField = (field: string, value: string) => {
     setState({...state, [field]: value});
@@ -660,7 +676,7 @@ const GeneticsScreen = () => {
           <Text style={selectModalStyles.headerText}>{title}</Text>
         </View>
         <View style={selectModalStyles.modalBody}>
-          <View style={selectModalStyles.colWrapper}>
+          <ScrollView style={selectModalStyles.colWrapper}>
             {Object.keys(options).map((key: string, i: number) => (
               <CheckListItem
                 key={i}
@@ -670,7 +686,7 @@ const GeneticsScreen = () => {
                 setStatus={(key: string) => onChangeField(field, options[key])}
               />
             ))}
-          </View>
+          </ScrollView>
           <View style={selectModalStyles.buttonsWrapper}>
             <Button customStyle={selectModalStyles.cancelBtn} onPress={() => onCancel(field)}>
               <Text style={selectModalStyles.buttonText}>{t('general.cancel')}</Text>

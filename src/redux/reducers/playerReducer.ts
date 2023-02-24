@@ -1,11 +1,18 @@
 import {ADD_PLYAER, HANDLE_PLYAER_SUCCESS, HANDLE_PLYAER_FAILED} from '../actions/types/player';
-import {ADD_KEY_MEASUREMENTS, SET_KEY_MEASUREMENTS, SET_WAIST_HIPS} from '../actions/types/formula';
+import {
+  ADD_KEY_MEASUREMENTS,
+  SET_KEY_MEASUREMENTS,
+  ADD_GENETICS,
+  SET_GENETICS,
+  SET_WAIST_HIPS,
+} from '../actions/types/formula';
 import {TPlayerInfo} from '../types/player';
-import {TKeyMeasurementData} from '../../services/formulaService';
+import {TKeyMeasurementData, TGeneticsData} from '../../services/formulaService';
 import {TAction} from '../types/action';
 
 export type TPlayerState = TPlayerInfo &
-  TKeyMeasurementData & {
+  TKeyMeasurementData &
+  TGeneticsData & {
     loading: boolean;
     error: string;
     waistHipsRatio: number;
@@ -63,6 +70,9 @@ const initState: TPlayerState = {
   gluteCircumference: 0,
   waistCircumference: 0,
   waistHipsRatio: 0,
+  ethnicity: '',
+  complexion: '',
+  bloodType: '',
 };
 
 export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) => {
@@ -96,6 +106,19 @@ export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) =
       };
     }
     case SET_KEY_MEASUREMENTS: {
+      return {
+        ...state,
+        loading: false,
+        ...payload,
+      };
+    }
+    case ADD_GENETICS: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case SET_GENETICS: {
       return {
         ...state,
         loading: false,
