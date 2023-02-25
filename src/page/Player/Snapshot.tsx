@@ -313,7 +313,7 @@ const nutrientModalStyles = StyleSheet.create({
     paddingHorizontal: normalize(10),
   },
   modalHeaderTabBottom: {
-    width: 'normalize(100)%',
+    width: '100%',
     height: normalize(8, orientation.HEIGHT),
     marginTop: normalize(8, orientation.HEIGHT),
     borderRadius: 4,
@@ -327,7 +327,7 @@ const nutrientModalStyles = StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
   },
   modalHeaderTabActiveBottom: {
-    width: 'normalize(100)%',
+    width: '100%',
     height: normalize(8, orientation.HEIGHT),
     marginTop: normalize(8, orientation.HEIGHT),
     borderRadius: 4,
