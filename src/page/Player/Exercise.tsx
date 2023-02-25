@@ -3,6 +3,7 @@ import {Text, Image, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {COLORS, FONT_WEIGHT, FONT_SIZE} from '../../common/constants/StyleConstants';
 import {CircularProgressBar, AnalysisDisplay, AnalysisBar} from '../../common/components';
+import {orientation, normalize, normalizeHalf} from '../../utils/normalize';
 
 const CPUImg = require('../../assets/img/cpu.png');
 
@@ -11,17 +12,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    gap: 60,
+    gap: normalize(60),
     backgroundColor: COLORS.WHITE,
-    paddingVertical: 30,
-    paddingHorizontal: 20,
+    paddingVertical: normalizeHalf(30),
+    paddingHorizontal: normalizeHalf(20),
   },
   analysisWrapper: {
     flexDirection: 'column',
   },
   logsWrapper: {
     flexDirection: 'row',
-    gap: 30,
+    gap: normalize(30),
   },
   logWrapper: {
     flexDirection: 'column',
@@ -29,42 +30,42 @@ const styles = StyleSheet.create({
   },
   percentValue: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: 36,
+    fontSize: normalize(36),
     color: COLORS.BLACK,
   },
   unitText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XXL,
+    fontSize: normalize(FONT_SIZE.XXL),
     color: COLORS.BLACK,
-    marginLeft: 10,
+    marginLeft: normalize(10, orientation.HEIGHT),
   },
   percentDescText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MS,
+    fontSize: normalize(FONT_SIZE.MS),
     color: COLORS.TEXT_DARK,
     textAlign: 'center',
-    width: 120,
+    width: normalize(120),
   },
   cpuImg: {
-    width: 24,
-    height: 24,
+    width: normalize(24),
+    height: normalize(24),
     resizeMode: 'contain',
-    marginTop: 16,
+    marginTop: normalize(16, orientation.HEIGHT),
   },
   percentGroupWrapper: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginTop: 20,
+    marginTop: normalize(20, orientation.HEIGHT),
   },
   analysisTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.TEXT_DARK_LIGHT,
   },
   analysisInfoWrapper: {
     flexDirection: 'column',
-    width: 400,
-    marginTop: 40,
+    width: normalize(400),
+    marginTop: normalize(40, orientation.HEIGHT),
   },
   dataWrapper: {
     flex: 1,
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
   },
   dataTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.BLACK,
   },
   dataInfoWrapper: {
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   dataInfoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 30,
+    marginTop: normalize(30, orientation.HEIGHT),
   },
 });
 
@@ -94,7 +95,7 @@ const ExerciseScreen = () => {
         <View style={styles.logsWrapper}>
           <CircularProgressBar
             progress={75}
-            diameter={190}
+            diameter={normalize(190)}
             startColor={COLORS.GRADIENT_ORANGE}
             endColor={COLORS.GRADIENT_GREEN}>
             <View style={styles.logWrapper}>
@@ -104,7 +105,7 @@ const ExerciseScreen = () => {
           </CircularProgressBar>
           <CircularProgressBar
             progress={75}
-            diameter={190}
+            diameter={normalize(190)}
             startColor={COLORS.GRADIENT_ORANGE}
             endColor={COLORS.GRADIENT_GREEN}>
             <View style={styles.logWrapper}>
@@ -125,7 +126,7 @@ const ExerciseScreen = () => {
             rLabel={t('personalInfo.exercise.pa')}
             rHours="05:21"
             dividerColor={COLORS.DIVIDER_ORANGE}
-            customStyle={{marginTop: 16}}
+            customStyle={{marginTop: normalize(16)}}
           />
           <AnalysisBar
             startLabel={t('personalInfo.exercise.recovery')}
@@ -134,7 +135,7 @@ const ExerciseScreen = () => {
             middleValue={46}
             endLabel={t('personalInfo.exercise.maximum')}
             endValue={30}
-            customStyle={{marginTop: 16}}
+            customStyle={{marginTop: normalize(16)}}
           />
         </View>
       </View>
@@ -143,8 +144,8 @@ const ExerciseScreen = () => {
         <View style={styles.dataInfoWrapper}>
           <View style={styles.dataInfoRow}>
             <CircularProgressBar
-              progress={75}
-              diameter={170}
+              progress={100}
+              diameter={normalize(170)}
               startColor={COLORS.GRADIENT_YELLOW}
               endColor={COLORS.GRADIENT_ORANGE}>
               <View style={styles.logWrapper}>
@@ -154,8 +155,8 @@ const ExerciseScreen = () => {
               </View>
             </CircularProgressBar>
             <CircularProgressBar
-              progress={75}
-              diameter={170}
+              progress={100}
+              diameter={normalize(170)}
               startColor={COLORS.GRADIENT_YELLOW}
               endColor={COLORS.GRADIENT_ORANGE}>
               <View style={styles.logWrapper}>
@@ -171,8 +172,8 @@ const ExerciseScreen = () => {
         </View>
         <View style={styles.dataInfoRow}>
           <CircularProgressBar
-            progress={75}
-            diameter={170}
+            progress={100}
+            diameter={normalize(170)}
             startColor={COLORS.GRADIENT_YELLOW}
             endColor={COLORS.GRADIENT_ORANGE}>
             <View style={styles.logWrapper}>
@@ -182,8 +183,8 @@ const ExerciseScreen = () => {
             </View>
           </CircularProgressBar>
           <CircularProgressBar
-            progress={75}
-            diameter={170}
+            progress={100}
+            diameter={normalize(170)}
             startColor={COLORS.GRADIENT_YELLOW}
             endColor={COLORS.GRADIENT_ORANGE}>
             <View style={styles.logWrapper}>
@@ -195,8 +196,8 @@ const ExerciseScreen = () => {
         </View>
         <View style={styles.dataInfoRow}>
           <CircularProgressBar
-            progress={75}
-            diameter={170}
+            progress={100}
+            diameter={normalize(170)}
             startColor={COLORS.GRADIENT_YELLOW}
             endColor={COLORS.GRADIENT_ORANGE}>
             <View style={styles.logWrapper}>
@@ -205,8 +206,8 @@ const ExerciseScreen = () => {
             </View>
           </CircularProgressBar>
           <CircularProgressBar
-            progress={75}
-            diameter={170}
+            progress={100}
+            diameter={normalize(170)}
             startColor={COLORS.GRADIENT_YELLOW}
             endColor={COLORS.GRADIENT_ORANGE}>
             <View style={styles.logWrapper}>

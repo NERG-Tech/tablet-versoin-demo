@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../common/constants/StyleConstants';
+import {orientation, normalize} from '../../../utils/normalize';
 import WeeklyChart from './WeeklyChart';
 
 const styles = StyleSheet.create({
@@ -12,25 +13,25 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     borderWidth: 1.5,
     borderColor: COLORS.BORDER_ALPHA_LIGHT,
-    borderRadius: 24,
-    paddingVertical: 20,
-    paddingHorizontal: 40,
+    borderRadius: normalize(24),
+    paddingVertical: normalize(20, orientation.HEIGHT),
+    paddingHorizontal: normalize(40),
   },
   resultTitle: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.TEXT_DARK,
   },
   lastWeek: {
     position: 'absolute',
     zIndex: 9,
-    left: 75,
+    left: normalize(75),
     bottom: 7,
   },
   currentWeek: {
     position: 'absolute',
     zIndex: 9,
-    left: 210,
+    left: normalize(210),
     bottom: 7,
   },
 });

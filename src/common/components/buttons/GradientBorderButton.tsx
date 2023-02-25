@@ -11,35 +11,36 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {Button} from './Button';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../constants/StyleConstants';
+import {orientation, normalize, normalizeHalf} from '../../../utils/normalize';
 
 const CircleLeftImg = require('../../../assets/img/circleLeft.png');
 
 const styles = StyleSheet.create({
   gradientButton: {
     flex: 1,
-    borderRadius: 24,
+    borderRadius: normalize(24),
   },
   innerContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    margin: 5,
-    borderRadius: 24,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    margin: normalizeHalf(5),
+    borderRadius: normalize(24),
+    paddingVertical: normalize(10, orientation.HEIGHT),
+    paddingHorizontal: normalize(16),
     backgroundColor: COLORS.BACKGROUND_GREY_LIGHT,
   },
   buttonText: {
     flex: 1,
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.WHITE,
     textAlign: 'center',
   },
   arrowImg: {
-    width: 21,
-    height: 21,
+    width: normalize(21),
+    height: normalize(21),
     resizeMode: 'contain',
   },
 });

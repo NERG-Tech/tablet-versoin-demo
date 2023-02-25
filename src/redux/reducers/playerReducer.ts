@@ -115,7 +115,7 @@ export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) =
     case ADD_GENETICS: {
       return {
         ...state,
-        loading: true,
+        loading: false,
       };
     }
     case SET_GENETICS: {

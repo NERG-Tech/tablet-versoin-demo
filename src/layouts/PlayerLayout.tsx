@@ -16,6 +16,7 @@ import {
 import {useAuth} from '../contexts/AuthProvider';
 import {useDispatch, useSelector} from '../redux/store';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
+import {orientation, normalize, normalizeHalf} from '../utils/normalize';
 
 import {addPlayer} from '../redux/actions/plyerActions';
 import {TAddPlayer} from '../services/playerService';
@@ -89,38 +90,37 @@ const styles = StyleSheet.create({
   },
   leftSideBarWrapper: {
     flexDirection: 'column',
-    width: 330,
+    width: normalize(330),
     backgroundColor: COLORS.BLACK,
-    paddingHorizontal: 36,
+    paddingHorizontal: normalize(36),
   },
   logoWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 100,
+    height: normalize(100, orientation.HEIGHT),
   },
   logo: {
-    width: 140,
-    height: 30,
+    width: normalize(140),
     resizeMode: 'contain',
   },
   playerInfoWrapper: {
     flexDirection: 'column',
-    marginBottom: 80,
+    marginBottom: normalizeHalf(80),
   },
   avatarWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: normalizeHalf(40),
   },
   avatarLogo: {
-    width: 220,
-    height: 220,
+    width: normalize(220),
+    height: normalize(220),
     borderRadius: 999,
     resizeMode: 'contain',
   },
   descriptionText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XXL,
+    fontSize: normalizeHalf(FONT_SIZE.XXL),
     color: COLORS.WHITE,
   },
   optionsWrapper: {
@@ -130,13 +130,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 20,
+    paddingVertical: normalize(20, orientation.HEIGHT),
     borderBottomWidth: 1.5,
     borderBottomColor: COLORS.DIVIDER,
   },
   optionText: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.WHITE,
   },
   optionImg: {
@@ -152,21 +152,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 100,
+    height: normalize(100, orientation.HEIGHT),
     backgroundColor: COLORS.BACKGROUND_DARK,
   },
   navWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 40,
+    paddingHorizontal: normalize(40),
   },
   navButton: {
-    paddingRight: 70,
+    paddingRight: normalize(70),
   },
   navText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.TEXT_GREY,
+  },
+  addBtnWrapper: {
+    width: normalize(180),
+    height: normalize(60, orientation.HEIGHT),
+    borderRadius: normalize(24),
+  },
+  addBtnText: {
+    fontSize: normalize(FONT_SIZE.MD),
   },
   invite: {
     flex: 1,
@@ -177,16 +185,16 @@ const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 40,
-    paddingHorizontal: 30,
+    paddingTop: normalizeHalf(40),
+    paddingHorizontal: normalizeHalf(30),
     backgroundColor: COLORS.WHITE,
   },
   tabsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 50,
-    marginBottom: 10,
+    gap: normalize(50),
+    marginBottom: normalizeHalf(10),
   },
   tabWrapper: {
     flex: 1,
@@ -195,7 +203,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
     paddingVertical: 4,
   },
@@ -234,11 +242,12 @@ const styles = StyleSheet.create({
 const addPlayerModalStyles = StyleSheet.create({
   modal: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   container: {
-    width: 830,
-    height: 700,
-    borderRadius: 25,
+    width: normalize(830),
+    height: normalize(700, orientation.HEIGHT),
+    borderRadius: normalize(25),
     backgroundColor: COLORS.WHITE,
   },
   modalHeader: {
@@ -246,11 +255,11 @@ const addPlayerModalStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    paddingLeft: 35,
-    paddingRight: 55,
-    paddingVertical: 25,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    paddingLeft: normalize(35),
+    paddingRight: normalize(55),
+    paddingVertical: normalize(25, orientation.HEIGHT),
+    borderTopLeftRadius: normalize(24),
+    borderTopRightRadius: normalize(24),
     backgroundColor: COLORS.BLACK_MIDDLE,
   },
   searchWrapper: {
@@ -263,25 +272,24 @@ const addPlayerModalStyles = StyleSheet.create({
     fontSize: FONT_SIZE.MS,
     fontWeight: FONT_WEIGHT.LIGHT,
     color: COLORS.BLACK_LIGHT,
-    width: 160,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
+    width: normalize(160),
+    paddingVertical: normalize(10, orientation.HEIGHT),
+    paddingHorizontal: normalize(14),
   },
   serachImg: {
-    width: 16,
-    height: 16,
-    marginLeft: 18,
+    width: normalize(16),
+    marginLeft: normalize(18),
     resizeMode: 'contain',
   },
   headerGroupWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 90,
+    gap: normalize(90),
   },
   headerItemWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: normalize(10),
   },
   headerItemText: {
     fontWeight: FONT_WEIGHT.LIGHT,
@@ -289,29 +297,28 @@ const addPlayerModalStyles = StyleSheet.create({
     color: COLORS.WHITE,
   },
   headerItemImg: {
-    width: 40,
-    height: 40,
+    width: normalize(40),
     resizeMode: 'contain',
   },
   modalBody: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 28,
-    padding: 60,
-    paddingTop: 40,
+    gap: normalize(28),
+    padding: normalizeHalf(60),
+    paddingTop: normalize(40, orientation.HEIGHT),
   },
   colWrapper: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    gap: 35,
+    gap: normalizeHalf(35),
   },
   rowWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 20,
+    gap: normalize(20),
   },
   attrBtn: {
     flex: 1,
@@ -319,35 +326,52 @@ const addPlayerModalStyles = StyleSheet.create({
   avatarWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
-    gap: 15,
+    gap: normalize(15, orientation.HEIGHT),
   },
   avatar: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    borderWidth: 6,
+    width: normalize(200),
+    height: normalize(200),
+    borderRadius: normalize(100),
+    borderWidth: normalize(6),
     borderColor: COLORS.BORDER_GREY,
   },
   uploadBtn: {
-    width: 185,
-    height: 40,
-    borderRadius: 24,
+    width: normalize(185),
+    height: normalize(50, orientation.HEIGHT),
+    borderRadius: normalize(24),
+  },
+  uploadBtnText: {
+    fontSize: normalize(FONT_SIZE.MD),
+  },
+  attributeWrapper: {
+    height: normalize(80, orientation.HEIGHT),
+    paddingVertical: normalizeHalf(10),
+    borderRadius: normalize(16),
+  },
+  attributeLabel: {
+    fontSize: normalize(FONT_SIZE.XS),
+    paddingVertical: normalize(10),
+    paddingHorizontal: normalize(30),
+  },
+  attributeText: {
+    marginHorizontal: normalize(10),
+    fontSize: normalize(FONT_SIZE.MD),
   },
   modalFooter: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 60,
-    paddingBottom: 40,
+    paddingHorizontal: normalize(60),
+    paddingBottom: normalize(40, orientation.HEIGHT),
   },
   bluetoothBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 36,
+    paddingVertical: normalize(20, orientation.HEIGHT),
+    paddingHorizontal: normalize(36),
     backgroundColor: COLORS.BACKGROUND,
     borderWidth: 1,
-    borderRadius: 24,
+    borderRadius: normalize(24),
     borderColor: COLORS.BORDER_ALPHA,
   },
   bluetoothText: {
@@ -356,31 +380,30 @@ const addPlayerModalStyles = StyleSheet.create({
     color: COLORS.BLACK_MIDDLE,
   },
   bluetoothImg: {
-    width: 32,
-    height: 32,
-    marginLeft: 20,
+    width: normalize(32),
+    marginLeft: normalize(20),
     resizeMode: 'contain',
   },
   buttonGroupWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 20,
+    gap: normalize(20),
   },
   confirmBtn: {
-    borderRadius: 50,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    borderRadius: normalize(50),
+    paddingVertical: normalize(15, orientation.HEIGHT),
+    paddingHorizontal: normalize(30),
     backgroundColor: COLORS.GREEN,
   },
   cancelBtn: {
-    borderRadius: 50,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    borderRadius: normalize(50),
+    paddingVertical: normalize(15, orientation.HEIGHT),
+    paddingHorizontal: normalize(30),
     backgroundColor: COLORS.RED,
   },
   buttonText: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.WHITE,
   },
 });
@@ -707,8 +730,6 @@ const PlayerLayout = (props: TProps) => {
         accessToken: authData?.accessToken,
       };
       dispatch(addPlayer(playerData));
-
-      // props.onChangeNav(NavigationConstants.PLAYER_INFO);
     }, 500);
 
     setPlayerModalState(initPlayerModalState);
@@ -780,6 +801,7 @@ const PlayerLayout = (props: TProps) => {
             <RoundedButton
               label={t('profile.uploadPhoto')}
               customStyle={addPlayerModalStyles.uploadBtn}
+              textStyle={addPlayerModalStyles.uploadBtnText}
               onPress={() => console.log('Uplaod Photo')}
             />
           </View>
@@ -789,12 +811,18 @@ const PlayerLayout = (props: TProps) => {
                 label={t('profile.name')}
                 value={playerModalState.name}
                 placeholder="Tom Brady"
+                inputStyle={addPlayerModalStyles.attributeWrapper}
+                labelStyle={addPlayerModalStyles.attributeLabel}
+                textStyle={addPlayerModalStyles.attributeText}
                 onChangeText={(text: string) => onChangeModalField('name', text)}
               />
               <AttributeInput
                 label={t('profile.age')}
                 value={playerModalState.age}
                 placeholder="34"
+                inputStyle={addPlayerModalStyles.attributeWrapper}
+                labelStyle={addPlayerModalStyles.attributeLabel}
+                textStyle={addPlayerModalStyles.attributeText}
                 onChangeText={(text: string) => onChangeModalField('age', text)}
               />
             </View>
@@ -803,12 +831,18 @@ const PlayerLayout = (props: TProps) => {
                 label={t('profile.height')}
                 value={playerModalState.height}
                 placeholder="5’5”"
+                inputStyle={addPlayerModalStyles.attributeWrapper}
+                labelStyle={addPlayerModalStyles.attributeLabel}
+                textStyle={addPlayerModalStyles.attributeText}
                 onChangeText={(text: string) => onChangeModalField('height', text)}
               />
               <AttributeInput
                 label={t('profile.weight')}
                 value={playerModalState.weight}
                 placeholder="145 LBS"
+                inputStyle={addPlayerModalStyles.attributeWrapper}
+                labelStyle={addPlayerModalStyles.attributeLabel}
+                textStyle={addPlayerModalStyles.attributeText}
                 onChangeText={(text: string) => onChangeModalField('weight', text)}
               />
             </View>
@@ -824,6 +858,9 @@ const PlayerLayout = (props: TProps) => {
                   value={playerModalState.gender}
                   placeholder="Male"
                   readOnly={true}
+                  inputStyle={addPlayerModalStyles.attributeWrapper}
+                  labelStyle={addPlayerModalStyles.attributeLabel}
+                  textStyle={addPlayerModalStyles.attributeText}
                 />
               </Button>
               <Button
@@ -843,6 +880,9 @@ const PlayerLayout = (props: TProps) => {
                   value={playerModalState.sport}
                   placeholder="Football"
                   readOnly={true}
+                  inputStyle={addPlayerModalStyles.attributeWrapper}
+                  labelStyle={addPlayerModalStyles.attributeLabel}
+                  textStyle={addPlayerModalStyles.attributeText}
                 />
               </Button>
             </View>
@@ -858,6 +898,9 @@ const PlayerLayout = (props: TProps) => {
                   value={playerModalState.position}
                   placeholder="QB"
                   readOnly={true}
+                  inputStyle={addPlayerModalStyles.attributeWrapper}
+                  labelStyle={addPlayerModalStyles.attributeLabel}
+                  textStyle={addPlayerModalStyles.attributeText}
                 />
               </Button>
             </View>
@@ -1074,7 +1117,7 @@ const PlayerLayout = (props: TProps) => {
           <View style={styles.avatarWrapper}>
             <CircularProgressBar
               progress={100}
-              diameter={224}
+              diameter={normalize(224)}
               startColor={COLORS.GRADIENT_SKY}
               endColor={COLORS.GRADIENT_BLUE}>
               <Image style={styles.avatarLogo} source={AvatarImg} />
@@ -1101,7 +1144,12 @@ const PlayerLayout = (props: TProps) => {
               </Button>
             ))}
           </View>
-          <RoundedButton onPress={() => setPlayerVisible(true)} label="Add Player" />
+          <RoundedButton
+            customStyle={styles.addBtnWrapper}
+            textStyle={styles.addBtnText}
+            onPress={() => setPlayerVisible(true)}
+            label="Add Player"
+          />
           <Button customStyle={styles.invite} onPress={() => console.log('Invite')}>
             <Text style={styles.navText}>Invite</Text>
           </Button>

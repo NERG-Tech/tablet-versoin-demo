@@ -1,10 +1,11 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, ScrollView, StyleSheet, Dimensions} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {useToast} from 'react-native-toast-notifications';
 import {useAuth} from '../../contexts/AuthProvider';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../common/constants/StyleConstants';
 import {Loading, Input, Button, RoundedGradientButton} from '../../common/components';
+import {normalize, normalizeHalf, normalizeQuarter, normalizeRate} from '../../utils/normalize';
 
 const WatchesImage = require('../../assets/img/watches.png');
 const LogoImage = require('../../assets/img/logo/logo.png');
@@ -16,21 +17,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: COLORS.BACKGROUND,
-    paddingHorizontal: 60,
-    gap: 60,
+    paddingHorizontal: normalizeHalf(60),
+    gap: normalizeHalf(60),
   },
   leftContainer: {
     flex: 1,
     flexDirection: 'column',
   },
   logo: {
-    width: 497,
-    height: 110,
+    width: '80%',
     resizeMode: 'contain',
-    marginBottom: 32,
+    marginBottom: normalizeHalf(16),
   },
   text: {
-    fontSize: 36,
+    fontSize: normalize(36),
     fontWeight: FONT_WEIGHT.LIGHT,
     color: COLORS.BLACK,
   },
@@ -38,39 +38,39 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.L,
     fontWeight: FONT_WEIGHT.LIGHT,
     color: COLORS.BLACK_LIGHT,
-    paddingVertical: 20,
+    paddingVertical: normalizeHalf(20),
     paddingHorizontal: 28,
   },
   emailWrapper: {
-    height: 90,
+    height: normalize(90, 'height'),
     borderRadius: 24,
-    marginTop: 100,
+    marginTop: normalizeQuarter(90),
   },
   passwordWrapper: {
-    height: 90,
+    height: normalize(90, 'height'),
     borderRadius: 24,
-    marginTop: 45,
+    marginTop: normalizeHalf(45),
   },
   buttonGroupWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 50,
+    marginTop: normalizeHalf(50),
   },
   forgotText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XXL,
+    fontSize: normalize(FONT_SIZE.XXL),
     color: COLORS.BLUE,
     textDecorationLine: 'underline',
   },
   signInText: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.XXL,
+    fontSize: normalize(FONT_SIZE.XXL),
     color: COLORS.WHITE,
   },
   sigInButton: {
-    width: 220,
-    height: 70,
+    width: normalize(220),
+    height: normalize(70),
     borderRadius: 50,
   },
   rightContainer: {
@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   watches: {
-    width: 580,
-    height: 465,
+    width: normalize(580),
+    height: normalize(465),
     resizeMode: 'contain',
   },
   watchDesc: {

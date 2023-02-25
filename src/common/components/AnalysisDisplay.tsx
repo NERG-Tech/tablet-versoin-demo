@@ -1,51 +1,54 @@
 import React from 'react';
 import {Text, View, StyleSheet, ViewStyle} from 'react-native';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../constants/StyleConstants';
+import {orientation, normalize} from '../../utils/normalize';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 16,
+    borderRadius: normalize(16),
   },
   label: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.MS,
+    fontSize: normalize(FONT_SIZE.MS),
     color: COLORS.TEXT_GREY_LIGHT,
   },
   hourText: {
     fontWeight: FONT_WEIGHT.BOLD,
-    fontSize: 28,
+    fontSize: normalize(28),
     color: COLORS.WHITE,
   },
   hourWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 9,
-    marginTop: 20,
+    gap: normalize(9),
+    marginTop: normalize(20, orientation.HEIGHT),
   },
   lWrapper: {
-    flex: 1,
-    paddingVertical: 20,
-    borderTopLeftRadius: 16,
-    borderBottomLeftRadius: 16,
+    justifyContent: 'center',
+    height: normalize(120, orientation.HEIGHT),
+    paddingVertical: normalize(20, orientation.HEIGHT),
+    borderTopLeftRadius: normalize(16),
+    borderBottomLeftRadius: normalize(16),
     backgroundColor: COLORS.GREY,
   },
   lContentWrapper: {
     flexDirection: 'column',
-    paddingHorizontal: 30,
+    paddingHorizontal: normalize(30),
   },
   rWrapper: {
-    flex: 1,
-    paddingVertical: 20,
-    borderTopRightRadius: 16,
-    borderBottomRightRadius: 16,
+    justifyContent: 'center',
+    height: normalize(120, orientation.HEIGHT),
+    paddingVertical: normalize(20, orientation.HEIGHT),
+    borderTopRightRadius: normalize(16),
+    borderBottomRightRadius: normalize(16),
     backgroundColor: COLORS.GREY_LIGHT,
   },
   rContentWrapper: {
     flexDirection: 'column',
-    paddingHorizontal: 30,
-    borderLeftWidth: 5,
+    paddingHorizontal: normalize(30),
+    borderLeftWidth: normalize(5),
   },
 });
 

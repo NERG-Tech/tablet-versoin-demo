@@ -9,6 +9,7 @@ import {
   AnalysisDisplay,
   AnalysisBar,
 } from '../../common/components';
+import {orientation, normalize, normalizeHalf} from '../../utils/normalize';
 
 const CPUImg = require('../../assets/img/cpu.png');
 
@@ -56,8 +57,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     backgroundColor: COLORS.WHITE,
-    paddingVertical: 30,
-    paddingHorizontal: 20,
+    paddingVertical: normalize(30, orientation.HEIGHT),
+    paddingHorizontal: normalize(20),
   },
   logsWrapper: {
     flexDirection: 'row',
@@ -67,17 +68,17 @@ const styles = StyleSheet.create({
   logWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 30,
+    gap: normalize(30),
   },
   logBtnText: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.WHITE,
   },
   logBtn: {
-    width: 180,
-    height: 60,
-    borderRadius: 24,
+    width: normalize(180),
+    height: normalize(60, orientation.HEIGHT),
+    borderRadius: normalize(24),
   },
   logDescWrapper: {
     flexDirection: 'column',
@@ -85,49 +86,49 @@ const styles = StyleSheet.create({
   },
   percentValue: {
     fontWeight: FONT_WEIGHT.MIDDLE,
-    fontSize: 36,
+    fontSize: normalize(36),
     color: COLORS.BLACK,
   },
   unitText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XXL,
+    fontSize: normalize(FONT_SIZE.XXL),
     color: COLORS.BLACK,
-    marginLeft: 10,
+    marginLeft: normalize(10),
   },
   percentDescText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MS,
+    fontSize: normalize(FONT_SIZE.MS),
     color: COLORS.TEXT_DARK,
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: normalize(20),
   },
   cpuImg: {
-    width: 24,
-    height: 24,
+    width: normalize(24),
+    height: normalize(24),
     resizeMode: 'contain',
   },
   percentGroupWrapper: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginTop: 20,
+    marginTop: normalize(20, orientation.HEIGHT),
   },
   infoWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 60,
-    gap: 60,
+    marginTop: normalize(60, orientation.HEIGHT),
+    gap: normalize(60),
   },
   analysisWrapper: {
     flexDirection: 'column',
   },
   analysisTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.TEXT_DARK_LIGHT,
   },
   analysisInfoWrapper: {
     flexDirection: 'column',
-    width: 400,
+    width: normalize(400),
   },
   dataWrapper: {
     flex: 1,
@@ -135,35 +136,35 @@ const styles = StyleSheet.create({
   },
   dataTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
   },
   dataInfoWrapper: {
     flexDirection: 'column',
-    marginTop: 30,
+    marginTop: normalize(30, orientation.HEIGHT),
   },
   dataTabsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: normalize(10, orientation.HEIGHT),
   },
   dataTabWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
-    width: 100,
+    width: normalize(100),
   },
   dataTabTitle: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
     textAlign: 'center',
     paddingVertical: 8,
   },
   dataTabBottom: {
     width: '100%',
-    height: 8,
-    marginTop: 8,
+    height: normalizeHalf(8),
+    marginTop: normalizeHalf(8),
     borderRadius: 4,
     borderWidth: 1,
     borderColor: COLORS.WHITE_ALPHA,
@@ -176,8 +177,8 @@ const styles = StyleSheet.create({
   },
   dataTabActiveBottom: {
     width: '100%',
-    height: 8,
-    marginTop: 8,
+    height: normalizeHalf(8),
+    marginTop: normalizeHalf(8),
     borderRadius: 4,
     backgroundColor: COLORS.BLUE_LIGHT,
     elevation: 2,
@@ -188,8 +189,8 @@ const styles = StyleSheet.create({
   },
   dataContentWrapper: {
     flexDirection: 'column',
-    gap: 24,
-    paddingTop: 20,
+    gap: normalize(24),
+    paddingTop: normalize(20, orientation.HEIGHT),
   },
 });
 
@@ -199,12 +200,12 @@ const dataItemStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: normalize(12, orientation.HEIGHT),
+    paddingHorizontal: normalize(16),
     backgroundColor: COLORS.BACKGROUND,
     borderColor: COLORS.BORDER_ALPHA_LIGHT,
     borderWidth: 1.5,
-    borderRadius: 24,
+    borderRadius: normalize(24),
     elevation: 2,
     shadowOpacity: 1,
     shadowRadius: 4,
@@ -214,21 +215,21 @@ const dataItemStyles = StyleSheet.create({
   categoryText: {
     flex: 1,
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.MS,
+    fontSize: normalize(FONT_SIZE.MS),
     color: COLORS.TEXT_DARK,
   },
   percentText: {
     flex: 1,
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
   },
   descText: {
     flex: 1,
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XS,
+    fontSize: normalize(FONT_SIZE.XS),
     color: COLORS.TEXT_DARK,
-    width: 100,
+    width: normalize(100),
   },
 });
 
@@ -258,7 +259,7 @@ const NutrientsScreen = () => {
         <View style={styles.logWrapper}>
           <CircularProgressBar
             progress={75}
-            diameter={190}
+            diameter={normalize(190)}
             startColor={COLORS.GRADIENT_SKY}
             endColor={COLORS.GRADIENT_BLUE}>
             <View style={styles.logDescWrapper}>
@@ -281,7 +282,7 @@ const NutrientsScreen = () => {
         <View style={styles.logWrapper}>
           <CircularProgressBar
             progress={75}
-            diameter={190}
+            diameter={normalize(190)}
             startColor={COLORS.GRADIENT_YELLOW}
             endColor={COLORS.GRADIENT_SKY}>
             <View style={styles.logDescWrapper}>
@@ -309,7 +310,7 @@ const NutrientsScreen = () => {
               rLabel="Diet"
               rHours="05:21"
               dividerColor={COLORS.DIVIDER_SKY}
-              customStyle={{marginTop: 16}}
+              customStyle={{marginTop: normalize(16)}}
             />
             <AnalysisBar
               startLabel="Morning"
@@ -318,7 +319,7 @@ const NutrientsScreen = () => {
               middleValue={46}
               endLabel="Night"
               endValue={30}
-              customStyle={{marginTop: 16}}
+              customStyle={{marginTop: normalize(16)}}
             />
           </View>
         </View>

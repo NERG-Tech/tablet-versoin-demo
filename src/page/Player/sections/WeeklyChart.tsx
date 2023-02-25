@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../common/constants/StyleConstants';
+import {orientation, normalize, normalizeHalf} from '../../../utils/normalize';
 
 type TProps = {
   label: string;
@@ -17,28 +18,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'center',
-    gap: 5,
-    paddingHorizontal: 5,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    gap: normalizeHalf(5),
+    paddingHorizontal: normalizeHalf(5),
+    borderTopLeftRadius: normalizeHalf(5),
+    borderTopRightRadius: normalizeHalf(5),
     backgroundColor: COLORS.CHART_BLUE,
   },
   pnWrapper: {
-    width: 26,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    width: normalize(26),
+    borderTopLeftRadius: normalizeHalf(5),
+    borderTopRightRadius: normalizeHalf(5),
     backgroundColor: COLORS.CHART_YELLOW,
   },
   haWrapper: {
-    width: 26,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    width: normalize(26),
+    borderTopLeftRadius: normalizeHalf(5),
+    borderTopRightRadius: normalizeHalf(5),
     backgroundColor: COLORS.CHART_GREEN,
   },
   brWrapper: {
-    width: 26,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    width: normalize(26),
+    borderTopLeftRadius: normalizeHalf(5),
+    borderTopRightRadius: normalizeHalf(5),
     backgroundColor: COLORS.CHART_PINK,
   },
   textWrapper: {
@@ -46,13 +47,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    width: 103,
+    width: normalize(103),
     left: 0,
-    bottom: -30,
+    bottom: -normalize(30, orientation.HEIGHT),
   },
   text: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
   },
 });
