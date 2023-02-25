@@ -5,6 +5,7 @@ import {Text, Image, View, StyleSheet} from 'react-native';
 import {Button, CircularProgressBar, GradientBorderButton} from '../../common/components';
 import {COLORS, FONT_WEIGHT, FONT_SIZE} from '../../common/constants/StyleConstants';
 import WeeklyResult from './sections/WeeklyResult';
+import {orientation, normalize} from '../../utils/normalize';
 
 const ArrowUpImg = require('../../assets/img/arrowUp.png');
 const TreasureImg = require('../../assets/img/treasure.png');
@@ -48,20 +49,20 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     backgroundColor: COLORS.WHITE,
-    borderRadius: 24,
-    paddingVertical: 30,
+    borderRadius: normalize(24),
+    paddingVertical: normalize(30, orientation.HEIGHT),
   },
   dailyInfoWrapper: {
     flexDirection: 'column',
     borderWidth: 1.5,
     borderColor: COLORS.BORDER_ALPHA_LIGHT,
-    borderRadius: 24,
-    paddingVertical: 20,
-    paddingHorizontal: 24,
+    borderRadius: normalize(24),
+    paddingVertical: normalize(20, orientation.HEIGHT),
+    paddingHorizontal: normalize(24),
   },
   dailyInfoTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.TEXT_DARK_LIGHT,
   },
   dailySubInfosWrapper: {
@@ -69,8 +70,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 20,
-    paddingHorizontal: 40,
+    marginTop: normalize(20, orientation.HEIGHT),
+    paddingHorizontal: normalize(40),
   },
   dailySubInfoWrapper: {
     flexDirection: 'column',
@@ -88,62 +89,62 @@ const styles = StyleSheet.create({
   },
   dailySubInfoContentPercentValue: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: 36,
+    fontSize: normalize(36),
     color: COLORS.TEXT_DARK,
-    paddingRight: 10,
+    paddingRight: normalize(10),
   },
   dailySubInfoContentPercentSymbol: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: 24,
+    fontSize: normalize(24),
     color: COLORS.TEXT_DARK,
   },
   dailySubInfoContentDesc: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MS,
+    fontSize: normalize(FONT_SIZE.MS),
     color: COLORS.TEXT_DARK,
-    paddingBottom: 16,
+    paddingBottom: normalize(16, orientation.HEIGHT),
   },
   dailySubInfoArrowUpWrapper: {
     position: 'absolute',
-    bottom: 15,
+    bottom: normalize(15, orientation.HEIGHT),
   },
   dailySubInfoArrowUpImg: {
-    width: 27,
-    height: 27,
+    width: normalize(27),
+    height: normalize(27),
     resizeMode: 'contain',
   },
   dailySubInfoGuideWrapper: {
-    marginTop: 24,
+    marginTop: normalize(24, orientation.HEIGHT),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 9,
+    gap: normalize(9),
   },
   dailySubInfoGuideText: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.BLACK,
   },
   dailySubInfoGuideImg: {
-    width: 36,
-    height: 36,
+    width: normalize(36),
+    height: normalize(36),
     resizeMode: 'contain',
   },
   restInfoWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 28,
-    marginTop: 20,
+    gap: normalize(28),
+    marginTop: normalize(20, orientation.HEIGHT),
   },
   weeklyResultInfoWrapper: {
     flexDirection: 'column',
-    width: 420,
+    width: normalize(420),
   },
   weeklyResultInfoDescWrapper: {
     flexDirection: 'column',
-    gap: 30,
-    marginTop: 25,
-    paddingHorizontal: 25,
+    gap: normalize(30, orientation.HEIGHT),
+    marginTop: normalize(25, orientation.HEIGHT),
+    paddingHorizontal: normalize(25),
   },
   weeklyResultInfoDescRow: {
     flexDirection: 'row',
@@ -157,26 +158,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   weeklyResultInfoDescIcon: {
-    width: 36,
-    height: 30,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    width: normalize(36),
+    height: normalize(30, orientation.HEIGHT),
+    borderTopLeftRadius: normalize(5),
+    borderTopRightRadius: normalize(5),
   },
   weeklyResultInfoDescDashWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   weeklyResultInfoDescDash: {
-    width: 36,
-    borderTopWidth: 4,
+    width: normalize(36),
+    borderTopWidth: normalize(4),
     borderStyle: 'dashed',
   },
   weeklyResultInfoDescText: {
     flex: 1,
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
-    marginLeft: 15,
+    marginLeft: normalize(15),
   },
   playerSelfInfoWrapper: {
     flex: 1,
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
   },
   assessmentTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.TEXT_DARK_LIGHT,
   },
   assessmentsWrapper: {
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 30,
+    marginTop: normalize(30, orientation.HEIGHT),
   },
   assessmentWrapper: {
     flexDirection: 'column',
@@ -210,30 +211,30 @@ const styles = StyleSheet.create({
   },
   assessmentContentDesc: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.XS,
+    fontSize: normalize(FONT_SIZE.XS),
     color: COLORS.TEXT_DARK,
     textAlign: 'center',
-    width: 60,
+    width: normalize(60),
   },
   assessmentContentValue: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.XL,
+    fontSize: normalize(FONT_SIZE.XL),
     color: COLORS.TEXT_DARK,
-    paddingBottom: 10,
+    paddingBottom: normalize(10, orientation.HEIGHT),
   },
   assessmentArrowWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: normalize(10, orientation.HEIGHT),
   },
   assessmentArrowImg: {
-    width: 27,
-    height: 27,
+    width: normalize(27),
+    height: normalize(27),
     resizeMode: 'contain',
   },
   playerHealthWrapper: {
     flexDirection: 'column',
-    marginTop: 30,
+    marginTop: normalize(30, orientation.HEIGHT),
   },
   playerHealthTitleWrapper: {
     flexDirection: 'row',
@@ -241,25 +242,25 @@ const styles = StyleSheet.create({
   },
   playerHealthTitleText: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.TEXT_DARK_LIGHT,
   },
   playerHealthTitleImg: {
-    width: 24,
-    height: 24,
+    width: normalize(24),
+    height: normalize(24),
     resizeMode: 'contain',
-    marginLeft: 6,
+    marginLeft: normalize(6),
   },
   playerHealthButtonsWrapper: {
     flexDirection: 'column',
-    gap: 20,
-    marginTop: 20,
+    gap: normalize(20, orientation.HEIGHT),
+    marginTop: normalize(20, orientation.HEIGHT),
   },
   playerHealthButtonsRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 20,
+    gap: normalize(20),
   },
   playerHealthButtonsCol: {
     flex: 1,
@@ -275,46 +276,46 @@ const nutrientModalStyles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    width: 700,
-    borderRadius: 25,
+    width: normalize(700),
+    borderRadius: normalize(25),
     backgroundColor: COLORS.WHITE,
   },
   modalHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 40,
-    paddingHorizontal: 25,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    paddingTop: normalize(40, orientation.HEIGHT),
+    paddingHorizontal: normalize(25),
+    borderTopLeftRadius: normalize(24),
+    borderTopRightRadius: normalize(24),
   },
   modalHeaderTitle: {
     fontWeight: FONT_WEIGHT.SEMI_BOLD,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.TEXT_DARK,
   },
   modalHeaderTabsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 24,
+    gap: normalize(24),
   },
   modalHeaderTabWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
-    width: 120,
+    width: normalize(120),
   },
   modalHeaderTabText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.MD,
+    fontSize: normalize(FONT_SIZE.MD),
     color: COLORS.TEXT_DARK,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
+    paddingVertical: normalize(8, orientation.HEIGHT),
+    paddingHorizontal: normalize(10),
   },
   modalHeaderTabBottom: {
-    width: '100%',
-    height: 8,
-    marginTop: 8,
+    width: 'normalize(100)%',
+    height: normalize(8, orientation.HEIGHT),
+    marginTop: normalize(8, orientation.HEIGHT),
     borderRadius: 4,
     borderWidth: 1,
     borderColor: COLORS.WHITE_ALPHA,
@@ -326,9 +327,9 @@ const nutrientModalStyles = StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
   },
   modalHeaderTabActiveBottom: {
-    width: '100%',
-    height: 8,
-    marginTop: 8,
+    width: 'normalize(100)%',
+    height: normalize(8, orientation.HEIGHT),
+    marginTop: normalize(8, orientation.HEIGHT),
     borderRadius: 4,
     backgroundColor: COLORS.BLUE_LIGHT,
     elevation: 2,
@@ -339,24 +340,24 @@ const nutrientModalStyles = StyleSheet.create({
   },
   modalBody: {
     flexDirection: 'column',
-    gap: 40,
-    paddingVertical: 60,
-    paddingHorizontal: 30,
+    gap: normalize(40, orientation.HEIGHT),
+    paddingVertical: normalize(60, orientation.HEIGHT),
+    paddingHorizontal: normalize(30),
   },
   descWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   descImg: {
-    width: 30,
-    height: 30,
+    width: normalize(30),
+    height: normalize(30),
     resizeMode: 'contain',
   },
   descText: {
     fontWeight: FONT_WEIGHT.LIGHT,
-    fontSize: FONT_SIZE.L,
+    fontSize: normalize(FONT_SIZE.L),
     color: COLORS.BLACK,
-    marginLeft: 10,
+    marginLeft: normalize(10),
   },
 });
 
@@ -430,7 +431,7 @@ const SnapshotScreen = () => {
           <View style={styles.dailySubInfoWrapper}>
             <CircularProgressBar
               progress={75}
-              diameter={174}
+              diameter={normalize(174)}
               startColor={COLORS.GRADIENT_SKY}
               endColor={COLORS.GRADIENT_BLUE}>
               <View style={styles.dailySubInfoContentWrapper}>
@@ -454,7 +455,7 @@ const SnapshotScreen = () => {
           <View style={styles.dailySubInfoWrapper}>
             <CircularProgressBar
               progress={75}
-              diameter={174}
+              diameter={normalize(174)}
               startColor={COLORS.GRADIENT_SKY}
               endColor={COLORS.GRADIENT_YELLOW}>
               <View style={styles.dailySubInfoContentWrapper}>
@@ -480,7 +481,7 @@ const SnapshotScreen = () => {
           <View style={styles.dailySubInfoWrapper}>
             <CircularProgressBar
               progress={75}
-              diameter={174}
+              diameter={normalize(174)}
               startColor={COLORS.GRADIENT_ORANGE}
               endColor={COLORS.GRADIENT_GREEN}>
               <View style={styles.dailySubInfoContentWrapper}>
@@ -504,7 +505,7 @@ const SnapshotScreen = () => {
           <View style={styles.dailySubInfoWrapper}>
             <CircularProgressBar
               progress={75}
-              diameter={174}
+              diameter={normalize(174)}
               startColor={COLORS.GRADIENT_YELLOW}
               endColor={COLORS.GRADIENT_PURPLE}>
               <View style={styles.dailySubInfoContentWrapper}>
@@ -598,7 +599,7 @@ const SnapshotScreen = () => {
               <View style={styles.assessmentWrapper}>
                 <CircularProgressBar
                   progress={75}
-                  diameter={100}
+                  diameter={normalize(100)}
                   startColor={COLORS.GRADIENT_SKY}
                   endColor={COLORS.GRADIENT_PURPLE}>
                   <View style={styles.assessmentContentWrapper}>
@@ -615,7 +616,7 @@ const SnapshotScreen = () => {
               <View style={styles.assessmentWrapper}>
                 <CircularProgressBar
                   progress={75}
-                  diameter={100}
+                  diameter={normalize(100)}
                   startColor={COLORS.GRADIENT_SKY}
                   endColor={COLORS.GRADIENT_PURPLE}>
                   <View style={styles.assessmentContentWrapper}>
@@ -632,7 +633,7 @@ const SnapshotScreen = () => {
               <View style={styles.assessmentWrapper}>
                 <CircularProgressBar
                   progress={75}
-                  diameter={100}
+                  diameter={normalize(100)}
                   startColor={COLORS.GRADIENT_SKY}
                   endColor={COLORS.GRADIENT_PURPLE}>
                   <View style={styles.assessmentContentWrapper}>
@@ -649,7 +650,7 @@ const SnapshotScreen = () => {
               <View style={styles.assessmentWrapper}>
                 <CircularProgressBar
                   progress={75}
-                  diameter={100}
+                  diameter={normalize(100)}
                   startColor={COLORS.GRADIENT_SKY}
                   endColor={COLORS.GRADIENT_PURPLE}>
                   <View style={styles.assessmentContentWrapper}>

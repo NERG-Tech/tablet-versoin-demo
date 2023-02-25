@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
   },
   dataTabBottom: {
     width: '100%',
-    height: 8,
-    marginTop: 8,
+    height: normalizeHalf(8),
+    marginTop: normalizeHalf(8),
     borderRadius: 4,
     borderWidth: 1,
     borderColor: COLORS.WHITE_ALPHA,
@@ -177,8 +177,8 @@ const styles = StyleSheet.create({
   },
   dataTabActiveBottom: {
     width: '100%',
-    height: 8,
-    marginTop: 8,
+    height: normalizeHalf(8),
+    marginTop: normalizeHalf(8),
     borderRadius: 4,
     backgroundColor: COLORS.BLUE_LIGHT,
     elevation: 2,
