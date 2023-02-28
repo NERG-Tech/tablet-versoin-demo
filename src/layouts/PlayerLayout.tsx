@@ -17,8 +17,9 @@ import {useAuth} from '../contexts/AuthProvider';
 import {useDispatch, useSelector} from '../redux/store';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 import {orientation, normalize, normalizeHalf} from '../utils/normalize';
+import {height2Data, data2Height} from '../utils/heightConverter';
 
-import {addPlayer} from '../redux/actions/plyerActions';
+import {addPlayer, editPlayer} from '../redux/actions/plyerActions';
 import {TAddPlayer} from '../services/playerService';
 import {TPlayerState} from '../redux/reducers/playerReducer';
 
@@ -683,6 +684,7 @@ const PlayerLayout = (props: TProps) => {
   };
 
   const [isPlayerVisible, setPlayerVisible] = useState(false);
+  const [playerModalMode, setPlayerModalMode] = useState<'add' | 'edit'>('add');
   const [isPositionVisible, setPositionVisible] = useState(false);
   const [isGenderVisible, setGenderVisible] = useState(false);
   const [isMenVisible, setMenVisible] = useState(false);
@@ -716,7 +718,7 @@ const PlayerLayout = (props: TProps) => {
     setTimeout(() => setPlayerVisible(false), 150);
   };
 
-  const onAddPlayerModalConfirm = () => {
+  const onAddPlayerModalConfirm = (mode: string) => {
     setTimeout(() => setPlayerVisible(false), 150);
     setTimeout(() => {
       const playerData: TAddPlayer = {
@@ -724,12 +726,16 @@ const PlayerLayout = (props: TProps) => {
         age: parseInt(playerModalState.age),
         sex: playerModalState.gender,
         weight: parseFloat(playerModalState.weight),
-        height: parseFloat(playerModalState.height),
+        height: height2Data(playerModalState.height),
         sport: playerModalState.sport,
         position: playerModalState.position,
         accessToken: authData?.accessToken,
       };
-      dispatch(addPlayer(playerData));
+      if (mode === 'add') {
+        dispatch(addPlayer(playerData));
+      } else {
+        dispatch(editPlayer(playerData));
+      }
     }, 500);
 
     setPlayerModalState(initPlayerModalState);
@@ -765,6 +771,20 @@ const PlayerLayout = (props: TProps) => {
     }
     setTimeout(() => setWomenVisible(false), 150);
     setTimeout(() => setPlayerVisible(true), 600);
+  };
+
+  const handleEditProfile = () => {
+    const playerInfo = {
+      name: playerData.name,
+      gender: playerData.sex === 'male' ? 'Male' : 'Female',
+      age: playerData.age.toString(),
+      weight: playerData.weight.kg.toString(),
+      height: data2Height(playerData.height),
+      sport: playerData.sport,
+      position: playerData.position,
+    };
+    setPlayerModalState({...playerModalState, ...playerInfo});
+    setPlayerVisible(true);
   };
 
   const addPlayerModal = isPlayerVisible => (
@@ -919,7 +939,7 @@ const PlayerLayout = (props: TProps) => {
             </Button>
             <Button
               customStyle={addPlayerModalStyles.confirmBtn}
-              onPress={() => onAddPlayerModalConfirm()}>
+              onPress={() => onAddPlayerModalConfirm(playerModalMode)}>
               <Text style={addPlayerModalStyles.buttonText}>{t('profile.createSave')}</Text>
             </Button>
           </View>
@@ -1129,7 +1149,7 @@ const PlayerLayout = (props: TProps) => {
           </Text>
         </View>
         <View style={styles.optionsWrapper}>
-          <Button customStyle={styles.optionWrapper} onPress={() => console.log('Edit Profile')}>
+          <Button customStyle={styles.optionWrapper} onPress={() => handleEditProfile()}>
             <Text style={styles.optionText}>{t('app.editProfile')}</Text>
             <Image style={styles.optionImg} source={ArrowRight} />
           </Button>
