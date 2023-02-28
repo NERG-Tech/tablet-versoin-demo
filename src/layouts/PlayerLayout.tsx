@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Image} from 'react-native';
-import {Text, View, ScrollView, StyleSheet} from 'react-native';
+import {Text, View, Alert, ScrollView, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
+import * as Yup from 'yup';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
 import {
   Loading,
@@ -19,7 +20,7 @@ import * as NavigationConstants from '../common/constants/NavigationConstants';
 import {orientation, normalize, normalizeHalf} from '../utils/normalize';
 import {height2Data, data2Height} from '../utils/heightConverter';
 
-import {addPlayer, editPlayer} from '../redux/actions/plyerActions';
+import {addPlayer, getPlayer, editPlayer} from '../redux/actions/plyerActions';
 import {TAddPlayer} from '../services/playerService';
 import {TPlayerState} from '../redux/reducers/playerReducer';
 
@@ -697,6 +698,10 @@ const PlayerLayout = (props: TProps) => {
   const playerData = useSelector<TPlayerState>(state => state.player);
 
   useEffect(() => {
+    dispatch(getPlayer({accessToken: authData?.accessToken}));
+  }, []);
+
+  useEffect(() => {
     const tempState: TState = {...initState};
     tempState.name = playerData.name;
     tempState.position = playerData.position;
@@ -721,21 +726,39 @@ const PlayerLayout = (props: TProps) => {
   const onAddPlayerModalConfirm = (mode: string) => {
     setTimeout(() => setPlayerVisible(false), 150);
     setTimeout(() => {
-      const playerData: TAddPlayer = {
-        name: playerModalState.name,
-        age: parseInt(playerModalState.age),
-        sex: playerModalState.gender,
-        weight: parseFloat(playerModalState.weight),
-        height: height2Data(playerModalState.height),
-        sport: playerModalState.sport,
-        position: playerModalState.position,
-        accessToken: authData?.accessToken,
-      };
-      if (mode === 'add') {
-        dispatch(addPlayer(playerData));
-      } else {
-        dispatch(editPlayer(playerData));
-      }
+      const {name, age, gender, weight, height, sport, position} = playerModalState;
+      const schema = Yup.object().shape({
+        name: Yup.string().required(),
+        age: Yup.string().required(),
+        gender: Yup.string().required(),
+        height: Yup.string().required(),
+        weight: Yup.string().required(),
+        sport: Yup.string().required(),
+        position: Yup.string().required(),
+      });
+
+      schema
+        .validate({name, age, gender, weight, height, sport, position})
+        .then(res => {
+          const playerData: TAddPlayer = {
+            name: name,
+            age: parseInt(age),
+            sex: gender,
+            weight: parseFloat(weight),
+            height: height2Data(height),
+            sport: sport,
+            position: position,
+            accessToken: authData?.accessToken,
+          };
+          if (mode === 'add') {
+            dispatch(addPlayer(playerData));
+          } else {
+            dispatch(editPlayer(playerData));
+          }
+        })
+        .catch(err => {
+          Alert.alert('Oops!', 'Please fill all required fields..');
+        });
     }, 500);
 
     setPlayerModalState(initPlayerModalState);

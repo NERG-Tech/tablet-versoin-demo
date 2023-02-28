@@ -32,7 +32,7 @@ export const addPlayer = async (params: TAddPlayer) => {
 };
 
 export type TToken = {
-  accessToken: string;
+  accessToken: string | undefined;
 };
 
 export const getPlayer = async (params: TToken) => {
