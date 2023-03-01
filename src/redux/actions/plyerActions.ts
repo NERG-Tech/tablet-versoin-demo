@@ -1,7 +1,15 @@
 import {TAddPlayer, TToken} from '../../services/playerService';
 import {TWaistAndHip, TMet, TVo2, TGenetics, TKeyMeasurement} from '../../services/formulaService';
 import {ADD_PLYAER, GET_PLYAER, EDIT_PLYAER} from './types/player';
-import {ADD_MET, ADD_VO2, ADD_WAIST_HIP, ADD_KEY_MEASUREMENTS, ADD_GENETICS} from './types/formula';
+import {
+  ADD_MET,
+  ADD_VO2,
+  ADD_WAIST_HIP,
+  ADD_KEY_MEASUREMENTS,
+  ADD_GENETICS,
+  SET_FIELD,
+} from './types/formula';
+import {TField} from '../types/action';
 
 export const addPlayer = (data: TAddPlayer) => ({
   type: ADD_PLYAER,
@@ -40,5 +48,10 @@ export const addKeyMeasurements = (data: TKeyMeasurement) => ({
 
 export const addGenetics = (data: TGenetics) => ({
   type: ADD_GENETICS,
+  payload: data,
+});
+
+export const setFiled = (data: TField) => ({
+  type: SET_FIELD,
   payload: data,
 });

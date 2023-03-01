@@ -11,17 +11,18 @@ import {
   ADD_GENETICS,
   SET_GENETICS,
   SET_WAIST_HIPS,
+  SET_FIELD,
 } from '../actions/types/formula';
 import {TPlayerInfo} from '../types/player';
 import {TKeyMeasurementData, TGeneticsData} from '../../services/formulaService';
 import {TAction} from '../types/action';
 
 export type TPlayerState = TPlayerInfo &
-  TKeyMeasurementData &
-  TGeneticsData & {
+  TKeyMeasurementData & {
     loading: boolean;
     error: string;
     playerId: string;
+    geneticHealth: TGeneticsData;
     waistHipsRatio: number;
   };
 
@@ -78,13 +79,16 @@ const initState: TPlayerState = {
   gluteCircumference: 0,
   waistCircumference: 0,
   waistHipsRatio: 0,
-  ethnicity: '',
-  complexion: '',
-  bloodType: '',
+  geneticHealth: {
+    ethnicity: '',
+    complexion: '',
+    bloodType: '',
+  },
 };
 
 export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) => {
   const {type, payload} = action;
+  console.log(type, payload);
   switch (type) {
     case ADD_PLYAER: {
       return {
@@ -135,14 +139,14 @@ export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) =
     case ADD_GENETICS: {
       return {
         ...state,
-        loading: false,
+        loading: true,
       };
     }
     case SET_GENETICS: {
       return {
         ...state,
         loading: false,
-        ...payload,
+        geneticHealth: {...payload},
       };
     }
     case SET_WAIST_HIPS: {
@@ -152,6 +156,12 @@ export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) =
         waistCircumference: payload.waist,
         hipsCircumference: payload.hip,
         waistHipsRatio: payload.ratio,
+      };
+    }
+    case SET_FIELD: {
+      return {
+        ...state,
+        [payload.field]: payload.data,
       };
     }
     default:

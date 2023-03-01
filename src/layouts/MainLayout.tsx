@@ -18,7 +18,6 @@ import * as NavigationConstants from '../common/constants/NavigationConstants';
 import {orientation, normalize, normalizeHalf} from '../utils/normalize';
 import * as Yup from 'yup';
 import {height2Data, data2Height} from '../utils/heightConverter';
-import {navigate} from '../redux/actions/navigationActions';
 
 import {addPlayer, getPlayer} from '../redux/actions/plyerActions';
 import {TAddPlayer} from '../services/playerService';

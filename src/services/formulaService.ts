@@ -81,7 +81,7 @@ export const addGenetics = async (params: TGenetics) => {
 
     return Promise.resolve(res.data);
   } catch (err) {
-    console.log('getGenetics Error: ', err);
+    console.log('addGenetics Error: ', err);
     return Promise.reject(err);
   }
 };
