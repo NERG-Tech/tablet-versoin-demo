@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {THeightFeet} from '../redux/types/player';
 
 const apiUrl = 'https://us-central1-nerg-one.cloudfunctions.net/api';
 
@@ -6,7 +7,7 @@ export type TAddPlayer = {
   sex: string;
   age: number;
   weight: number;
-  height: number;
+  height: THeightFeet;
   name: string;
   sport: string;
   position: string;
@@ -31,19 +32,36 @@ export const addPlayer = async (params: TAddPlayer) => {
 };
 
 export type TToken = {
-  accessToken: string;
+  accessToken: string | undefined;
 };
 
 export const getPlayer = async (params: TToken) => {
   if (params) {
     try {
-      const url = `${apiUrl}/player/${params.accessToken}`;
-      const options = {
-        method: 'GET',
-        url: url,
-      };
-      const res = await axios.request(options);
+      const url = `${apiUrl}/player`;
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${params.accessToken}`,
+        },
+      });
 
+      return Promise.resolve(res.data);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  } else {
+    return Promise.reject('no access');
+  }
+};
+
+export const updatePlayer = async (params: TAddPlayer) => {
+  const url = `${apiUrl}/players`;
+  if (params.accessToken) {
+    try {
+      const res = await axios.put(url, {
+        ...params,
+        idToken: params.accessToken,
+      });
       return Promise.resolve(res.data);
     } catch (err) {
       return Promise.reject(err);
@@ -56,4 +74,5 @@ export const getPlayer = async (params: TToken) => {
 export const authService = {
   addPlayer,
   getPlayer,
+  updatePlayer,
 };

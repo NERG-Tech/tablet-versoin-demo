@@ -58,7 +58,8 @@
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.2.2",
     "styled-components": "^5.3.6",
-    "typesafe-actions": "^5.1.0"
+    "typesafe-actions": "^5.1.0",
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

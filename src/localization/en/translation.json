@@ -224,6 +224,7 @@
         "ethnicity": "Genetic Makeup",
         "complexion": "Complexion",
         "bloodType": "Blood Type",
+        "ag": "Add Genetics",
         "apec": "Add Pre-Existing Conditions",
         "adm": "Add Food Allergies / Diet Restrictions / Medications",
         "afmh": "Add Family Medical History"

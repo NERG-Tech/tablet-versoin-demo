@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Image} from 'react-native';
-import {Text, View, ScrollView, StyleSheet} from 'react-native';
+import {Text, View, Alert, ScrollView, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
+import * as Yup from 'yup';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
 import {
   Loading,
@@ -17,8 +18,9 @@ import {useAuth} from '../contexts/AuthProvider';
 import {useDispatch, useSelector} from '../redux/store';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 import {orientation, normalize, normalizeHalf} from '../utils/normalize';
+import {height2Data, data2Height} from '../utils/heightConverter';
 
-import {addPlayer} from '../redux/actions/plyerActions';
+import {addPlayer, getPlayer, editPlayer} from '../redux/actions/plyerActions';
 import {TAddPlayer} from '../services/playerService';
 import {TPlayerState} from '../redux/reducers/playerReducer';
 
@@ -683,6 +685,7 @@ const PlayerLayout = (props: TProps) => {
   };
 
   const [isPlayerVisible, setPlayerVisible] = useState(false);
+  const [playerModalMode, setPlayerModalMode] = useState<'add' | 'edit'>('add');
   const [isPositionVisible, setPositionVisible] = useState(false);
   const [isGenderVisible, setGenderVisible] = useState(false);
   const [isMenVisible, setMenVisible] = useState(false);
@@ -693,6 +696,10 @@ const PlayerLayout = (props: TProps) => {
   const {authData} = useAuth();
   const dispatch = useDispatch();
   const playerData = useSelector<TPlayerState>(state => state.player);
+
+  useEffect(() => {
+    dispatch(getPlayer({accessToken: authData?.accessToken}));
+  }, []);
 
   useEffect(() => {
     const tempState: TState = {...initState};
@@ -716,23 +723,42 @@ const PlayerLayout = (props: TProps) => {
     setTimeout(() => setPlayerVisible(false), 150);
   };
 
-  const onAddPlayerModalConfirm = () => {
-    setTimeout(() => setPlayerVisible(false), 150);
-    setTimeout(() => {
-      const playerData: TAddPlayer = {
-        name: playerModalState.name,
-        age: parseInt(playerModalState.age),
-        sex: playerModalState.gender,
-        weight: parseFloat(playerModalState.weight),
-        height: parseFloat(playerModalState.height),
-        sport: playerModalState.sport,
-        position: playerModalState.position,
-        accessToken: authData?.accessToken,
-      };
-      dispatch(addPlayer(playerData));
-    }, 500);
+  const onAddPlayerModalConfirm = (mode: string) => {
+    const {name, age, gender, weight, height, sport, position} = playerModalState;
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      age: Yup.string().required(),
+      gender: Yup.string().required(),
+      height: Yup.string().required(),
+      weight: Yup.string().required(),
+      sport: Yup.string().required(),
+      position: Yup.string().required(),
+    });
 
-    setPlayerModalState(initPlayerModalState);
+    schema
+      .validate({name, age, gender, weight, height, sport, position})
+      .then(res => {
+        const playerData: TAddPlayer = {
+          name: name,
+          age: parseInt(age),
+          sex: gender,
+          weight: parseFloat(weight),
+          height: height2Data(height),
+          sport: sport,
+          position: position,
+          accessToken: authData?.accessToken,
+        };
+        if (mode === 'add') {
+          dispatch(addPlayer(playerData));
+        } else {
+          dispatch(editPlayer(playerData));
+        }
+        setTimeout(() => setPlayerVisible(false), 150);
+        setPlayerModalState(initPlayerModalState);
+      })
+      .catch(err => {
+        Alert.alert('Oops!', 'Please fill all required fields..');
+      });
   };
 
   const onPositionModalClose = (confirm: boolean) => {
@@ -765,6 +791,21 @@ const PlayerLayout = (props: TProps) => {
     }
     setTimeout(() => setWomenVisible(false), 150);
     setTimeout(() => setPlayerVisible(true), 600);
+  };
+
+  const handleEditProfile = () => {
+    const playerInfo = {
+      name: playerData.name,
+      gender: playerData.sex === 'male' ? 'Male' : 'Female',
+      age: playerData.age.toString(),
+      weight: playerData.weight.pounds.toString(),
+      height: data2Height(playerData.height),
+      sport: playerData.sport,
+      position: playerData.position,
+    };
+    setPlayerModalState({...playerModalState, ...playerInfo});
+    setPlayerModalMode('edit');
+    setPlayerVisible(true);
   };
 
   const addPlayerModal = isPlayerVisible => (
@@ -919,7 +960,7 @@ const PlayerLayout = (props: TProps) => {
             </Button>
             <Button
               customStyle={addPlayerModalStyles.confirmBtn}
-              onPress={() => onAddPlayerModalConfirm()}>
+              onPress={() => onAddPlayerModalConfirm(playerModalMode)}>
               <Text style={addPlayerModalStyles.buttonText}>{t('profile.createSave')}</Text>
             </Button>
           </View>
@@ -1129,7 +1170,7 @@ const PlayerLayout = (props: TProps) => {
           </Text>
         </View>
         <View style={styles.optionsWrapper}>
-          <Button customStyle={styles.optionWrapper} onPress={() => console.log('Edit Profile')}>
+          <Button customStyle={styles.optionWrapper} onPress={() => handleEditProfile()}>
             <Text style={styles.optionText}>{t('app.editProfile')}</Text>
             <Image style={styles.optionImg} source={ArrowRight} />
           </Button>
@@ -1147,7 +1188,10 @@ const PlayerLayout = (props: TProps) => {
           <RoundedButton
             customStyle={styles.addBtnWrapper}
             textStyle={styles.addBtnText}
-            onPress={() => setPlayerVisible(true)}
+            onPress={() => {
+              setPlayerModalMode('add');
+              setPlayerVisible(true);
+            }}
             label="Add Player"
           />
           <Button customStyle={styles.invite} onPress={() => console.log('Invite')}>

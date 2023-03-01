@@ -13,7 +13,7 @@ import {
 } from '../../common/components';
 import {useDispatch, useSelector} from '../../redux/store';
 import {useAuth} from '../../contexts/AuthProvider';
-import {addKeyMeasurements, addGenetics} from '../../redux/actions/plyerActions';
+import {addKeyMeasurements, addGenetics, getPlayer} from '../../redux/actions/plyerActions';
 import {TPlayerState} from '../../redux/reducers/playerReducer';
 import {TKeyMeasurement, TGenetics} from '../../services/formulaService';
 import {orientation, normalize, normalizeHalf, normalizeRate} from '../../utils/normalize';
@@ -480,6 +480,7 @@ const GeneticsScreen = () => {
   const [isBloodAbout, setBloodAbout] = useState(false);
   const [isWaterAbout, setWaterAbout] = useState(false);
   const [isBmiBtn, setBmiBtn] = useState(true);
+  const [isGeneticsBtn, setGeneticsBtn] = useState(true);
   const {authData} = useAuth();
 
   const {t} = useTranslation();
@@ -492,6 +493,12 @@ const GeneticsScreen = () => {
       setBmiBtn(false);
     } else {
       setBmiBtn(true);
+    }
+
+    if (playerData.ethnicity && playerData.complexion && playerData.bloodType) {
+      setGeneticsBtn(false);
+    } else {
+      setGeneticsBtn(true);
     }
 
     const ratio = (playerData.bodyWaterWeight.kg / playerData.idealWeight.kg) * 100;
@@ -573,6 +580,16 @@ const GeneticsScreen = () => {
       default:
         break;
     }
+  };
+
+  const handleAddGenetics = () => {
+    const geneticsData: TGenetics = {
+      ethnicity: state.ethnicity,
+      complexion: state.complexion,
+      bloodType: state.bloodType,
+      idToken: authData?.accessToken,
+    };
+    dispatch(addGenetics(geneticsData));
   };
 
   const measurementModal = (isVisible: boolean) => (
@@ -727,7 +744,11 @@ const GeneticsScreen = () => {
     </Modal>
   );
 
-  return (
+  return playerData.loading ? (
+    <View style={{flex: 1}}>
+      <Loading />
+    </View>
+  ) : (
     <View style={styles.container}>
       <View style={styles.playerInfoInputsWrapper}>
         <View style={styles.bmiWrapper}>
@@ -821,12 +842,21 @@ const GeneticsScreen = () => {
                   textStyle={styles.bmiInputText}
                 />
               </Button>
-              <RoundedButton
-                customStyle={styles.gahButtonWrapper}
-                textStyle={styles.bmiButtonText}
-                onPress={() => {}}
-                label={t('personalInfo.genetics.gah.apec')}
-              />
+              {isGeneticsBtn ? (
+                <RoundedButton
+                  customStyle={styles.gahButtonWrapper}
+                  textStyle={styles.bmiButtonText}
+                  onPress={handleAddGenetics}
+                  label={t('personalInfo.genetics.gah.ag')}
+                />
+              ) : (
+                <RoundedButton
+                  customStyle={styles.gahButtonWrapper}
+                  textStyle={styles.bmiButtonText}
+                  onPress={() => {}}
+                  label={t('personalInfo.genetics.gah.apec')}
+                />
+              )}
             </View>
             <View style={styles.geneticsHealthInfoRow}>
               <RoundedButton
