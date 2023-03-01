@@ -1,4 +1,10 @@
-import {ADD_PLYAER, HANDLE_PLYAER_SUCCESS, HANDLE_PLYAER_FAILED} from '../actions/types/player';
+import {
+  ADD_PLYAER,
+  GET_PLYAER,
+  EDIT_PLYAER,
+  HANDLE_PLYAER_SUCCESS,
+  HANDLE_PLYAER_FAILED,
+} from '../actions/types/player';
 import {
   ADD_KEY_MEASUREMENTS,
   SET_KEY_MEASUREMENTS,
@@ -15,12 +21,14 @@ export type TPlayerState = TPlayerInfo &
   TGeneticsData & {
     loading: boolean;
     error: string;
+    playerId: string;
     waistHipsRatio: number;
   };
 
 const initState: TPlayerState = {
   loading: false,
   error: '',
+  playerId: '',
   name: '',
   age: 0,
   sex: '',
@@ -79,6 +87,18 @@ export const PlayerReducer = (state: TPlayerInfo = initState, action: TAction) =
   const {type, payload} = action;
   switch (type) {
     case ADD_PLYAER: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case GET_PLYAER: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case EDIT_PLYAER: {
       return {
         ...state,
         loading: true,

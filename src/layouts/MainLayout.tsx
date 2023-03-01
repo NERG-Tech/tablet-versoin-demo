@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image} from 'react-native';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, Alert, StyleSheet} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Modal from 'react-native-modal';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../common/constants/StyleConstants';
@@ -16,8 +16,11 @@ import {useAuth} from '../contexts/AuthProvider';
 import {useDispatch, useSelector} from '../redux/store';
 import * as NavigationConstants from '../common/constants/NavigationConstants';
 import {orientation, normalize, normalizeHalf} from '../utils/normalize';
+import * as Yup from 'yup';
+import {height2Data, data2Height} from '../utils/heightConverter';
+import {navigate} from '../redux/actions/navigationActions';
 
-import {addPlayer} from '../redux/actions/plyerActions';
+import {addPlayer, getPlayer} from '../redux/actions/plyerActions';
 import {TAddPlayer} from '../services/playerService';
 
 const LogoImg = require('../assets/img/logo/logo_white.png');
@@ -665,7 +668,11 @@ const MainLayout = (props: TProps) => {
   const {t} = useTranslation();
   const {authData, signOut} = useAuth();
   const dispatch = useDispatch();
-  const {loading} = useSelector(state => state.player);
+  const {loading, playerId} = useSelector(state => state.player);
+
+  useEffect(() => {
+    dispatch(getPlayer({accessToken: authData?.accessToken}));
+  }, []);
 
   const handleSignOut = () => {
     setConfrimVisible(true);
@@ -683,22 +690,38 @@ const MainLayout = (props: TProps) => {
   };
 
   const onAddPlayerModalConfirm = () => {
-    setTimeout(() => setPlayerVisible(false), 150);
-    setTimeout(() => {
-      const playerData: TAddPlayer = {
-        name: playerState.name,
-        age: parseInt(playerState.age),
-        sex: playerState.gender,
-        weight: parseFloat(playerState.weight),
-        height: parseFloat(playerState.height),
-        sport: playerState.sport,
-        position: playerState.position,
-        accessToken: authData?.accessToken,
-      };
-      dispatch(addPlayer(playerData));
-    }, 500);
+    const {name, age, gender, weight, height, sport, position} = playerState;
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      age: Yup.string().required(),
+      gender: Yup.string().required(),
+      height: Yup.string().required(),
+      weight: Yup.string().required(),
+      sport: Yup.string().required(),
+      position: Yup.string().required(),
+    });
 
-    setPlayerState(initPlayerState);
+    schema
+      .validate({name, age, gender, weight, height, sport, position})
+      .then(res => {
+        const playerData: TAddPlayer = {
+          name: name,
+          age: parseInt(age),
+          sex: gender,
+          weight: parseFloat(weight),
+          height: height2Data(height),
+          sport: sport,
+          position: position,
+          accessToken: authData?.accessToken,
+        };
+
+        dispatch(addPlayer(playerData));
+        setTimeout(() => setPlayerVisible(false), 150);
+        setPlayerState(initPlayerState);
+      })
+      .catch(err => {
+        Alert.alert('Oops!', 'Please fill all required fields..');
+      });
   };
 
   const onPositionModalClose = (confirm: boolean) => {

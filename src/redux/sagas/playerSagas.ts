@@ -41,7 +41,7 @@ type TAddGeneticsResponse = SagaReturnType<typeof addGeneticsRequest>;
 function* addPlayer(action: Effect<string, TAddPlayer>) {
   try {
     const res: TAddPlayerResponse = yield call(addPlayerRequest, action.payload);
-    yield put({type: HANDLE_PLYAER_SUCCESS, payload: res.list});
+    yield put({type: HANDLE_PLYAER_SUCCESS, payload: {...res.list, playerId: res.playerId}});
     yield call(
       navigate,
       NavigationConstants.PLAYER_INFO as never,
@@ -59,17 +59,7 @@ function* addPlayer(action: Effect<string, TAddPlayer>) {
 function* getPlayer(action: Effect<string, TToken>) {
   try {
     const res: TGetPlayerResponse = yield call(getPlayerRequest, action.payload);
-    yield put({type: HANDLE_PLYAER_SUCCESS, payload: res});
-  } catch (err) {
-    yield put({type: HANDLE_PLYAER_FAILED, payload: err});
-    console.log('addPlayer saga error: ', err);
-  }
-}
-
-function* updatePlayer(action: Effect<string, TAddPlayer>) {
-  try {
-    const res: TUpdatePlayerResponse = yield call(updatePlayerRequest, action.payload);
-    yield put({type: HANDLE_PLYAER_SUCCESS, payload: res.list});
+    yield put({type: HANDLE_PLYAER_SUCCESS, payload: {...res.player, playerId: res.playerId}});
     yield call(
       navigate,
       NavigationConstants.PLAYER_INFO as never,
@@ -80,7 +70,17 @@ function* updatePlayer(action: Effect<string, TAddPlayer>) {
     );
   } catch (err) {
     yield put({type: HANDLE_PLYAER_FAILED, payload: err});
-    console.log('addPlayer saga error: ', err);
+    console.log('getPlayer saga error: ', err);
+  }
+}
+
+function* updatePlayer(action: Effect<string, TAddPlayer>) {
+  try {
+    const res: TUpdatePlayerResponse = yield call(updatePlayerRequest, action.payload);
+    yield put({type: HANDLE_PLYAER_SUCCESS, payload: {...res.list, playerId: res.playerId}});
+  } catch (err) {
+    yield put({type: HANDLE_PLYAER_FAILED, payload: err});
+    console.log('updatePlayer saga error: ', err);
   }
 }
 

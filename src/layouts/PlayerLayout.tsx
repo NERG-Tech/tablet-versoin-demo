@@ -724,44 +724,41 @@ const PlayerLayout = (props: TProps) => {
   };
 
   const onAddPlayerModalConfirm = (mode: string) => {
-    setTimeout(() => setPlayerVisible(false), 150);
-    setTimeout(() => {
-      const {name, age, gender, weight, height, sport, position} = playerModalState;
-      const schema = Yup.object().shape({
-        name: Yup.string().required(),
-        age: Yup.string().required(),
-        gender: Yup.string().required(),
-        height: Yup.string().required(),
-        weight: Yup.string().required(),
-        sport: Yup.string().required(),
-        position: Yup.string().required(),
+    const {name, age, gender, weight, height, sport, position} = playerModalState;
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      age: Yup.string().required(),
+      gender: Yup.string().required(),
+      height: Yup.string().required(),
+      weight: Yup.string().required(),
+      sport: Yup.string().required(),
+      position: Yup.string().required(),
+    });
+
+    schema
+      .validate({name, age, gender, weight, height, sport, position})
+      .then(res => {
+        const playerData: TAddPlayer = {
+          name: name,
+          age: parseInt(age),
+          sex: gender,
+          weight: parseFloat(weight),
+          height: height2Data(height),
+          sport: sport,
+          position: position,
+          accessToken: authData?.accessToken,
+        };
+        if (mode === 'add') {
+          dispatch(addPlayer(playerData));
+        } else {
+          dispatch(editPlayer(playerData));
+        }
+        setTimeout(() => setPlayerVisible(false), 150);
+        setPlayerModalState(initPlayerModalState);
+      })
+      .catch(err => {
+        Alert.alert('Oops!', 'Please fill all required fields..');
       });
-
-      schema
-        .validate({name, age, gender, weight, height, sport, position})
-        .then(res => {
-          const playerData: TAddPlayer = {
-            name: name,
-            age: parseInt(age),
-            sex: gender,
-            weight: parseFloat(weight),
-            height: height2Data(height),
-            sport: sport,
-            position: position,
-            accessToken: authData?.accessToken,
-          };
-          if (mode === 'add') {
-            dispatch(addPlayer(playerData));
-          } else {
-            dispatch(editPlayer(playerData));
-          }
-        })
-        .catch(err => {
-          Alert.alert('Oops!', 'Please fill all required fields..');
-        });
-    }, 500);
-
-    setPlayerModalState(initPlayerModalState);
   };
 
   const onPositionModalClose = (confirm: boolean) => {
@@ -801,12 +798,13 @@ const PlayerLayout = (props: TProps) => {
       name: playerData.name,
       gender: playerData.sex === 'male' ? 'Male' : 'Female',
       age: playerData.age.toString(),
-      weight: playerData.weight.kg.toString(),
+      weight: playerData.weight.pounds.toString(),
       height: data2Height(playerData.height),
       sport: playerData.sport,
       position: playerData.position,
     };
     setPlayerModalState({...playerModalState, ...playerInfo});
+    setPlayerModalMode('edit');
     setPlayerVisible(true);
   };
 
@@ -1190,7 +1188,10 @@ const PlayerLayout = (props: TProps) => {
           <RoundedButton
             customStyle={styles.addBtnWrapper}
             textStyle={styles.addBtnText}
-            onPress={() => setPlayerVisible(true)}
+            onPress={() => {
+              setPlayerModalMode('add');
+              setPlayerVisible(true);
+            }}
             label="Add Player"
           />
           <Button customStyle={styles.invite} onPress={() => console.log('Invite')}>

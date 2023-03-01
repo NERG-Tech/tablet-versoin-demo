@@ -55,7 +55,7 @@ export const getPlayer = async (params: TToken) => {
 };
 
 export const updatePlayer = async (params: TAddPlayer) => {
-  const url = `${apiUrl}/player`;
+  const url = `${apiUrl}/players`;
   if (params.accessToken) {
     try {
       const res = await axios.put(url, {
