@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, Image, View, ScrollView, StyleSheet} from 'react-native';
+import {Text, Image, View, ScrollView, StyleSheet, Alert} from 'react-native';
 import Modal from 'react-native-modal';
 import {useTranslation} from 'react-i18next';
 import {COLORS, FONT_WEIGHT, FONT_SIZE} from '../../common/constants/StyleConstants';
@@ -13,10 +13,12 @@ import {
 } from '../../common/components';
 import {useDispatch, useSelector} from '../../redux/store';
 import {useAuth} from '../../contexts/AuthProvider';
-import {addKeyMeasurements, addGenetics, getPlayer} from '../../redux/actions/plyerActions';
+import {addKeyMeasurements, addGenetics, setFiled} from '../../redux/actions/plyerActions';
+import {TField} from '../../redux/types/action';
 import {TPlayerState} from '../../redux/reducers/playerReducer';
 import {TKeyMeasurement, TGenetics} from '../../services/formulaService';
 import {orientation, normalize, normalizeHalf, normalizeRate} from '../../utils/normalize';
+import * as Yup from 'yup';
 
 const SkeletonIMg = require('../../assets/img/skeleton.png');
 const LogoImg = require('../../assets/img/logo/logo.png');
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
   geneticsHealthInfoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     gap: normalize(20),
   },
   attrBtn: {
@@ -140,6 +142,11 @@ const styles = StyleSheet.create({
   },
   gahButtonWrapper: {
     flex: 1,
+    height: normalize(58, orientation.HEIGHT),
+    borderRadius: normalize(16),
+  },
+  gahSingleButtonWrapper: {
+    width: '50%',
     height: normalize(58, orientation.HEIGHT),
     borderRadius: normalize(16),
   },
@@ -480,7 +487,6 @@ const GeneticsScreen = () => {
   const [isBloodAbout, setBloodAbout] = useState(false);
   const [isWaterAbout, setWaterAbout] = useState(false);
   const [isBmiBtn, setBmiBtn] = useState(true);
-  const [isGeneticsBtn, setGeneticsBtn] = useState(true);
   const {authData} = useAuth();
 
   const {t} = useTranslation();
@@ -495,18 +501,23 @@ const GeneticsScreen = () => {
       setBmiBtn(true);
     }
 
-    if (playerData.ethnicity && playerData.complexion && playerData.bloodType) {
-      setGeneticsBtn(false);
-    } else {
-      setGeneticsBtn(true);
-    }
-
     const ratio = (playerData.bodyWaterWeight.kg / playerData.idealWeight.kg) * 100;
     onChangeField('waterRatio', ratio.toFixed(2).toString());
   }, [playerData]);
 
   const onChangeField = (field: string, value: string) => {
     setState({...state, [field]: value});
+  };
+
+  const onGeneticsSelect = (field: string, value: string) => {
+    const data: TField = {
+      field: 'geneticHealth',
+      data: {
+        ...playerData.geneticHealth,
+        [field]: value,
+      },
+    };
+    dispatch(setFiled(data));
   };
 
   const onMeasurementModalClose = () => {
@@ -583,13 +594,26 @@ const GeneticsScreen = () => {
   };
 
   const handleAddGenetics = () => {
-    const geneticsData: TGenetics = {
-      ethnicity: state.ethnicity,
-      complexion: state.complexion,
-      bloodType: state.bloodType,
-      idToken: authData?.accessToken,
-    };
-    dispatch(addGenetics(geneticsData));
+    const {ethnicity, complexion, bloodType} = playerData.geneticHealth;
+    const schema = Yup.object().shape({
+      ethnicity: Yup.string().required(),
+      complexion: Yup.string().required(),
+      bloodType: Yup.string().required(),
+    });
+    schema
+      .validate({ethnicity, complexion, bloodType})
+      .then(res => {
+        const geneticsData: TGenetics = {
+          ethnicity: ethnicity,
+          complexion: complexion,
+          bloodType: bloodType,
+          idToken: authData?.accessToken,
+        };
+        dispatch(addGenetics(geneticsData));
+      })
+      .catch(err => {
+        Alert.alert('Oops!', 'Please fill all required fields..');
+      });
   };
 
   const measurementModal = (isVisible: boolean) => (
@@ -703,8 +727,8 @@ const GeneticsScreen = () => {
                 key={i}
                 label={key}
                 options={options}
-                status={state[field] === options[key]}
-                setStatus={(key: string) => onChangeField(field, options[key])}
+                status={playerData.geneticHealth[field] === key}
+                setStatus={(key: string) => onGeneticsSelect(field, key)}
               />
             ))}
           </ScrollView>
@@ -810,7 +834,7 @@ const GeneticsScreen = () => {
               <Button customStyle={styles.attrBtn} onPress={() => setEthnicity(true)}>
                 <AttributeInput
                   label={t('personalInfo.genetics.gah.ethnicity')}
-                  value={state.ethnicity}
+                  value={ethnicitys[playerData.geneticHealth.ethnicity]}
                   placeholder="Black"
                   readOnly={true}
                   labelStyle={styles.gahInputLabel}
@@ -821,7 +845,7 @@ const GeneticsScreen = () => {
               <Button customStyle={styles.attrBtn} onPress={() => setComplexion(true)}>
                 <AttributeInput
                   label={t('personalInfo.genetics.gah.complexion')}
-                  value={state.complexion}
+                  value={complexions[playerData.geneticHealth.complexion]}
                   placeholder="Dark"
                   readOnly={true}
                   labelStyle={styles.gahInputLabel}
@@ -834,7 +858,7 @@ const GeneticsScreen = () => {
               <Button customStyle={styles.attrBtn} onPress={() => setBloodType(true)}>
                 <AttributeInput
                   label={t('personalInfo.genetics.gah.bloodType')}
-                  value={state.bloodType}
+                  value={bloodTypes[playerData.geneticHealth.bloodType]}
                   placeholder="O-"
                   readOnly={true}
                   labelStyle={styles.gahInputLabel}
@@ -842,21 +866,12 @@ const GeneticsScreen = () => {
                   textStyle={styles.bmiInputText}
                 />
               </Button>
-              {isGeneticsBtn ? (
-                <RoundedButton
-                  customStyle={styles.gahButtonWrapper}
-                  textStyle={styles.bmiButtonText}
-                  onPress={handleAddGenetics}
-                  label={t('personalInfo.genetics.gah.ag')}
-                />
-              ) : (
-                <RoundedButton
-                  customStyle={styles.gahButtonWrapper}
-                  textStyle={styles.bmiButtonText}
-                  onPress={() => {}}
-                  label={t('personalInfo.genetics.gah.apec')}
-                />
-              )}
+              <RoundedButton
+                customStyle={styles.gahButtonWrapper}
+                textStyle={styles.bmiButtonText}
+                onPress={handleAddGenetics}
+                label={t('personalInfo.genetics.gah.ag')}
+              />
             </View>
             <View style={styles.geneticsHealthInfoRow}>
               <RoundedButton
@@ -870,6 +885,14 @@ const GeneticsScreen = () => {
                 textStyle={styles.bmiButtonText}
                 onPress={() => {}}
                 label={t('personalInfo.genetics.gah.afmh')}
+              />
+            </View>
+            <View style={styles.geneticsHealthInfoRow}>
+              <RoundedButton
+                customStyle={styles.gahSingleButtonWrapper}
+                textStyle={styles.bmiButtonText}
+                onPress={() => {}}
+                label={t('personalInfo.genetics.gah.apec')}
               />
             </View>
           </View>

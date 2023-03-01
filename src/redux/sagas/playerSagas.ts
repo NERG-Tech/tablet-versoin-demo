@@ -59,7 +59,10 @@ function* addPlayer(action: Effect<string, TAddPlayer>) {
 function* getPlayer(action: Effect<string, TToken>) {
   try {
     const res: TGetPlayerResponse = yield call(getPlayerRequest, action.payload);
-    yield put({type: HANDLE_PLYAER_SUCCESS, payload: {...res.player, playerId: res.playerId}});
+    yield put({
+      type: HANDLE_PLYAER_SUCCESS,
+      payload: {...res.player, playerId: res.playerId},
+    });
     yield call(
       navigate,
       NavigationConstants.PLAYER_INFO as never,
@@ -109,12 +112,7 @@ function* addGenetics(action: Effect<string, TGenetics>) {
   try {
     const res: TAddGeneticsResponse = yield call(addGeneticsRequest, action.payload);
 
-    const data: TGeneticsData = {
-      ethnicity: action.payload.ethnicity,
-      complexion: action.payload.complexion,
-      bloodType: action.payload.bloodType,
-    };
-    yield put({type: SET_GENETICS, payload: data});
+    yield put({type: SET_GENETICS, payload: res.list.geneticHealth});
   } catch (err) {
     console.log('addGenetics saga error: ', err);
   }
